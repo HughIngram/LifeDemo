@@ -1,0 +1,21 @@
+-is there a way to package-protect the View from the Model?
+-How should Logging be handled??
+    Log can be mocked in unit tests.
+
+-make an ERD diagram for the initial app 
+    >this will be good for explaining MVP details
+
+-what are the options for order of instantiation?
+    >calling to Set[Component]() means that the component reference can
+    not be declared final. How can the risk that this causes be negated?
+    >the set[component]() methods must be called immediately after construcors
+
+
+-coding standards... justify them. Cite clean code.
+
+-can I use lambdas? Might need to increase MinSDKVersion
+
+-graph loc, number of TODO's etc.. get data from git
+
+-the grid needs to be initialised onCreate..
+    how should lifecycle events tie into MVP?
