@@ -1,13 +1,16 @@
 package uk.co.hughingram.lifedemo.view;
 
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 /**
  * Encapsulating class for Activities, to be passed to the View component.
  */
-
-public interface ActivityWrapper_View {
+public interface ActivityWrapperForView {
 
     /**
      * Gets a child view of the base layout.
@@ -21,5 +24,11 @@ public interface ActivityWrapper_View {
      * @param action the action to run.
      */
     void runOnUiThread(final Runnable action);
+
+    /**
+     * Returns a Resources instance.
+     * @return resources
+     */
+    Resources getResources();
 
 }

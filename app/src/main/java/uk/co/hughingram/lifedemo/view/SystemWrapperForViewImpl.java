@@ -1,5 +1,6 @@
 package uk.co.hughingram.lifedemo.view;
 
+import android.content.res.Resources;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -7,7 +8,7 @@ import android.view.View;
 /**
  * Implementation of the System Wrapper for View.
  */
-public final class SystemWrapperForViewImpl implements ActivityWrapper_View {
+public final class SystemWrapperForViewImpl implements ActivityWrapperForView {
     private final AppCompatActivity activity;
 
     public SystemWrapperForViewImpl(final AppCompatActivity activity) {
@@ -23,4 +24,10 @@ public final class SystemWrapperForViewImpl implements ActivityWrapper_View {
     public void runOnUiThread(final Runnable action) {
         activity.runOnUiThread(action);
     }
+
+    @Override
+    public Resources getResources() {
+        return activity.getResources();
+    }
+
 }

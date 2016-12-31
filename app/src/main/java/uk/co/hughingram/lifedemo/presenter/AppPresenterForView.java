@@ -8,4 +8,6 @@ public interface AppPresenterForView {
 
     void toggleSimulationRunning();
 
+    void setUpSimulation();
+
 }

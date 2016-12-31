@@ -1,6 +1,7 @@
 package uk.co.hughingram.lifedemo.view;
 
 import android.support.design.widget.FloatingActionButton;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,16 +11,15 @@ import uk.co.hughingram.lifedemo.presenter.AppPresenterForView;
 /**
  * Master class for the AppPresenterImpl component.
  */
+public final class AppViewImpl implements AppView {
 
-public class AppViewImpl implements AppView {
-
-    private final ActivityWrapper_View systemWrapper;
+    private final ActivityWrapperForView systemWrapper;
     private final AppPresenterForView presenter;
 
     private final TextView gridView;
     private final FloatingActionButton fab;
 
-    public AppViewImpl(final ActivityWrapper_View activityWrapper,
+    public AppViewImpl(final ActivityWrapperForView activityWrapper,
                        final AppPresenterForView presenter) {
         this.systemWrapper = activityWrapper;
         this.presenter = presenter;
@@ -52,11 +52,20 @@ public class AppViewImpl implements AppView {
 
     @Override
     public void showStatePaused() {
-
+        fab.setImageDrawable(systemWrapper.getResources()
+                .getDrawable(android.R.drawable.ic_media_play));
     }
 
     @Override
     public void showStateRunning() {
+        fab.setImageDrawable(systemWrapper.getResources()
+                .getDrawable(android.R.drawable.ic_media_pause));
+    }
 
+    @Override
+    public void setPatternChoices(final SubMenu subMenu, final String[] choices) {
+        for (String s : choices) {
+            subMenu.add(s);
+        }
     }
 }

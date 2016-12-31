@@ -1,3 +1,30 @@
+====================
+current tasks:
+>implement reading of .rle files.[include an example file in the report]
+http://golly.sourceforge.net/Help/formats.html#rule
+-The .rle format can express the following information:
+    comments, game transition rules, cell configuration, generation count, the absolute position on screen
+-comments are  lines which are blank or start with "#"
+-the start of the data is marked by the first non-comment line, which should start with "x"
+    this line gives the dimensions of the pattern, and the rule, e.g.
+       "x = width, y = height, rule = rule"
+-for conway's Life,
+ rule = B3/S23
+-lines which are not comments, and do not start with "x" are used as storage of the cell configuration:
+ the RLE format uses run length encoding - where repeated runs of the same character are shortened
+ the character prefixed by the length of its run, e.g.
+ AAAAAABBBAACAAA
+ would be compressed to:
+ 6A3B2AC3A
+-in two-state games like Life, "b" represents an off cell, and "o" represents an on cell.
+-lines are teminated by "$". Note that "$" can also be run length encoded.
+-an optional "!" represents the end of a pattern
+
+>Implementation:
+-add the permission to read files from the SD card
+-implement File reader
+====================
+
 -is there a way to package-protect the View from the Model?
 -How should Logging be handled??
     Log can be mocked in unit tests.
@@ -9,6 +36,13 @@
     >calling to Set[Component]() means that the component reference can
     not be declared final. How can the risk that this causes be negated?
     >the set[component]() methods must be called immediately after construcors
+    >what about using an injection framework??
+        -compare the options etc etc
+http://hannesdorfmann.com/android/presenters-dont-need-lifecycle
+https://www.reddit.com/r/androiddev/comments/4bs4lz/presenters_dont_need_lifecycle_events_hannes/
+    -for now: use the Activity to manage lifecycle events. This approach is
+    chosen because it is consistent with SRP (what is SRP?)
+    >why is this the best approach? What were the alternatives?
 
 
 -coding standards... justify them. Cite clean code.
@@ -19,3 +53,10 @@
 
 -the grid needs to be initialised onCreate..
     how should lifecycle events tie into MVP?
+
+-creating a generic framework for the Life implementation:
+    why do this?
+        >the algorithm is likely to change frequently
+        >inter-change should be simple, so that implementations can be rapidly
+        developed, switched and compared
+    how can the algorithm best be encapsulated?

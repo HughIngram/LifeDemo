@@ -35,6 +35,7 @@ public final class AppModelImpl implements AppModel {
         grid = makeGrid(GRID_WIDTH, GRID_HEIGHT);
     }
 
+    @Override
     public void setPresenter(final AppPresenterForModel presenter) {
         this.presenter = presenter;
     }
@@ -158,6 +159,16 @@ public final class AppModelImpl implements AppModel {
         return sb.toString();
     }
 
+    @Override
+    public String[] getAvailablePatterns() {
+        return new PatternLoader().getPatternList();
+    }
+
+    @Override
+    public void loadPattern(final String id) {
+
+    }
+
     //returns a glider in a 16*12 grid
     private boolean[][] makeGrid(final int width, final int height) {
         return new boolean[][]{
@@ -187,6 +198,11 @@ public final class AppModelImpl implements AppModel {
                 grid[i][j] = random.nextBoolean();
             }
         }
+        return grid;
+    }
+
+    @Override
+    public boolean[][] getGrid() {
         return grid;
     }
 }
