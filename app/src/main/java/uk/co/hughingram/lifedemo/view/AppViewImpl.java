@@ -1,6 +1,7 @@
 package uk.co.hughingram.lifedemo.view;
 
 import android.support.design.widget.FloatingActionButton;
+import android.view.Menu;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.TextView;
@@ -62,10 +63,12 @@ public final class AppViewImpl implements AppView {
                 .getDrawable(android.R.drawable.ic_media_pause));
     }
 
+    public static final int PATTERNS_GROUP_ID = 1;
+
     @Override
     public void setPatternChoices(final SubMenu subMenu, final String[] choices) {
-        for (String s : choices) {
-            subMenu.add(s);
+        for (final String s : choices) {
+            subMenu.add(PATTERNS_GROUP_ID, Menu.NONE, Menu.NONE, s);
         }
     }
 }

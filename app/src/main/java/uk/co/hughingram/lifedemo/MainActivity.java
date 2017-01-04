@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -89,6 +90,10 @@ public final class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
+        if (item.getGroupId() == AppViewImpl.PATTERNS_GROUP_ID) {
+            Log.d("Activity", "Loading " + item.getTitle().toString());
+            model.loadPattern(item.getTitle().toString());
+        }
 //        int id = item.getItemId();
 //        if (id == R.id.menu_item_load) {
 //            presenterImpl.onLoadButtonPressed();

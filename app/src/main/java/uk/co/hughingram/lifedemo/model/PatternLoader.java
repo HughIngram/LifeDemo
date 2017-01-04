@@ -3,7 +3,10 @@ package uk.co.hughingram.lifedemo.model;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Class to read Patterns from the file system.
@@ -34,7 +37,11 @@ final class PatternLoader implements FileHelper {
     }
 
     @Override
-    public void loadPattern(final String patternId) {
-
+    public boolean[][] loadPattern(final String patternId) {
+        final File directory = new File(Environment.getExternalStorageDirectory(), PATTERNS_DIR);
+        final File patternFile = new File(directory, patternId);
+        final PatternParser parser = new PatternParser();
+        return parser.parsePatternFile(patternFile);
     }
+
 }

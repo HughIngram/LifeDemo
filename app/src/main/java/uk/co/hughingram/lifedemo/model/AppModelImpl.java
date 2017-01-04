@@ -166,7 +166,9 @@ public final class AppModelImpl implements AppModel {
 
     @Override
     public void loadPattern(final String id) {
-
+        boolean[][] pattern = new PatternLoader().loadPattern(id);
+        Log.d("Model", "height:" + pattern.length + " width:" + pattern[0].length);
+        // show the pattern...
     }
 
     //returns a glider in a 16*12 grid
@@ -188,17 +190,6 @@ public final class AppModelImpl implements AppModel {
                 {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}
         };
 
-    }
-
-    private boolean[][] makeGridRandom(final int width, final int height) {
-        final Random random = new Random();
-        final boolean[][] grid = new boolean[height][width];
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                grid[i][j] = random.nextBoolean();
-            }
-        }
-        return grid;
     }
 
     @Override

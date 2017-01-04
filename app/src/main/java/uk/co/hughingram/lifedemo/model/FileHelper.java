@@ -15,6 +15,6 @@ interface FileHelper {
      * Loads the given pattern into the Model.
      * @param patternId the Pattern ID.
      */
-    void loadPattern(final String patternId);
+    boolean[][] loadPattern(final String patternId);
 
 }

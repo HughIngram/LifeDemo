@@ -8,6 +8,8 @@ http://golly.sourceforge.net/Help/formats.html#rule
 -the start of the data is marked by the first non-comment line, which should start with "x"
     this line gives the dimensions of the pattern, and the rule, e.g.
        "x = width, y = height, rule = rule"
+       >the data here is delimited by ","
+       >within these comma delimited tokens, e.g. "x = 123", the integer must be extracted.
 -for conway's Life,
  rule = B3/S23
 -lines which are not comments, and do not start with "x" are used as storage of the cell configuration:
@@ -23,6 +25,12 @@ http://golly.sourceforge.net/Help/formats.html#rule
 >Implementation:
 -add the permission to read files from the SD card
 -implement File reader
+-implement parsing of rle files
+    String.split() or StringTokenizer?
+
+
+bibliography:
+http://michael.dipperstein.com/rle/
 ====================
 
 -is there a way to package-protect the View from the Model?
