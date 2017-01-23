@@ -10,7 +10,7 @@ import android.view.View;
 /**
  * Encapsulating class for Activities, to be passed to the View component.
  */
-public interface ActivityWrapperForView {
+public interface SystemWrapperForView {
 
     /**
      * Gets a child view of the base layout.

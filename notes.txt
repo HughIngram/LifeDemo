@@ -1,5 +1,6 @@
 ====================
 current tasks:
+====================
 >implement reading of .rle files.[include an example file in the report]
 http://golly.sourceforge.net/Help/formats.html#rule
 -The .rle format can express the following information:
@@ -19,7 +20,9 @@ http://golly.sourceforge.net/Help/formats.html#rule
  would be compressed to:
  6A3B2AC3A
 -in two-state games like Life, "b" represents an off cell, and "o" represents an on cell.
--lines are teminated by "$". Note that "$" can also be run length encoded.
+-lines are terminated by "$". Note that "$" can also be run length encoded.
+-trailing off cells at the end of a line can be ignored - just go to the next line if the rest of
+this line is empty.
 -an optional "!" represents the end of a pattern
 
 >Implementation:
@@ -27,10 +30,24 @@ http://golly.sourceforge.net/Help/formats.html#rule
 -implement File reader
 -implement parsing of rle files
     String.split() or StringTokenizer?
-
+    https://stackoverflow.com/questions/11442162/java-run-length-encoding
 
 bibliography:
 http://michael.dipperstein.com/rle/
+====================
+bug: loading patterns other than glider gun does not work
+====================
+now that the Java side of pattern parsing is implemented, the loaded pattern must displayed correctly.
+>add the option to not wrap edges?
+====================
+Graphical representation of grid:
+-compare options for different rendering techniques
+>openGL
+>Canvas, as per tutorial:
+
+https://developer.android.com/guide/topics/graphics/2d-graphics.html
+
+but first, do the RLE decoding!!
 ====================
 
 -is there a way to package-protect the View from the Model?

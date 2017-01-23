@@ -20,7 +20,7 @@ public interface AppModel {
      */
     String render(final boolean[][] grid);
 
-    // should it be possible for the presenter to have access to the un-rendered grid?
+    // should it be possible for the presenter to have access to the un-encapsulated array?
     /**
      * Gets the Grid in its current state.
      *

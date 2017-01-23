@@ -14,13 +14,13 @@ import uk.co.hughingram.lifedemo.presenter.AppPresenterForView;
  */
 public final class AppViewImpl implements AppView {
 
-    private final ActivityWrapperForView systemWrapper;
+    private final SystemWrapperForView systemWrapper;
     private final AppPresenterForView presenter;
 
     private final TextView gridView;
     private final FloatingActionButton fab;
 
-    public AppViewImpl(final ActivityWrapperForView activityWrapper,
+    public AppViewImpl(final SystemWrapperForView activityWrapper,
                        final AppPresenterForView presenter) {
         this.systemWrapper = activityWrapper;
         this.presenter = presenter;

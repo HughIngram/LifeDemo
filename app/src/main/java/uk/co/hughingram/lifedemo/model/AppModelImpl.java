@@ -2,23 +2,21 @@ package uk.co.hughingram.lifedemo.model;
 
 import android.util.Log;
 
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import uk.co.hughingram.lifedemo.presenter.AppPresenterForModel;
 
-//TODO create a Grid implements Iterator class
+//TODO create a Grid implements Iterator class, with toString() method too
 /**
  *  Master class for the AppModelImpl component.
  */
 public final class AppModelImpl implements AppModel {
 
-    private final static int GRID_WIDTH = 16;
-    private final static int GRID_HEIGHT= 12;
     private final static int INTERVAL_MILLISECONDS = 150;
 
     private AppPresenterForModel presenter;
+    private SystemWrapperForModel system;
     private boolean[][] grid;
     private boolean running = false;
     private Timer timer;
@@ -31,8 +29,9 @@ public final class AppModelImpl implements AppModel {
         }
     };
 
-    public AppModelImpl() {
-        grid = makeGrid(GRID_WIDTH, GRID_HEIGHT);
+    public AppModelImpl(final SystemWrapperForModel system) {
+        grid = new PatternLoader(system).getDefaultGrid();
+        this.system = system;
     }
 
     @Override
@@ -105,6 +104,7 @@ public final class AppModelImpl implements AppModel {
         } else {
             xOfLhs = x - 1;
         }
+        // TODO disable wrapping
         int yOfTop;
         int yOfBottom = (y + 1) % grid.length;
         if (y == 0) {
@@ -161,39 +161,20 @@ public final class AppModelImpl implements AppModel {
 
     @Override
     public String[] getAvailablePatterns() {
-        return new PatternLoader().getPatternList();
+        return new PatternLoader(system).getPatternList();
     }
 
     @Override
     public void loadPattern(final String id) {
-        boolean[][] pattern = new PatternLoader().loadPattern(id);
+        boolean[][] pattern = new PatternLoader(system).loadPattern(id);
         Log.d("Model", "height:" + pattern.length + " width:" + pattern[0].length);
         // show the pattern...
-    }
-
-    //returns a glider in a 16*12 grid
-    private boolean[][] makeGrid(final int width, final int height) {
-        return new boolean[][]{
-                {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-                {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-
-                {false,false,false,false,false,true, false,false,false,false,false,false,false,false,false,false},
-                {false,false,false,false,false,false,true,false,false,false,false,false,false,false,false,false},
-                {false,false,false,false,true, true, true,false,false,false,false,false,false,false,false,false},
-
-                {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-                {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-                {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-                {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-                {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-                {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
-                {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}
-        };
-
+        grid = pattern;
     }
 
     @Override
     public boolean[][] getGrid() {
         return grid;
     }
+
 }

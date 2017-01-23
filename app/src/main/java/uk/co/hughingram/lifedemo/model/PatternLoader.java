@@ -1,12 +1,10 @@
 package uk.co.hughingram.lifedemo.model;
 
 import android.os.Environment;
+import android.support.annotation.RawRes;
 import android.util.Log;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 
 /**
  * Class to read Patterns from the file system.
@@ -15,6 +13,12 @@ final class PatternLoader implements FileHelper {
 
     private final static String PATTERNS_DIR = "/Patterns/";
     private final static String TAG = "PatternLoader";
+
+    private final SystemWrapperForModel system;
+
+    PatternLoader(final SystemWrapperForModel system) {
+        this.system = system;
+    }
 
     @Override
     public String[] getPatternList() {
@@ -44,4 +48,12 @@ final class PatternLoader implements FileHelper {
         return parser.parsePatternFile(patternFile);
     }
 
+    boolean[][] getDefaultGrid() {
+        return loadPatternFromResources(SystemWrapperForModel.DEFAULT);
+    }
+
+    private boolean[][] loadPatternFromResources(@RawRes final int id) {
+        final String patternRle = system.getStringFromRawResource(id);
+        return new PatternParser().setUpArray(patternRle);
+    }
 }

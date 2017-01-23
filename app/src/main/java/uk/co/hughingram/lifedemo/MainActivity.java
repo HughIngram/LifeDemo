@@ -15,11 +15,12 @@ import android.view.SubMenu;
 
 import uk.co.hughingram.lifedemo.model.AppModel;
 import uk.co.hughingram.lifedemo.model.AppModelImpl;
-import uk.co.hughingram.lifedemo.presenter.AppPresenterForModel;
+import uk.co.hughingram.lifedemo.model.SystemWrapperForModel;
+import uk.co.hughingram.lifedemo.model.SystemWrapperForModelImpl;
 import uk.co.hughingram.lifedemo.presenter.AppPresenterImpl;
 import uk.co.hughingram.lifedemo.view.AppView;
 import uk.co.hughingram.lifedemo.view.SystemWrapperForViewImpl;
-import uk.co.hughingram.lifedemo.view.ActivityWrapperForView;
+import uk.co.hughingram.lifedemo.view.SystemWrapperForView;
 import uk.co.hughingram.lifedemo.view.AppViewImpl;
 
 /**
@@ -45,9 +46,10 @@ public final class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // TODO is there a more elegant way to do this?
-        final ActivityWrapperForView activityWrapperForView = new SystemWrapperForViewImpl(this);
-        model = new AppModelImpl();
-        view = new AppViewImpl(activityWrapperForView, presenterImpl);
+        final SystemWrapperForView systemWrapperForView = new SystemWrapperForViewImpl(this);
+        final SystemWrapperForModel systemWrapperForModel = new SystemWrapperForModelImpl(this);
+        model = new AppModelImpl(systemWrapperForModel);
+        view = new AppViewImpl(systemWrapperForView, presenterImpl);
         model.setPresenter(presenterImpl);
         presenterImpl.setModel(model);
         presenterImpl.setView(view);

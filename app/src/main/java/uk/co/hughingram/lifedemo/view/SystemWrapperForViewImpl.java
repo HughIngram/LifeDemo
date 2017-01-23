@@ -8,7 +8,7 @@ import android.view.View;
 /**
  * Implementation of the System Wrapper for View.
  */
-public final class SystemWrapperForViewImpl implements ActivityWrapperForView {
+public final class SystemWrapperForViewImpl implements SystemWrapperForView {
     private final AppCompatActivity activity;
 
     public SystemWrapperForViewImpl(final AppCompatActivity activity) {

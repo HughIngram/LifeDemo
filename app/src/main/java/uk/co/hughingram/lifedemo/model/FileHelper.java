@@ -1,5 +1,6 @@
 package uk.co.hughingram.lifedemo.model;
 
+
 /**
  * Interface to help with reading from the File System.
  */
@@ -12,7 +13,7 @@ interface FileHelper {
     String[] getPatternList();
 
     /**
-     * Loads the given pattern into the Model.
+     * Gets the given pattern.
      * @param patternId the Pattern ID.
      */
     boolean[][] loadPattern(final String patternId);

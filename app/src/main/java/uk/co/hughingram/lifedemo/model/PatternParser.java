@@ -18,9 +18,7 @@ final class PatternParser {
 
     boolean[][] parsePatternFile(final File file) {
         final String patternText = getPatternFileContent(file);
-        boolean[][] array = setUpArray(patternText);
-        // populate fill the array
-        return array;
+        return setUpArray(patternText);
     }
 
     // note : make unit tests for this! - write up why unit testing was done
@@ -42,17 +40,18 @@ final class PatternParser {
     }
 
     // creates an array of the correct size for the given pattern, with all values set to false.
-    private boolean[][] setUpArray(final String patternText) {
+    boolean[][] setUpArray(final String patternText) {
         final String dimensionsLine = getDimensionsLine(patternText);
 
         final String commaDelimiter = "[,]+";
         final String[] tokens = dimensionsLine.split(commaDelimiter);
         // tokens[0] contains "x = ???",  and tokens[1] contains "y = ???"
-        Pattern p = Pattern.compile("[\\d]+");
-        final int width = getDimensionFromToken(tokens[0], p);
-        final int height = getDimensionFromToken(tokens[1], p);
+        // This regex look for numerical digits.
+        final int width = getDimensionFromToken(tokens[0]);
+        final int height = getDimensionFromToken(tokens[1]);
 
-        return initialiseArray(height, width);
+        boolean[][] blankArray = initialiseArray(height, width);
+        return fillArray(blankArray, patternText);
     }
 
     private String getDimensionsLine(final String patternText) {
@@ -73,7 +72,8 @@ final class PatternParser {
         return patternText.substring(startOfSizeLine, endOfSizeLine);
     }
 
-    private int getDimensionFromToken(final String token, final Pattern p) {
+    private int getDimensionFromToken(final String token) {
+        final Pattern p = Pattern.compile("[\\d]+");
         final Matcher m = p.matcher(token);
         if (m.find()) {
             final String x = m.group();
@@ -91,6 +91,68 @@ final class PatternParser {
             }
         }
         return array;
+    }
+
+    //look the first line which starts with a number or a letter, but not 'x'
+    // ignore the possibility of a #comment in the middle of the pattern
+    boolean[][] fillArray(final boolean[][] array, final String patternText) {
+        //first step: extract the rle code only
+        String rle = getRleSection(patternText);
+        //delete all whitespace from this string...
+        rle = rle.replaceAll("\\s","");
+        //then split the string into tokens for each row - '$' is the delimiter
+        final String lineDelimiter = "[$]+";
+        final String[] lines = rle.split(lineDelimiter);
+
+        // each string needs to be split by a single instance of 'o' or 'b'
+        // \D will match any non-digit. Good enough.
+        final Pattern p = Pattern.compile("(\\d+\\D)|\\D");
+        for (int i = 0; i < lines.length; i++) {
+            int j = 0;
+            //fill each line
+            Matcher matcher = p.matcher(lines[i]);
+            while (matcher.find()) {
+                final String run = matcher.group();
+                if (run.length() > 1) {
+                    final int runLength = getDimensionFromToken(run);
+                    final char c = run.charAt(run.length() - 1);
+                    for (int k = 0; k < runLength; k++) {
+                        if (c == 'o') {
+                            array[i][j] = true;
+                        } else if (c == 'b') {
+                            array[i][j] = false;
+                        }
+                    }
+                    j += runLength;
+                } else {
+                    // run lenth is 1;
+                    final char c = run.charAt(0);
+                    if (c == 'o') {
+                        array[i][j] = true;
+                    } else if (c == 'b') {
+                        array[i][j] = false;
+                    }
+                    j++;
+                }
+
+            }
+        }
+        return array;
+    }
+
+    private String getRleSection(final String patternText) {
+        boolean isStartOfLine = false;
+        for (int i = 0; i < patternText.length(); i++) {
+            if (isStartOfLine && characterIsStartOfRle(patternText.charAt(i))) {
+                return patternText.substring(i, patternText.length() -1);
+            }
+            isStartOfLine = (patternText.charAt(i) == '\n');
+        }
+        return null;
+    }
+
+    private boolean characterIsStartOfRle(final char c) {
+        return (Character.isLetter(c) || Character.isDigit(c)) && c != 'x';
     }
 
 }
