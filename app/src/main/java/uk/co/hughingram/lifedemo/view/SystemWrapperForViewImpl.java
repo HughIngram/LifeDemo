@@ -1,5 +1,6 @@
 package uk.co.hughingram.lifedemo.view;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,11 @@ public final class SystemWrapperForViewImpl implements SystemWrapperForView {
     @Override
     public Resources getResources() {
         return activity.getResources();
+    }
+
+    @Override
+    public Context getContext() {
+        return activity.getApplicationContext();
     }
 
 }

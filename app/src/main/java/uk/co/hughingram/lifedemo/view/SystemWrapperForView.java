@@ -1,5 +1,6 @@
 package uk.co.hughingram.lifedemo.view;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
@@ -31,4 +32,5 @@ public interface SystemWrapperForView {
      */
     Resources getResources();
 
+    Context getContext();
 }

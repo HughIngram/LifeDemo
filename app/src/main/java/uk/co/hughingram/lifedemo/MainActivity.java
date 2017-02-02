@@ -2,6 +2,8 @@ package uk.co.hughingram.lifedemo;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -26,7 +28,7 @@ import uk.co.hughingram.lifedemo.view.AppViewImpl;
 /**
  * Main Activity class. This is effectively part of the Presenter layer (?)
  *
- * This class should be responsible for lifeclye events.
+ * This class should be responsible for lifeclyce events.
  *
  * This class should not be responsible for View logic.
  *

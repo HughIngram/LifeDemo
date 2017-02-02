@@ -19,5 +19,11 @@
         android:background="@drawable/rectangle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <!--put the graphics here-->
+    <uk.co.hughingram.lifedemo.view.GridGraphic
+        android:layout_below="@id/grid"
+        android:id="@+id/grid_graphic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

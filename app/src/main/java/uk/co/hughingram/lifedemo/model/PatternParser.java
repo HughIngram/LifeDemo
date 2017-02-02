@@ -100,42 +100,46 @@ final class PatternParser {
         String rle = getRleSection(patternText);
         //delete all whitespace from this string...
         rle = rle.replaceAll("\\s","");
-        //then split the string into tokens for each row - '$' is the delimiter
-        final String lineDelimiter = "[$]+";
-        final String[] lines = rle.split(lineDelimiter);
 
         // each string needs to be split by a single instance of 'o' or 'b'
         // \D will match any non-digit. Good enough.
         final Pattern p = Pattern.compile("(\\d+\\D)|\\D");
-        for (int i = 0; i < lines.length; i++) {
-            int j = 0;
-            //fill each line
-            Matcher matcher = p.matcher(lines[i]);
-            while (matcher.find()) {
-                final String run = matcher.group();
-                if (run.length() > 1) {
-                    final int runLength = getDimensionFromToken(run);
-                    final char c = run.charAt(run.length() - 1);
-                    for (int k = 0; k < runLength; k++) {
-                        if (c == 'o') {
-                            array[i][j] = true;
-                        } else if (c == 'b') {
-                            array[i][j] = false;
-                        }
-                    }
-                    j += runLength;
-                } else {
-                    // run lenth is 1;
-                    final char c = run.charAt(0);
+        int i = 0;  //row index
+        int j = 0;  //column index
+        //fill each line
+        Matcher matcher = p.matcher(rle);
+        while (matcher.find()) {
+            final String run = matcher.group();
+            if (run.length() > 1) {
+                final int runLength = getDimensionFromToken(run);
+                final char c = run.charAt(run.length() - 1);
+                for (int k = 0; k < runLength; k++) {
                     if (c == 'o') {
                         array[i][j] = true;
+                        j++;
                     } else if (c == 'b') {
                         array[i][j] = false;
+                        j++;
+                    } else if (c == '$') {
+                        i++;
+                        j = 0;
                     }
-                    j++;
                 }
-
+            } else {
+                // run length is 1;
+                final char c = run.charAt(0);
+                if (c == 'o') {
+                    array[i][j] = true;
+                    j++;
+                } else if (c == 'b') {
+                    array[i][j] = false;
+                    j++;
+                } else if (c == '$') {
+                    i++;
+                    j = 0;
+                }
             }
+
         }
         return array;
     }

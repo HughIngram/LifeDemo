@@ -15,18 +15,9 @@ public interface AppModel {
 
     /**
      * For a given grid, an ascii rendering is produce.
-     * @param grid the grid data.
      * @return the rendered grid.
      */
-    String render(final boolean[][] grid);
-
-    // should it be possible for the presenter to have access to the un-encapsulated array?
-    /**
-     * Gets the Grid in its current state.
-     *
-     * @return the Grid.
-     */
-    boolean[][] getGrid();
+    String render();
 
     /**
      * Gets an array of ID's of patterns available to be loaded.

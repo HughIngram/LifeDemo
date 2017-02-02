@@ -35,7 +35,15 @@ this line is empty.
 bibliography:
 http://michael.dipperstein.com/rle/
 ====================
-bug: loading patterns other than glider gun does not work
+bug: patterns are not being loaded accurately.
+>empty rows are ignored.
+    note - a line break "$" can be run length encoded, e.g. 3$
+    new strategy: don't split the string around "$".
+    Split the whole thing into rle tokens - "$" would have to be accepted in place of 'o' or 'b'.
+    Iterate through these tokens, incrementing the line index when at the end of a line or reaching
+    a '$'. Increment an appropriate number of lines when reaching an rle '$'.
+>runs of >1 live cells do not work
+    fixed  - dumb error in loop
 ====================
 now that the Java side of pattern parsing is implemented, the loaded pattern must displayed correctly.
 >add the option to not wrap edges?
@@ -46,8 +54,72 @@ Graphical representation of grid:
 >Canvas, as per tutorial:
 
 https://developer.android.com/guide/topics/graphics/2d-graphics.html
+There are two options presented here - draw into a View, or directly into a Canvas.
+I have chosen to draw directly into a Canvas, since this is recommended when the graphic needs to be
+regularly re-drawn. Drawing into a View is only suitable for static graphics.
 
-but first, do the RLE decoding!!
+Drawing into a Canvas can be done the UI thread, or in a separate thread, or in a separate thread.
+It is simpler to do it in the UI thread, however this requires waiting for the UI thread to be signal
+it is ready at each turn, via the onDraw() callback. By using a separate thread, the drawing can be
+done as fast as possible.
+should this be done in the UI thread or in a separate thread?
+this will be done on a separate thread.
+
+== how does Android handle graphics? ==
+https://source.android.com/devices/graphics/architecture.html
+
+low level components:
+
+BufferQueue:
+connects something that generates buffers of graphical data (the producer) to something that
+accepts the data for display or further processing (the consumer)
+SurfaceFlinger:
+Accepts buffers of data and sends them to the HAL for display
+Surface:
+Produces a buffer queue that is often consumed by SurfaceFlinger. When rendering onto a Surface,
+the result ends up in a buffer that gets shipped to the consumer.
+Canvas:
+Provides a Java API for drawing onto a Surface.
+SurfaceHolder:
+APIs enable getting and setting Surface parameters such as size and format
+
+high level components:
+SurfaceView:
+Combines a Surface and a View. Can be rendered in a thread separate to the main UI thread (by SurfaceFlinger)
+Is handled in the Layout just like any other View
+The View part of a SurfaceView is just a transparent placeholder - the Surface is rendered into here.
+
+
+>A 'game loop' is needed to keep the simulation running. The interval of this loop should be controlled
+by a set value, rather than just looping as fast as the system will allow.
+>The generation of the grid done by the model needs to be properly synchronised with view updates,
+to prevent the grid from changing whilst it is being rendered. These two tasks may as well be done
+in the same thread, since they have to be sequential.
+
+https://source.android.com/devices/graphics/arch-gameloops.html
+
+>decide a time for iterations, e.g. 33ms - ie 30fps
+>check how long it takes to do the computation for each step, subtract this from 33ms as the wait time
+>ensure the wait time is at least 2ms though, to prevent starving the system.
+>if the time taken is longer than the time for a frame, then that frame will have to be dropped
+>there are libraries available for managing all of the above. Using such a library may not be necesary
+since the game is very simple.
+>we could have separate threads for computing the grid and rendering, with a shared semaphore.
+    // Model
+    run() {
+        Thread.sleep(GRID_INTERVAL);
+        synchronized (mLock) {
+            iterateGrid();
+        }
+    }
+    // View
+    run() {
+        Thread.sleep(FRAME_INTERVAL);
+        synchronized (mLock) {
+            showGrid();
+        }
+    }
+
 ====================
 
 -is there a way to package-protect the View from the Model?

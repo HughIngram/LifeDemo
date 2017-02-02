@@ -3,6 +3,7 @@ package uk.co.hughingram.lifedemo.presenter;
 import android.util.Log;
 
 import uk.co.hughingram.lifedemo.model.AppModel;
+import uk.co.hughingram.lifedemo.model.Grid;
 import uk.co.hughingram.lifedemo.view.AppView;
 
 /**
@@ -21,7 +22,7 @@ public final class AppPresenterImpl implements AppPresenterForView, AppPresenter
 
     @Override
     public void setUpSimulation() {
-        final String renderedGrid = model.render(model.getGrid());
+        final String renderedGrid = model.render();
         view.updateGrid(renderedGrid);
     }
 
@@ -37,8 +38,9 @@ public final class AppPresenterImpl implements AppPresenterForView, AppPresenter
     }
 
     @Override
-    public void displayGrid(boolean[][] grid) {
-        view.updateGrid(model.render(grid));
+    public void displayGrid(final Grid grid) {
+        // TODO
+        view.updateGrid(grid.toString());
     }
 
     public void setModel(final AppModel model) {
