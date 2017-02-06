@@ -92,8 +92,8 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        // TODO pause the simulation.
         // how exactly should this Activity be able to interact with the Presenter?
+        model.pauseSimulation();
         gridGraphic.pause();
     }
 

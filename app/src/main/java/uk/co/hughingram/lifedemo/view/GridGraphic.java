@@ -12,7 +12,6 @@ import android.view.SurfaceView;
 import uk.co.hughingram.lifedemo.presenter.AppPresenterForView;
 
 
-// TODO implement runnable and try to fix the frame rate at 30fps
 /**
  * View to show a graphic representation of the grid.
  */
@@ -34,7 +33,6 @@ public final class GridGraphic extends SurfaceView implements Runnable {
                        final AppPresenterForView presenter) {
         super(context, attributeSet);
         holder = getHolder();
-//        getHolder().addCallback(this);
         this.presenter = presenter;
     }
 
@@ -49,44 +47,9 @@ public final class GridGraphic extends SurfaceView implements Runnable {
         try {
             thread.join();
         } catch (final InterruptedException e) {
-            Log.e(TAG, "ADGAAAAAAAA");
+            Log.e(TAG, "pausing failed");
         }
     }
-
-//    @Override
-//    public void surfaceCreated(final SurfaceHolder holder) {
-////
-////        final Canvas c = holder.lockCanvas();
-////        int h = this.getHeight();
-////        int w = this.getWidth();
-////        Bitmap bmp = presenter.getRenderedGrid();
-////        c.drawBitmap(bmp, null, new RectF(0, 0, w, h), null);
-////        holder.unlockCanvasAndPost(c);
-//        isRunning = true;
-//    }
-//
-//    @Override
-//    public void surfaceChanged(final SurfaceHolder holder, final int format,
-//                               final int width, final int height) {
-//
-//    }
-//
-//    @Override
-//    public void surfaceDestroyed(final SurfaceHolder holder) {
-//
-//    }
-
-    // TODO put this in the run method
-//    @Override
-//    public void onDraw(final Canvas canvas) {
-//        super.onDraw(canvas);
-//        final Canvas c = holder.lockCanvas();
-//        int h = this.getHeight();
-//        int w = this.getWidth();
-//        Bitmap bmp = presenter.getRenderedGrid();
-//        c.drawBitmap(bmp, null, new RectF(0, 0, w, h), null);
-//        holder.unlockCanvasAndPost(c);
-//    }
 
     @Override
     public void run() {

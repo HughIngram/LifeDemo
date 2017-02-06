@@ -121,7 +121,7 @@ since the game is very simple.
     }
 
 current tasks:
--refresh the SurfaceView onDraw()
+-clean this shit up
 ====================
 
 -is there a way to package-protect the View from the Model?

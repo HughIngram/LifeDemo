@@ -17,7 +17,6 @@ public final class AppViewImpl implements AppView {
     private final SystemWrapperForView systemWrapper;
     private final AppPresenterForView presenter;
 
-    private final TextView gridView;
     private final FloatingActionButton fab;
 
 
@@ -25,7 +24,6 @@ public final class AppViewImpl implements AppView {
                        final AppPresenterForView presenter) {
         this.systemWrapper = activityWrapper;
         this.presenter = presenter;
-        gridView = (TextView) systemWrapper.findViewById(R.id.grid);
         fab = (FloatingActionButton) systemWrapper.findViewById(R.id.fab);
         setUpOnClickListeners();
     }
@@ -38,20 +36,6 @@ public final class AppViewImpl implements AppView {
                 presenter.toggleSimulationRunning();
             }
         });
-    }
-
-    @Override
-    public void updateGrid(final String grid) {
-        // TODO check that the threading is actually working as expected
-        // creating a new runnable *every* time???
-        systemWrapper.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                gridView.setText(grid);
-            }
-        });
-
-        // TODO put the fancy graphics logic in here
     }
 
     @Override

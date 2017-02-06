@@ -64,7 +64,6 @@ public final class AppModelImpl implements AppModel {
         @Override
         public void run() {
             grid.iterate();
-            presenter.displayGrid(grid);
         }
     };
 
@@ -95,7 +94,6 @@ public final class AppModelImpl implements AppModel {
     @Override
     public void loadPattern(final String id) {
         grid = new Grid(id, system);
-        presenter.displayGrid(grid);
     }
 
 }

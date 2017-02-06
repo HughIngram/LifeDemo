@@ -9,15 +9,18 @@ public final class Grid {
 
     private boolean[][] grid;
     private boolean isLocked = false;
+    private GridStepper stepper;
 
     private final static String TAG = "Grid";
 
     Grid(final SystemWrapperForModel system) {
         grid = new PatternLoader(system).getDefaultGrid();
+        stepper = new GridStepper();
     }
 
     Grid(final String patternId, final SystemWrapperForModel system) {
         grid = new PatternLoader(system).loadPattern(patternId);
+        stepper = new GridStepper();
     }
 
     void lock() {
@@ -32,15 +35,15 @@ public final class Grid {
         return isLocked;
     }
 
-    public boolean getCell(final int x, final int y) {
+    boolean getCell(final int x, final int y) {
         return grid[y][x];
     }
 
-    public int getWidth() {
+    int getWidth() {
         return grid[0].length;
     }
 
-    public int getHeight() {
+    int getHeight() {
         return grid.length;
     }
 
@@ -54,71 +57,9 @@ public final class Grid {
             }
         }
         lock();
-        final boolean[][] newGrid = new boolean[grid.length][grid[0].length];
-        int liveNeighbours;
-        for (int y = 0; y < grid.length; y++) {
-            for (int x = 0; x < grid[0].length; x++) {
-                liveNeighbours = countLiveNeighbours(grid, x, y);
-                if (liveNeighbours <= 1) {
-                    newGrid[y][x] = false;
-                } else if (liveNeighbours == 3 || (grid[y][x] && liveNeighbours == 2)) {
-                    newGrid[y][x] = true;
-                } else if (liveNeighbours > 3) {
-                    newGrid[y][x] = false;
-                } else {
-                    newGrid[y][x] = grid[y][x];
-                }
-            }
-        }
-        grid = newGrid;
+        grid = stepper.step(grid);
         unlock();
     }
-
-    private int countLiveNeighbours(final boolean[][] grid, final int x, final int y) {
-        int neighbors = 0;
-        int xOfRhs = (x + 1) % grid[0].length;
-        int xOfLhs;
-        if (x == 0) {
-            xOfLhs = grid[0].length - 1;
-        } else {
-            xOfLhs = x - 1;
-        }
-        // TODO disable wrapping
-        int yOfTop;
-        int yOfBottom = (y + 1) % grid.length;
-        if (y == 0) {
-            yOfTop = grid.length - 1;
-        } else {
-            yOfTop = y - 1;
-        }
-
-        if (grid[y][xOfRhs]) {
-            neighbors++;
-        }
-        if (grid[yOfBottom][xOfRhs]) {
-            neighbors++;
-        }
-        if (grid[yOfBottom][x]) {
-            neighbors++;
-        }
-        if (grid[yOfBottom][xOfLhs]) {
-            neighbors++;
-        }
-        if (grid[y][xOfLhs]) {
-            neighbors++;
-        }
-        if (grid[yOfTop][xOfLhs]) {
-            neighbors++;
-        }
-        if (grid[yOfTop][x]) {
-            neighbors++;
-        }
-        if (grid[yOfTop][xOfRhs]) {
-            neighbors++;
-        }
-        return neighbors;
-    }
-
 
     @Override
     public String toString() {

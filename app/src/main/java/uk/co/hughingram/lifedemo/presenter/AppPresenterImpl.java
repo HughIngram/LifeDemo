@@ -4,13 +4,12 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import uk.co.hughingram.lifedemo.model.AppModel;
-import uk.co.hughingram.lifedemo.model.Grid;
 import uk.co.hughingram.lifedemo.view.AppView;
 
 /**
  * Master class for the AppPresenterImpl component.
  */
-public final class AppPresenterImpl implements AppPresenterForView, AppPresenterForModel {
+final class AppPresenterImpl implements AppPresenterForView, AppPresenterForModel {
 
     private AppModel model;
     private AppView view;
@@ -23,8 +22,6 @@ public final class AppPresenterImpl implements AppPresenterForView, AppPresenter
 
     @Override
     public void setUpSimulation() {
-        final String renderedGrid = model.getModelString();
-        view.updateGrid(renderedGrid);
     }
 
     @Override
@@ -37,13 +34,6 @@ public final class AppPresenterImpl implements AppPresenterForView, AppPresenter
             view.showStatePaused();
         }
     }
-
-    @Override
-    public void displayGrid(final Grid grid) {
-        // TODO
-        view.updateGrid(grid.toString());
-    }
-
 
     @Override
     public Bitmap getRenderedGrid() {
