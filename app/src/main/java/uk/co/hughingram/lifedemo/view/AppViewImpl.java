@@ -20,7 +20,6 @@ public final class AppViewImpl implements AppView {
     private final TextView gridView;
     private final FloatingActionButton fab;
 
-    private GridGraphic gridGraphic;
 
     public AppViewImpl(final SystemWrapperForView activityWrapper,
                        final AppPresenterForView presenter) {
@@ -29,8 +28,6 @@ public final class AppViewImpl implements AppView {
         gridView = (TextView) systemWrapper.findViewById(R.id.grid);
         fab = (FloatingActionButton) systemWrapper.findViewById(R.id.fab);
         setUpOnClickListeners();
-        gridGraphic = (GridGraphic) activityWrapper.findViewById(R.id.grid_graphic);
-        gridGraphic.resume();
     }
 
     private void setUpOnClickListeners() {

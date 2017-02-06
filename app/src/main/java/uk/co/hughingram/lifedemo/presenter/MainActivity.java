@@ -1,26 +1,27 @@
-package uk.co.hughingram.lifedemo;
+package uk.co.hughingram.lifedemo.presenter;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
+import android.view.ViewGroup;
 
+import uk.co.hughingram.lifedemo.R;
 import uk.co.hughingram.lifedemo.model.AppModel;
 import uk.co.hughingram.lifedemo.model.AppModelImpl;
 import uk.co.hughingram.lifedemo.model.SystemWrapperForModel;
 import uk.co.hughingram.lifedemo.model.SystemWrapperForModelImpl;
-import uk.co.hughingram.lifedemo.presenter.AppPresenterImpl;
 import uk.co.hughingram.lifedemo.view.AppView;
+import uk.co.hughingram.lifedemo.view.GridGraphic;
 import uk.co.hughingram.lifedemo.view.SystemWrapperForViewImpl;
 import uk.co.hughingram.lifedemo.view.SystemWrapperForView;
 import uk.co.hughingram.lifedemo.view.AppViewImpl;
@@ -40,6 +41,9 @@ public final class MainActivity extends AppCompatActivity {
     AppModel model;
     private final static int PERMISSION_STORAGE = 1;
 
+    // I'm not sure this is the best place for this field ...
+    private GridGraphic gridGraphic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,11 @@ public final class MainActivity extends AppCompatActivity {
         model.setPresenter(presenterImpl);
         presenterImpl.setModel(model);
         presenterImpl.setView(view);
+
+        ViewGroup vg = (ViewGroup) findViewById(R.id.content_main);
+        gridGraphic = new GridGraphic(this.getApplicationContext(), presenterImpl);
+        vg.addView(gridGraphic);
+        gridGraphic.run();
     }
 
     @Override
@@ -62,6 +71,7 @@ public final class MainActivity extends AppCompatActivity {
         super.onResume();
         presenterImpl.setUpSimulation();
         getWriteStoragePermission();
+        gridGraphic.start();
     }
 
     private void getWriteStoragePermission() {
@@ -82,8 +92,9 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        // pause the simulation.
+        // TODO pause the simulation.
         // how exactly should this Activity be able to interact with the Presenter?
+        gridGraphic.pause();
     }
 
     @Override
@@ -94,6 +105,7 @@ public final class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
+        gridGraphic.invalidate();
         if (item.getGroupId() == AppViewImpl.PATTERNS_GROUP_ID) {
             Log.d("Activity", "Loading " + item.getTitle().toString());
             model.loadPattern(item.getTitle().toString());

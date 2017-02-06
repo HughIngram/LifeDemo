@@ -1,5 +1,6 @@
 package uk.co.hughingram.lifedemo.model;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.util.Timer;
@@ -7,7 +8,6 @@ import java.util.TimerTask;
 
 import uk.co.hughingram.lifedemo.presenter.AppPresenterForModel;
 
-//TODO create a Grid implements Iterator class, with toString() method too
 /**
  *  Master class for the AppModelImpl component.
  */
@@ -74,10 +74,15 @@ public final class AppModelImpl implements AppModel {
         running = !running;
     }
 
+    final Renderer renderer = new Renderer();
     // for now just use ASCII for rendering!
     @Override
-    public String render() {
-        // TODO actually render the grid properly
+    public Bitmap render() {
+        return renderer.render(grid);
+    }
+
+    @Override
+    public String getModelString() {
         return grid.toString();
     }
 

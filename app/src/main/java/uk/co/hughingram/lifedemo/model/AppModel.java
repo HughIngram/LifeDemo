@@ -1,5 +1,7 @@
 package uk.co.hughingram.lifedemo.model;
 
+import android.graphics.Bitmap;
+
 import uk.co.hughingram.lifedemo.presenter.AppPresenterForModel;
 
 /**
@@ -14,10 +16,16 @@ public interface AppModel {
     void pauseSimulation();
 
     /**
-     * For a given grid, an ascii rendering is produce.
+     * Renders the Grid as a Bitmap.
      * @return the rendered grid.
      */
-    String render();
+    Bitmap render();
+
+    /**
+     * Remove this when the render() method is implemented!
+     * @return
+     */
+    String getModelString();
 
     /**
      * Gets an array of ID's of patterns available to be loaded.

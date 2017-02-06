@@ -33,7 +33,15 @@ public final class Grid {
     }
 
     public boolean getCell(final int x, final int y) {
-        return grid[x][y];
+        return grid[y][x];
+    }
+
+    public int getWidth() {
+        return grid[0].length;
+    }
+
+    public int getHeight() {
+        return grid.length;
     }
 
     void iterate() {
