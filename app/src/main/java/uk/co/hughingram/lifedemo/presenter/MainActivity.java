@@ -28,7 +28,7 @@ import uk.co.hughingram.lifedemo.view.AppViewImpl;
 /**
  * Main Activity class. This is effectively part of the Presenter layer (?)
  *
- * This class should be responsible for lifeclyce events.
+ * This class should be responsible for lifecycle events.
  *
  * This class should not be responsible for View logic.
  *
@@ -59,7 +59,7 @@ public final class MainActivity extends AppCompatActivity {
         presenterImpl.setModel(model);
         presenterImpl.setView(view);
 
-        ViewGroup vg = (ViewGroup) findViewById(R.id.content_main);
+        final ViewGroup vg = (ViewGroup) findViewById(R.id.content_main);
         gridGraphic = new GridGraphic(this.getApplicationContext(), presenterImpl);
         vg.addView(gridGraphic);
         gridGraphic.run();
@@ -91,7 +91,11 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        // how exactly should this Activity be able to interact with the Presenter?
+        pauseSimulation();
+    }
+
+    private void pauseSimulation() {
+        view.showStatePaused();
         model.pauseSimulation();
         gridGraphic.pause();
     }

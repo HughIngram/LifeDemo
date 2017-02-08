@@ -40,18 +40,17 @@ public final class AppModelImpl implements AppModel {
 
     @Override
     public void runSimulation() {
-        TimerTask timerTask = genTimerTask();
+        TimerTask gridStepTask = genGridStepTask();
         timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask, 0, 100);
+        timer.scheduleAtFixedRate(gridStepTask, 0, 100);
         running = !running;
     }
 
-    private TimerTask genTimerTask() {
+    private TimerTask genGridStepTask() {
         return new TimerTask() {
             @Override
             public void run() {
                 gridHolder.iterate();
-                runnable.run();
                 try {
                     Thread.sleep(INTERVAL_MILLISECONDS);
                 } catch (final InterruptedException e){
@@ -60,13 +59,6 @@ public final class AppModelImpl implements AppModel {
             }
         };
     }
-
-    private final Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            gridHolder.iterate();
-        }
-    };
 
     @Override
     public void pauseSimulation() {

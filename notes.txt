@@ -128,9 +128,13 @@ square blocks.
 -on the glider gun, this causes the pattern to collapse.
 
 current tasks:
--fix wrapping
+-handle portrait orientation patterns
+-handle rotate events
+-bug: open cambrian explosion in landscape, then glider gun.
+    artifact from cambrian explosion remains at bottom of screen.
 
-
+done tasks:
+-fix crash on pause
 ====================
 
 -is there a way to package-protect the View from the Model?

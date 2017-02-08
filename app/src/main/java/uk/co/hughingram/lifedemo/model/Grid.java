@@ -30,10 +30,8 @@ final class Grid {
     boolean getCell(final int x, final int y) {
         // return false if out of bounds
         if (y < 0 || x < 0 || y > getHeight() - 1|| x > getWidth() - 1) {
-            Log.d(TAG, "test");
             return false;
         } else {
-            Log.d(TAG, "test");
             return array[y][x];
         }
     }

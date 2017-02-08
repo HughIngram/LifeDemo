@@ -56,10 +56,15 @@ public final class GridGraphic extends SurfaceView implements Runnable {
          while(isRunning) {
              if (holder.getSurface().isValid()) {
                  final Canvas c = holder.lockCanvas();
-                 int h = this.getHeight();
-                 int w = this.getWidth();
+                 float viewHeight = this.getHeight();
+                 float viewWidth = this.getWidth();
                  final Bitmap bmp = presenter.getRenderedGrid();
-                 RectF rectF = new RectF(0, 0, w, h);
+                 float bmpHeight = bmp.getHeight();
+                 float bmpWidth = bmp.getWidth();
+                 float bmpAspectRatio = bmpWidth / bmpHeight;
+                 // just fit to width for now
+                 float scaledHeight = viewWidth / bmpAspectRatio;
+                 RectF rectF = new RectF(0, 0, viewWidth, scaledHeight);
                  c.drawBitmap(bmp, null, rectF, null);
                  holder.unlockCanvasAndPost(c);
              }
