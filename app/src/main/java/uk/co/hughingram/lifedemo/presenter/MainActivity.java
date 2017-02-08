@@ -8,7 +8,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -110,10 +109,10 @@ public final class MainActivity extends AppCompatActivity {
             Log.d("Activity", "Loading " + item.getTitle().toString());
             model.loadPattern(item.getTitle().toString());
         }
-//        int id = item.getItemId();
-//        if (id == R.id.menu_item_load) {
-//            presenterImpl.onLoadButtonPressed();
-//        }
+        int id = item.getItemId();
+        if (id == R.id.menu_item_step) {
+            model.iterateOnce();
+        }
         return super.onOptionsItemSelected(item);
     }
 

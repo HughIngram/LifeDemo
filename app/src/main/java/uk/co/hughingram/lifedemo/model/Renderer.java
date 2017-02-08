@@ -5,13 +5,13 @@ import android.graphics.Color;
 import android.util.Log;
 
 /**
- * Renders Bitmaps of the Grid.
+ * Renders Bitmaps of the GridHolder.
  */
 final class Renderer {
 
     private static final String TAG = "Renderer";
 
-    Bitmap render(final Grid grid) {
+    Bitmap render(final GridHolder grid) {
         int w = grid.getWidth();
         int h = grid.getHeight();
         final Bitmap.Config conf = Bitmap.Config.ARGB_8888;

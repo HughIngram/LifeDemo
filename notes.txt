@@ -120,8 +120,17 @@ since the game is very simple.
         }
     }
 
+
+preventing wrapping:
+-note the implementation of getCel() method.
+-when gliders reach the edge of a bounded grid with the 'edges are always dead' rule, they become
+square blocks.
+-on the glider gun, this causes the pattern to collapse.
+
 current tasks:
--clean this shit up
+-fix wrapping
+
+
 ====================
 
 -is there a way to package-protect the View from the Model?

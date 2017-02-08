@@ -16,16 +16,15 @@ public interface AppModel {
     void pauseSimulation();
 
     /**
-     * Renders the Grid as a Bitmap.
+     * Steps the grid a single iteration.
+     */
+    void iterateOnce();
+
+    /**
+     * Renders the GridHolder as a Bitmap.
      * @return the rendered grid.
      */
     Bitmap render();
-
-    /**
-     * Remove this when the render() method is implemented!
-     * @return
-     */
-    String getModelString();
 
     /**
      * Gets an array of ID's of patterns available to be loaded.

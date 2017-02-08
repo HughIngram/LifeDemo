@@ -17,13 +17,14 @@ public final class AppModelImpl implements AppModel {
 
     private AppPresenterForModel presenter;
     private SystemWrapperForModel system;
-    private Grid grid;
+    private GridHolder gridHolder;
     private boolean running = false;
     private Timer timer;
+    private final Renderer renderer = new Renderer();
 
 
     public AppModelImpl(final SystemWrapperForModel system) {
-        grid = new Grid(system);
+        gridHolder = new GridHolder(new PatternLoader(system).getDefaultGrid());
         this.system = system;
     }
 
@@ -49,7 +50,7 @@ public final class AppModelImpl implements AppModel {
         return new TimerTask() {
             @Override
             public void run() {
-                grid.iterate();
+                gridHolder.iterate();
                 runnable.run();
                 try {
                     Thread.sleep(INTERVAL_MILLISECONDS);
@@ -63,7 +64,7 @@ public final class AppModelImpl implements AppModel {
     private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            grid.iterate();
+            gridHolder.iterate();
         }
     };
 
@@ -73,16 +74,14 @@ public final class AppModelImpl implements AppModel {
         running = !running;
     }
 
-    final Renderer renderer = new Renderer();
-    // for now just use ASCII for rendering!
     @Override
-    public Bitmap render() {
-        return renderer.render(grid);
+    public void iterateOnce() {
+        gridHolder.iterate();
     }
 
     @Override
-    public String getModelString() {
-        return grid.toString();
+    public Bitmap render() {
+        return renderer.render(gridHolder);
     }
 
     @Override
@@ -90,10 +89,10 @@ public final class AppModelImpl implements AppModel {
         return new PatternLoader(system).getPatternList();
     }
 
-    // TODO move stuff like this up, so the Presenter interacts with the Grid directly instead of delegating
+    // TODO move stuff like this up, so the Presenter interacts with the GridHolder directly instead of delegating
     @Override
     public void loadPattern(final String id) {
-        grid = new Grid(id, system);
+        gridHolder = new GridHolder(new PatternLoader(system).loadPattern(id));
     }
 
 }

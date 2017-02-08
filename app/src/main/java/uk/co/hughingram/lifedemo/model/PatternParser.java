@@ -16,7 +16,7 @@ final class PatternParser {
 
     private final static String TAG = "PatternParser";
 
-    boolean[][] parsePatternFile(final File file) {
+    Grid parsePatternFile(final File file) {
         final String patternText = getPatternFileContent(file);
         return setUpArray(patternText);
     }
@@ -40,7 +40,7 @@ final class PatternParser {
     }
 
     // creates an array of the correct size for the given pattern, with all values set to false.
-    boolean[][] setUpArray(final String patternText) {
+    Grid setUpArray(final String patternText) {
         final String dimensionsLine = getDimensionsLine(patternText);
 
         final String commaDelimiter = "[,]+";
@@ -50,8 +50,9 @@ final class PatternParser {
         final int width = getDimensionFromToken(tokens[0]);
         final int height = getDimensionFromToken(tokens[1]);
 
-        boolean[][] blankArray = initialiseArray(height, width);
-        return fillArray(blankArray, patternText);
+        final Grid blankGrid = new Grid(height, width);
+        populateGrid(blankGrid, patternText);
+        return blankGrid;
     }
 
     private String getDimensionsLine(final String patternText) {
@@ -83,19 +84,9 @@ final class PatternParser {
         }
     }
 
-    private boolean[][] initialiseArray(final int height, final int width) {
-        boolean[][] array = new boolean[height][width];
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                array[i][j] = false;
-            }
-        }
-        return array;
-    }
-
     //look the first line which starts with a number or a letter, but not 'x'
     // ignore the possibility of a #comment in the middle of the pattern
-    boolean[][] fillArray(final boolean[][] array, final String patternText) {
+    private void populateGrid(final Grid grid, final String patternText) {
         //first step: extract the rle code only
         String rle = getRleSection(patternText);
         //delete all whitespace from this string...
@@ -115,10 +106,12 @@ final class PatternParser {
                 final char c = run.charAt(run.length() - 1);
                 for (int k = 0; k < runLength; k++) {
                     if (c == 'o') {
-                        array[i][j] = true;
+//                        array[i][j] = true;
+                        grid.setCell(j, i, true);
                         j++;
                     } else if (c == 'b') {
-                        array[i][j] = false;
+//                        array[i][j] = false;
+                        grid.setCell(j, i, false);
                         j++;
                     } else if (c == '$') {
                         i++;
@@ -129,10 +122,12 @@ final class PatternParser {
                 // run length is 1;
                 final char c = run.charAt(0);
                 if (c == 'o') {
-                    array[i][j] = true;
+//                    array[i][j] = true;
+                    grid.setCell(j, i, true);
                     j++;
                 } else if (c == 'b') {
-                    array[i][j] = false;
+//                    array[i][j] = false;
+                    grid.setCell(j, i, false);
                     j++;
                 } else if (c == '$') {
                     i++;
@@ -141,7 +136,6 @@ final class PatternParser {
             }
 
         }
-        return array;
     }
 
     private String getRleSection(final String patternText) {

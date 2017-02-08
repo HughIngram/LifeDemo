@@ -16,6 +16,6 @@ interface FileHelper {
      * Gets the given pattern.
      * @param patternId the Pattern ID.
      */
-    boolean[][] loadPattern(final String patternId);
+    Grid loadPattern(final String patternId);
 
 }
