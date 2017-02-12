@@ -3,6 +3,9 @@ package uk.co.hughingram.lifedemo.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -34,6 +37,9 @@ public final class GridGraphic extends SurfaceView implements Runnable {
         super(context, attributeSet);
         holder = getHolder();
         this.presenter = presenter;
+        // This may cause problems when trying to put another view element on top.
+        setZOrderOnTop(true);
+        holder.setFormat(PixelFormat.TRANSLUCENT);
     }
 
     public void start() {
@@ -56,6 +62,9 @@ public final class GridGraphic extends SurfaceView implements Runnable {
          while(isRunning) {
              if (holder.getSurface().isValid()) {
                  final Canvas c = holder.lockCanvas();
+                 // clear previous frame
+                 c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
                  float viewHeight = this.getHeight();
                  float viewWidth = this.getWidth();
                  final Bitmap bmp = presenter.getRenderedGrid();
@@ -64,7 +73,7 @@ public final class GridGraphic extends SurfaceView implements Runnable {
                  float bmpAspectRatio = bmpWidth / bmpHeight;
                  // just fit to width for now
                  float scaledHeight = viewWidth / bmpAspectRatio;
-                 RectF rectF = new RectF(0, 0, viewWidth, scaledHeight);
+                 final RectF rectF = new RectF(0, 0, viewWidth, scaledHeight);
                  c.drawBitmap(bmp, null, rectF, null);
                  holder.unlockCanvasAndPost(c);
              }

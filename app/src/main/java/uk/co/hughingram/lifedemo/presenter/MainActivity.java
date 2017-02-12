@@ -40,7 +40,7 @@ public final class MainActivity extends AppCompatActivity {
     AppModel model;
     private final static int PERMISSION_STORAGE = 1;
 
-    // I'm not sure this is the best place for this field ...
+    // I'm not sure this is the best place to hold this field ...
     private GridGraphic gridGraphic;
 
     @Override

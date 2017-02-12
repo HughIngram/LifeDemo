@@ -127,14 +127,21 @@ preventing wrapping:
 square blocks.
 -on the glider gun, this causes the pattern to collapse.
 
+====================
+getting translucency in the SurfaceView:
+By default, a SurfaceView is all black. We want it to be transparent.
+The missing lines were (in the constructor of the SurfaceView):
+        setZOrderOnTop(true);
+        holder.setFormat(PixelFormat.TRANSLUCENT);
+This may cause problems later on when trying to place views atop the SurfaceView.
+====================
 current tasks:
 -handle portrait orientation patterns
 -handle rotate events
 -bug: open cambrian explosion in landscape, then glider gun.
     artifact from cambrian explosion remains at bottom of screen.
-
-done tasks:
 -fix crash on pause
+
 ====================
 
 -is there a way to package-protect the View from the Model?
