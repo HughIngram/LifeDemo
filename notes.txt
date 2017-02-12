@@ -179,3 +179,6 @@ https://www.reddit.com/r/androiddev/comments/4bs4lz/presenters_dont_need_lifecyc
         >inter-change should be simple, so that implementations can be rapidly
         developed, switched and compared
     how can the algorithm best be encapsulated?
+
+
+test...
