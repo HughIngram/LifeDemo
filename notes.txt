@@ -120,7 +120,12 @@ since the game is very simple.
         }
     }
 
-
+====================
+note that the current implementation of GridGraphic is an Active View - documentation should be
+updated to reflect this, and why this decision was made.
+>the 'view' part of the Android system should be in charge of timing renders. The view is the only
+part of the Android system that is notified on screen updates.
+====================
 preventing wrapping:
 -note the implementation of getCel() method.
 -when gliders reach the edge of a bounded grid with the 'edges are always dead' rule, they become
@@ -138,6 +143,7 @@ This may cause problems later on when trying to place views atop the SurfaceView
 current tasks:
 -handle portrait orientation patterns
 -handle rotate events
+    >app crashes on rotation.
 -bug: open cambrian explosion in landscape, then glider gun.
     artifact from cambrian explosion remains at bottom of screen.
 -fix crash on pause
