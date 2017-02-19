@@ -21,12 +21,9 @@ final class AppPresenterImpl implements AppPresenterForView, AppPresenterForMode
     }
 
     @Override
-    public void setUpSimulation() {
-    }
-
-    @Override
     public void toggleSimulationRunning() {
         if (!model.isSimulationRunning()) {
+            model.setUpSimulation();
             model.runSimulation();
             view.showStateRunning();
         } else {

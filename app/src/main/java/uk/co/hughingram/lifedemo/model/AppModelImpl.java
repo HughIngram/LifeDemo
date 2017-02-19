@@ -39,9 +39,13 @@ public final class AppModelImpl implements AppModel {
     }
 
     @Override
+    public void setUpSimulation() {
+        timer = new Timer();
+    }
+
+    @Override
     public void runSimulation() {
         TimerTask gridStepTask = genGridStepTask();
-        timer = new Timer();
         timer.scheduleAtFixedRate(gridStepTask, 0, 100);
         running = !running;
     }

@@ -11,6 +11,14 @@ public interface AppModel {
 
     boolean isSimulationRunning();
 
+    /**
+     * Prepare the simulation to be run.
+     */
+    void setUpSimulation();
+
+    /**
+     * 'play' the simulation.
+     */
     void runSimulation();
 
     void pauseSimulation();

@@ -43,6 +43,7 @@ public final class MainActivity extends AppCompatActivity {
     // I'm not sure this is the best place to hold this field ...
     private GridGraphic gridGraphic;
 
+    /**  this is called on Rotate! not what i want... */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,7 @@ public final class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        presenterImpl.setUpSimulation();
+        model.setUpSimulation();
         getWriteStoragePermission();
         gridGraphic.start();
     }

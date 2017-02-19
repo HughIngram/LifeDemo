@@ -10,8 +10,6 @@ public interface AppPresenterForView {
 
     void toggleSimulationRunning();
 
-    void setUpSimulation();
-
     // TODO this is not really ideal - this method enables an active View.
     Bitmap getRenderedGrid();
 }
