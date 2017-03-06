@@ -50,4 +50,16 @@ public interface AppModel {
 
     void setPresenter(final AppPresenterForModel presenter);
 
+    // TODO replace this with a setSpeed() method to work with a slider.
+
+    /**
+     * Increase the speed of the simulation.
+     */
+    void speedUp();
+
+    /**
+     * Decrease the speed of teh simulation.
+     */
+    void speedDown();
+
 }

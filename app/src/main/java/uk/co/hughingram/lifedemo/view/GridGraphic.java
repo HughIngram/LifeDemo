@@ -60,23 +60,27 @@ public final class GridGraphic extends SurfaceView implements Runnable {
     @Override
     public void run() {
          while(isRunning) {
-             if (holder.getSurface().isValid()) {
-                 final Canvas c = holder.lockCanvas();
-                 // clear previous frame
-                 c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-
-                 float viewHeight = this.getHeight();
-                 float viewWidth = this.getWidth();
-                 final Bitmap bmp = presenter.getRenderedGrid();
-                 float bmpHeight = bmp.getHeight();
-                 float bmpWidth = bmp.getWidth();
-                 float bmpAspectRatio = bmpWidth / bmpHeight;
-                 // just fit to width for now
-                 float scaledHeight = viewWidth / bmpAspectRatio;
-                 final RectF rectF = new RectF(0, 0, viewWidth, scaledHeight);
-                 c.drawBitmap(bmp, null, rectF, null);
-                 holder.unlockCanvasAndPost(c);
-             }
+             draw();
          }
+    }
+
+    private void draw() {
+        if (holder.getSurface().isValid()) {
+            final Canvas c = holder.lockCanvas();
+            // clear previous frame
+            c.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+
+            float viewHeight = this.getHeight();
+            float viewWidth = this.getWidth();
+            final Bitmap bmp = presenter.getRenderedGrid();
+            float bmpHeight = bmp.getHeight();
+            float bmpWidth = bmp.getWidth();
+            float bmpAspectRatio = bmpWidth / bmpHeight;
+            // just fit to width for now
+            float scaledHeight = viewWidth / bmpAspectRatio;
+            final RectF rectF = new RectF(0, 0, viewWidth, scaledHeight);
+            c.drawBitmap(bmp, null, rectF, null);
+            holder.unlockCanvasAndPost(c);
+        }
     }
 }

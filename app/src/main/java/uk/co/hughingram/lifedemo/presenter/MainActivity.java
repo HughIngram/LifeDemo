@@ -118,6 +118,12 @@ public final class MainActivity extends AppCompatActivity {
         if (id == R.id.menu_item_step) {
             model.iterateOnce();
         }
+        if (id == R.id.menu_item_speed_down) {
+            model.speedDown();
+        }
+        if (id == R.id.menu_item_speed_up) {
+            model.speedUp();
+        }
         return super.onOptionsItemSelected(item);
     }
 

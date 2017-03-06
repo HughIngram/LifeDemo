@@ -13,7 +13,9 @@ import uk.co.hughingram.lifedemo.presenter.AppPresenterForModel;
  */
 public final class AppModelImpl implements AppModel {
 
-    private final static int INTERVAL_MILLISECONDS = 150;
+    // default interval between steps in milliseconds.
+    private final static int DEFAULT_INTERVAL = 150;
+    private int interval = DEFAULT_INTERVAL;
 
     private AppPresenterForModel presenter;
     private SystemWrapperForModel system;
@@ -56,7 +58,7 @@ public final class AppModelImpl implements AppModel {
             public void run() {
                 gridHolder.iterate();
                 try {
-                    Thread.sleep(INTERVAL_MILLISECONDS);
+                    Thread.sleep(interval);
                 } catch (final InterruptedException e){
                     Log.e("TAG", "no", e);
                 }
@@ -91,4 +93,17 @@ public final class AppModelImpl implements AppModel {
         gridHolder = new GridHolder(new PatternLoader(system).loadPattern(id));
     }
 
+    @Override
+    public void speedUp() {
+        if (interval > 15) {
+            interval = interval - 15;
+        }
+    }
+
+    @Override
+    public void speedDown() {
+        if (interval < 1000) {
+            interval = interval + 15;
+        }
+    }
 }
