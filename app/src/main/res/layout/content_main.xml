@@ -12,6 +12,19 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="uk.co.hughingram.lifedemo.presenter.MainActivity"
     tools:showIn="@layout/activity_main">
-    <!--the graphic needs to be constructed in java, so it is inserted here -->
+
+    <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/seek_bar_speed"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <RelativeLayout
+        android:id="@+id/grid_holder"
+        android:layout_below="@+id/seek_bar_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <!--the graphic needs to be constructed in java, so it is inserted here -->
+    </RelativeLayout>
 
 </RelativeLayout>
+

@@ -2,18 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_item_speed_down"
-        android:icon="@android:drawable/btn_minus"
-        android:title=""
-        app:showAsAction="always"
-        />
-    <item
-        android:id="@+id/menu_item_speed_up"
-        android:icon="@android:drawable/btn_plus"
-        android:title=""
-        app:showAsAction="always"
-       />
-    <item
         android:id="@+id/menu_item_step"
         android:icon="@android:drawable/ic_media_next"
         android:title=""

@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 
 import uk.co.hughingram.lifedemo.R;
 import uk.co.hughingram.lifedemo.model.AppModel;
@@ -43,6 +44,24 @@ public final class MainActivity extends AppCompatActivity {
     // I'm not sure this is the best place to hold this field ...
     private GridGraphic gridGraphic;
 
+    final SeekBar.OnSeekBarChangeListener seekBarChangeListener
+            = new SeekBar.OnSeekBarChangeListener() {
+        @Override
+        public void onProgressChanged(final SeekBar seekBar, final int i, final boolean b) {
+            model.setSpeed(seekBar.getProgress());
+        }
+
+        @Override
+        public void onStartTrackingTouch(final SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(final SeekBar seekBar) {
+
+        }
+    };
+
     /**  this is called on Rotate! not what i want... */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +79,15 @@ public final class MainActivity extends AppCompatActivity {
         presenterImpl.setModel(model);
         presenterImpl.setView(view);
 
-        final ViewGroup vg = (ViewGroup) findViewById(R.id.content_main);
+        final ViewGroup vg = (ViewGroup) findViewById(R.id.grid_holder);
         gridGraphic = new GridGraphic(this.getApplicationContext(), presenterImpl);
         vg.addView(gridGraphic);
         gridGraphic.run();
+
+        final SeekBar seekBar = (SeekBar) findViewById(R.id.seek_bar_speed);
+        seekBar.setMax(1000);
+        seekBar.setOnSeekBarChangeListener(seekBarChangeListener);
+        seekBar.setProgress(500);
     }
 
     @Override
@@ -118,12 +142,6 @@ public final class MainActivity extends AppCompatActivity {
         if (id == R.id.menu_item_step) {
             model.iterateOnce();
         }
-        if (id == R.id.menu_item_speed_down) {
-            model.speedDown();
-        }
-        if (id == R.id.menu_item_speed_up) {
-            model.speedUp();
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -134,4 +152,5 @@ public final class MainActivity extends AppCompatActivity {
         invalidateOptionsMenu();
         return super.onPrepareOptionsMenu(menu);
     }
+
 }

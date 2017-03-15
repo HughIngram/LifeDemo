@@ -139,10 +139,7 @@ The missing lines were (in the constructor of the SurfaceView):
         setZOrderOnTop(true);
         holder.setFormat(PixelFormat.TRANSLUCENT);
 This may cause problems later on when trying to place views atop the SurfaceView.
-====================
-current tasks:
->implement speed control slider
-====================
+=========================
 
 -is there a way to package-protect the View from the Model?
 -How should Logging be handled??
@@ -182,3 +179,21 @@ https://www.reddit.com/r/androiddev/comments/4bs4lz/presenters_dont_need_lifecyc
 
 
 test...
+
+====================
+speed slider:
+changing the interval down to 1ms shows a strange behaviour - for a few frames, the animation is
+very fast, then it slows down. Perhaps the system is capping the rate of a loop somehow?
+
+investigate this. Take screenshots of the fancy Android Tools used for investigation.
+Explain why Android imposes this limitation, and what could be done to overcome it - is overcoming
+it even a good idea?
+====================
+current tasks:
+>implement speed control slider
+    -investigate speed limit on animation
+    -investigate exponential speed control
+>read and understand the french code
+>implement function input UI element
+>integrate it into my app
+====================

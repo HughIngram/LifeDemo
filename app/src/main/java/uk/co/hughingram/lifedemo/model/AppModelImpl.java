@@ -94,16 +94,12 @@ public final class AppModelImpl implements AppModel {
     }
 
     @Override
-    public void speedUp() {
-        if (interval > 15) {
-            interval = interval - 15;
+    public void setSpeed(final int speed) {
+        if (speed == 0) {
+            interval = 1000;
+        } else {
+            interval = 1000 - speed;
         }
     }
 
-    @Override
-    public void speedDown() {
-        if (interval < 1000) {
-            interval = interval + 15;
-        }
-    }
 }

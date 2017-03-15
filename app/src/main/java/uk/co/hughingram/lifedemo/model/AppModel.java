@@ -46,20 +46,15 @@ public interface AppModel {
      *
      * @param id the ID of the pattern to load.
      */
-    void loadPattern(final String id);
+    void loadPattern(String id);
 
-    void setPresenter(final AppPresenterForModel presenter);
-
-    // TODO replace this with a setSpeed() method to work with a slider.
+    void setPresenter(AppPresenterForModel presenter);
 
     /**
-     * Increase the speed of the simulation.
+     * Set the speed of the simulation.
+     *
+     * @param speed the speed, between 0 and 1000.
      */
-    void speedUp();
-
-    /**
-     * Decrease the speed of teh simulation.
-     */
-    void speedDown();
+    void setSpeed(int speed);
 
 }
