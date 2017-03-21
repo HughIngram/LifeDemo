@@ -47,7 +47,7 @@ public class CLogicellUI extends Frame {
   /** Language management */
   CText Texts;
   /** The World ! */
-  CLogicellUniverse World;
+  CLogicellUniverse world;
 
   /** UI defs */
   BorderLayout borderLayout1 = new BorderLayout();
@@ -541,19 +541,19 @@ public class CLogicellUI extends Frame {
     panel19.add(BtnMakegun, null);
     panel2.add(BtnAbout, null);
 
-    World=new CLogicellUniverse(this);
-    panel1.add(World.MainView,null);
-    panel10.add(World.OpDispView,null);
+    world=new CLogicellUniverse(this);
+    panel1.add(world.mainView,null);
+    panel10.add(world.opDispView,null);
   }
 
  /** Init the World */
   public void start() {
-    if(World.GetSpeed()==0)
+    if(world.GetSpeed()==0)
       BtnSpeedP.enable(false);
-    World.InitView();
+    world.InitView();
     SetLowPanel(PanMode);
-    World.DrawWorld();
-    LblSpeed.setText(Integer.toString(World.Speed));
+    world.drawWorld();
+    LblSpeed.setText(Integer.toString(world.speed));
   }
 
   /** Good-Bye */
@@ -565,21 +565,21 @@ public class CLogicellUI extends Frame {
   }
   /** End */
   void End() {
-    synchronized(World) {World.end();}
+    synchronized(world) {world.end();}
     dispose();
   }
   /** Init the grid */
   void BtnStep_actionPerformed(ActionEvent e) {
-    World.Go();
+    world.Go();
   }
 
   void BtnGo_actionPerformed(ActionEvent e) {
     SetLowPanel(PAN_RUNNING);
-    World.Launch();
+    world.Launch();
   }
 
   void BtnStop_actionPerformed(ActionEvent e) {
-    World.stop();
+    world.stop();
     SetLowPanel(PAN_STOP);    
   }
   /** Generation display */
@@ -589,8 +589,8 @@ public class CLogicellUI extends Frame {
 
   /** Validate the Entry and set the problem or conway pattern */
   void ValEntry() {
-    if(World.GetMode()==CLogicellUniverse.M_DIGIT ||
-          World.GetMode()==CLogicellUniverse.M_DIGIT2) {
+    if(world.GetMode()==CLogicellUniverse.M_DIGIT ||
+          world.GetMode()==CLogicellUniverse.M_DIGIT2) {
       if(CbE4.getState() && (CbE2.getState() || CbE3.getState())) {
         JPAlert al=new JPAlert(this, Texts.Txt[28]);//"La valeur maximum est neuf !");
         return;
@@ -613,7 +613,7 @@ public class CLogicellUI extends Frame {
     panel10.setBackground(Color.red);
 
     String[] en;
-    switch(World.GetMode()) {
+    switch(world.GetMode()) {
       case CLogicellUniverse.M_DIGIT2 :
         NbTemplate=7;
         en=new String[NbTemplate];
@@ -671,38 +671,38 @@ public class CLogicellUI extends Frame {
     }
 
     // Problem or pattern construction
-    if(World.GetMode()!=CLogicellUniverse.M_CONWAY) {
+    if(world.GetMode()!=CLogicellUniverse.M_CONWAY) {
       String s=TfEntry.getText();
       TfEntry.setText(Texts.Txt[30]);// "Construction en cours ...");
-      World.GenLogiProblem(en, NbTemplate, entries, World.MAXENTRY);
+      world.GenLogiProblem(en, NbTemplate, entries, world.MAXENTRY);
       TfEntry.setText(s);
     }
     else
-      World.GenConwayPat(ConwPatCrt);
+      world.GenConwayPat(ConwPatCrt);
     // set info text
-    if(World.GetMode()==CLogicellUniverse.M_DIGIT ||
-          World.GetMode()==CLogicellUniverse.M_DIGIT2)
-      TfEntry.setText(Texts.Txt[29]+Integer.toString(World.EntryBinVal));
-    else if(World.GetMode()==CLogicellUniverse.M_LIGHT)
+    if(world.GetMode()==CLogicellUniverse.M_DIGIT ||
+          world.GetMode()==CLogicellUniverse.M_DIGIT2)
+      TfEntry.setText(Texts.Txt[29]+Integer.toString(world.entryBinVal));
+    else if(world.GetMode()==CLogicellUniverse.M_LIGHT)
       TfEntry.setText(en[0]);
-    else if(World.GetMode()==CLogicellUniverse.M_BINADD) {
+    else if(world.GetMode()==CLogicellUniverse.M_BINADD) {
       int e1=(CbE1.getState() ? 1 : 0);
       int e2=(CbE2.getState() ? 1 : 0);
       TfEntry.setText(Texts.Txt[33]+e1+" + "+e2+" = "+(e1+e2));
     }
-    else if(World.GetMode()==CLogicellUniverse.M_BINADD2) {
+    else if(world.GetMode()==CLogicellUniverse.M_BINADD2) {
       int e1=(CbE1.getState() ? 1 : 0) + (CbE2.getState() ? 2 : 0);
       int e2=(CbE3.getState() ? 1 : 0) + (CbE4.getState() ? 2 : 0);
       TfEntry.setText(Texts.Txt[33]+e1+" + "+e2+" = "+(e1+e2));
     }
-    else if(World.GetMode()!=CLogicellUniverse.M_EQUATION)
+    else if(world.GetMode()!=CLogicellUniverse.M_EQUATION)
       TfEntry.setText("");
 
-    World.DrawEquation();
+    world.DrawEquation();
 
-    if(World.GetMode()==CLogicellUniverse.M_DIGIT ||
-            World.GetMode()==CLogicellUniverse.M_DIGIT2)
-      World.DrawOutput();    
+    if(world.GetMode()==CLogicellUniverse.M_DIGIT ||
+            world.GetMode()==CLogicellUniverse.M_DIGIT2)
+      world.DrawOutput();    
   }
   
   /** Set all entries to false */
@@ -731,44 +731,44 @@ public class CLogicellUI extends Frame {
   /** Resize */
   void this_componentResized(ComponentEvent e) {
     boolean isr=false;
-    if(World.IsRunning) {
-      synchronized(World) {World.stop();}
+    if(world.isRunning) {
+      synchronized(world) {world.stop();}
       isr=true;
     }
-    World.InitView();
-    World.DrawWorld();
-    World.DrawOutput();
+    world.InitView();
+    world.drawWorld();
+    world.DrawOutput();
     if(isr) {
-      World.Launch();
+      world.Launch();
     }
   }
   /** Decrease speed */
   void BtnSpeedM_actionPerformed(ActionEvent e) {
-    World.SpeedDecr();
+    world.SpeedDecr();
       BtnSpeedP.enable(true);
-    LblSpeed.setText(" "+Integer.toString(World.Speed));
+    LblSpeed.setText(" "+Integer.toString(world.speed));
   }
 
   /** Increase speed */
   void BtnSpeedP_actionPerformed(ActionEvent e) {
-    World.SpeedIncr();
-    if(World.GetSpeed()==0)
+    world.SpeedIncr();
+    if(world.GetSpeed()==0)
       BtnSpeedP.enable(false);
-    LblSpeed.setText(" "+Integer.toString(World.Speed));      
+    LblSpeed.setText(" "+Integer.toString(world.speed));      
   }
 
   // Mode Management
   /** Set mode */
   void SetMode(int m) {
     InitEntries();
-    World.SetMode(m);
+    world.SetMode(m);
     SetLowPanel(PAN_RUN);
     DispInfoBox();
     ValEntry();
     if(m==CLogicellUniverse.M_CONWAY)
-      World.OpDispView.DrawConway();
+      world.opDispView.DrawConway();
     else if(m==CLogicellUniverse.M_LIGHT)
-      World.OpDispView.InitDrawLight();
+      world.opDispView.InitDrawLight();
   }
   /** Set  Equation mode */
   void BtnEq_actionPerformed(ActionEvent e) {
@@ -814,7 +814,7 @@ public class CLogicellUI extends Frame {
 //    World.OpDispView.InitDrawVV();
     SetMode(CLogicellUniverse.M_LIGHT);
     SetLowPanel(PAN_RUNNING);
-    World.Launch();
+    world.Launch();
   }
   /** Set  Digit mode */
   void BtnDigit2_actionPerformed(ActionEvent e) {
@@ -838,20 +838,20 @@ public class CLogicellUI extends Frame {
   void CbE1_itemStateChanged(ItemEvent e) {
     BtnGo.enable(false);
     BtnStep.enable(false);
-    if(World.GetMode()==CLogicellUniverse.M_LIGHT) {
+    if(world.GetMode()==CLogicellUniverse.M_LIGHT) {
       SetLowPanel(PAN_RUNNING);
       ValEntry();
-      World.Launch();
+      world.Launch();
     }
   }
 
   void CbE2_itemStateChanged(ItemEvent e) {
     BtnGo.enable(false);
     BtnStep.enable(false);
-    if(World.GetMode()==CLogicellUniverse.M_LIGHT) {
+    if(world.GetMode()==CLogicellUniverse.M_LIGHT) {
       SetLowPanel(PAN_RUNNING);
       ValEntry();
-      World.Launch();
+      world.Launch();
     }
   }
 
@@ -1043,14 +1043,14 @@ public class CLogicellUI extends Frame {
         BtnStop.enable(false);
         BtnGo.enable(true);
         TfEntry.enable(false);
-        if(World.GetMode()==CLogicellUniverse.M_LIGHT ||
-                  World.GetMode()==CLogicellUniverse.M_BINADD) {
+        if(world.GetMode()==CLogicellUniverse.M_LIGHT ||
+                  world.GetMode()==CLogicellUniverse.M_BINADD) {
             CbE3.enable(false);
             CbE4.enable(false);
         }
-        if(World.GetMode()==CLogicellUniverse.M_EQUATION)
+        if(world.GetMode()==CLogicellUniverse.M_EQUATION)
           BtnEqNew.enable(true);
-        if(World.GetMode()==CLogicellUniverse.M_CONWAY) {
+        if(world.GetMode()==CLogicellUniverse.M_CONWAY) {
           CbE1.enable(false);
           CbE2.enable(false);
           CbE3.enable(false);
@@ -1077,12 +1077,12 @@ public class CLogicellUI extends Frame {
         CbE2.enable(true);
         CbE3.enable(true);
         CbE4.enable(true);
-        if(World.GetMode()==CLogicellUniverse.M_BINADD ||
-            World.GetMode()==CLogicellUniverse.M_LIGHT) {
+        if(world.GetMode()==CLogicellUniverse.M_BINADD ||
+            world.GetMode()==CLogicellUniverse.M_LIGHT) {
           CbE3.enable(false);
           CbE4.enable(false);
         }
-        if(World.GetMode()==CLogicellUniverse.M_CONWAY) {
+        if(world.GetMode()==CLogicellUniverse.M_CONWAY) {
           CbE1.enable(false);
           CbE2.enable(false);
           CbE3.enable(false);

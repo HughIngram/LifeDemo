@@ -52,9 +52,9 @@ static long Tps, TpsA=0;
   /** Point to NorthWest bloc */
   CCells NWBloc;
   /** Cells values : long 64 bits = 8x8 */
-  long CellsVal=0L;
+  long cellsVal=0L;
 
-  /** Pointer to the List wich contains blocks */
+  /** Pointer to the List which contains blocks */
   private Vector FatherList;
 
   /** Construct cells at pos */
@@ -71,7 +71,7 @@ static long Tps, TpsA=0;
     WBloc=null;
     NWBloc=null;
     EmptyGen=0;
-    CellsVal=0L;
+    cellsVal=0L;
     SetPointers();
   }
   
@@ -89,7 +89,7 @@ static long Tps, TpsA=0;
     WBloc=null;
     NWBloc=null;
     EmptyGen=0;
-    CellsVal=v;
+    cellsVal=v;
     SetPointers();
   }
 
@@ -107,7 +107,7 @@ static long Tps, TpsA=0;
 
   /** Live : draw the CCells (blocks), manages blocks of 2x2 cells */
   void Live(JPView v) {
-    CLogicellView lv=(CLogicellView) v;
+    CLogicellView lv = (CLogicellView) v;
 
     int a=(int)(lv.HorizStepD*8*x);
     int b=(int)(lv.VerticStepD*8*y);
@@ -122,7 +122,7 @@ static long Tps, TpsA=0;
     // First 2 lines
 
     // Display South-East 2x2 cells
-    vcrt=CellsVal & 0x0303L;
+    vcrt = cellsVal & 0x0303L;
     if(vcrt !=0) {
       p=0;
 
@@ -138,7 +138,7 @@ static long Tps, TpsA=0;
         Gr.fillRect((int)(6*hsd+a),(int)(6*vsd+b), hs, vs);
     }
     // Display ESE 2x2 cells
-    vcrt=CellsVal & 0x0C0CL;
+    vcrt = cellsVal & 0x0C0CL;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0x0C00L) >> 8;
@@ -153,10 +153,10 @@ static long Tps, TpsA=0;
         Gr.fillRect((int)(4*hsd+a),(int)(6*vsd+b), hs, vs);
     }
     // Display WSW 2x2 cells
-    vcrt=CellsVal & 0x3030L;
+    vcrt = cellsVal & 0x3030L;
     if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0x3000L) >> 10;
+      p = 0;
+      blcrt =(vcrt & 0x3000L) >> 10;
       blcrt |= (vcrt & 0x30L) >> 4;
       if( ((blcrt >> p++) & 0x1L)>0 )
         Gr.fillRect((int)(3*hsd+a),(int)(7*vsd+b), hs, vs);
@@ -168,7 +168,7 @@ static long Tps, TpsA=0;
         Gr.fillRect((int)(2*hsd+a),(int)(6*vsd+b), hs, vs);
     }
     // Display SW 2x2 cells
-    vcrt=CellsVal & 0xC0C0L;
+    vcrt=cellsVal & 0xC0C0L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0xC000L) >> 12;
@@ -187,7 +187,7 @@ static long Tps, TpsA=0;
     // 2d 2 lines
 
     // Display South-East 2x2 cells
-    vcrt=CellsVal & 0x03030000L;
+    vcrt=cellsVal & 0x03030000L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0x03000000L) >> 22;
@@ -203,7 +203,7 @@ static long Tps, TpsA=0;
     }
 
     // Display ESE 2x2 cells
-    vcrt=CellsVal & 0x0C0C0000L;
+    vcrt=cellsVal & 0x0C0C0000L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0x0C000000L) >> 24;
@@ -218,7 +218,7 @@ static long Tps, TpsA=0;
         Gr.fillRect((int)(4*hsd+a),(int)(4*vsd+b), hs, vs);
     }
     // Display WSW 2x2 cells
-    vcrt=CellsVal & 0x30300000L;
+    vcrt=cellsVal & 0x30300000L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0x30000000L) >> 26;
@@ -233,7 +233,7 @@ static long Tps, TpsA=0;
         Gr.fillRect((int)(2*hsd+a),(int)(4*vsd+b), hs, vs);
     }
     // Display SW 2x2 cells
-    vcrt=CellsVal & 0xC0C00000L;
+    vcrt=cellsVal & 0xC0C00000L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0xC0000000L) >> 28;
@@ -251,7 +251,7 @@ static long Tps, TpsA=0;
     // 3d 2 lines
 
     // Display South-East 2x2 cells
-    vcrt=CellsVal & 0x030300000000L;
+    vcrt=cellsVal & 0x030300000000L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0x030000000000L) >> 38;
@@ -267,7 +267,7 @@ static long Tps, TpsA=0;
     }
 
     // Display ESE 2x2 cells
-    vcrt=CellsVal & 0x0C0C00000000L;
+    vcrt=cellsVal & 0x0C0C00000000L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0x0C0000000000L) >> 40;
@@ -282,7 +282,7 @@ static long Tps, TpsA=0;
         Gr.fillRect((int)(4*hsd+a),(int)(2*vsd+b), hs, vs);
     }
     // Display WSW 2x2 cells
-    vcrt=CellsVal & 0x303000000000L;
+    vcrt=cellsVal & 0x303000000000L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0x300000000000L) >> 42;
@@ -297,7 +297,7 @@ static long Tps, TpsA=0;
         Gr.fillRect((int)(2*hsd+a),(int)(2*vsd+b), hs, vs);
     }
     // Display SW 2x2 cells
-    vcrt=CellsVal & 0xC0C000000000L;
+    vcrt=cellsVal & 0xC0C000000000L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0xC00000000000L) >> 44;
@@ -315,7 +315,7 @@ static long Tps, TpsA=0;
     // 4th 2 lines
 
     // Display South-East 2x2 cells
-    vcrt=CellsVal & 0x0303000000000000L;
+    vcrt=cellsVal & 0x0303000000000000L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0x0300000000000000L) >> 54;
@@ -331,7 +331,7 @@ static long Tps, TpsA=0;
     }
 
     // Display ESE 2x2 cells
-    vcrt=CellsVal & 0x0C0C000000000000L;
+    vcrt=cellsVal & 0x0C0C000000000000L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0x0C00000000000000L) >> 56;
@@ -346,7 +346,7 @@ static long Tps, TpsA=0;
         Gr.fillRect((int)(4*hsd+a),(int)(0*vsd+b), hs, vs);
     }
     // Display WSW 2x2 cells
-    vcrt=CellsVal & 0x3030000000000000L;
+    vcrt=cellsVal & 0x3030000000000000L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0x3000000000000000L) >> 58;
@@ -361,7 +361,7 @@ static long Tps, TpsA=0;
         Gr.fillRect((int)(2*hsd+a),(int)(0*vsd+b), hs, vs);
     }
     // Display SW 2x2 cells
-    vcrt=CellsVal & 0xC0C0000000000000L;
+    vcrt=cellsVal & 0xC0C0000000000000L;
     if(vcrt !=0) {
       p=0;
       blcrt=(vcrt & 0xC000000000000000L) >> 60;

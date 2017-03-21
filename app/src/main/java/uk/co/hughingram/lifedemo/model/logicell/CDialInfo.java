@@ -77,7 +77,7 @@ public class CDialInfo extends Dialog {
     panel1.add(panel2, BorderLayout.SOUTH);
     panel2.add(button1, null);
     panel1.add(textArea1, BorderLayout.CENTER);
-    String s=CallingApp.World.GetInfoText(CallingApp.World.GetMode(),
+    String s=CallingApp.world.GetInfoText(CallingApp.world.GetMode(),
                          CallingApp.ConwPatCrt);
     textArea1.setText(s);
   }

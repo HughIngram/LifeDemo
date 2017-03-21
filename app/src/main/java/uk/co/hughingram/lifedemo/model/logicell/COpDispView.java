@@ -45,19 +45,19 @@ public class COpDispView extends JPView {
   }
 
   /** Paint View Background */
-  void PaintBackground() {
+  void paintBackground() {
     ResizeGrBuff();
     ClearBkg();
   }
   /** Draw Ouptput according to mode */
-  void DrawOutput(int m) {
-    PaintBackground();
+  void drawOutput(int m) {
+    paintBackground();
     switch(m) {
       case CLogicellUniverse.M_DIGIT2 :
         DrawDigit();
       break;
       case CLogicellUniverse.M_DIGIT :
-        DrawReducedDigit(MyUniverse.EntryBinVal);
+        DrawReducedDigit(MyUniverse.entryBinVal);
       break;
       case CLogicellUniverse.M_LIGHT :
         DrawLight();
@@ -78,13 +78,13 @@ public class COpDispView extends JPView {
 
   /** Init Light with LightOff */
   void InitDrawLight() {
-    ImgBuff=MyUniverse.App.MotherApplet.ImConway;// .ImLightOff;
+    ImgBuff=MyUniverse.app.MotherApplet.ImConway;// .ImLightOff;
     this.getGraphics().drawImage(ImgBuff,0,0,Width,Height,this);
   }
 
   /** Draw Conway image */
   void DrawConway() {
-    ImgBuff=MyUniverse.App.MotherApplet.ImConway;
+    ImgBuff=MyUniverse.app.MotherApplet.ImConway;
     this.getGraphics().drawImage(ImgBuff,0,0,Width,Height,this);
   }
 
@@ -105,9 +105,9 @@ public class COpDispView extends JPView {
   /** Draw Light (two-way switch) */
   private void DrawLight() {
     if(MyUniverse.GetLtOutputState(0)==CLogiTemplate.LT_TRUE)
-      ImgBuff=MyUniverse.App.MotherApplet.ImLightOn;
+      ImgBuff=MyUniverse.app.MotherApplet.ImLightOn;
     else if(MyUniverse.GetLtOutputState(0)==CLogiTemplate.LT_FALSE)
-      ImgBuff=MyUniverse.App.MotherApplet.ImLightOff;
+      ImgBuff=MyUniverse.app.MotherApplet.ImLightOff;
     this.getGraphics().drawImage(ImgBuff,0,0,Width , Height,this);
   }
 

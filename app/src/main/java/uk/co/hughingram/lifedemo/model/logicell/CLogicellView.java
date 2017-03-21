@@ -80,26 +80,26 @@ public class CLogicellView extends JPView {
   }
   /** Display Equations */
   void DispEquation(CLogiTemplate lt) {
-    double ltw=(double)lt.CTWidth*ZoomFactX/3;
+    double ltw=(double)lt.ctWidth*ZoomFactX/3;
     // Display user Entry
-    int cs=Math.min(Math.max((int)ltw/lt.EntryU.length(),12),22);
+    int cs=Math.min(Math.max((int)ltw/lt.entryU.length(),12),22);
     GrBuff.setFont(new Font(GrBuff.getFont().getName(), Font.PLAIN, cs));
     FontMetrics fm=getFontMetrics(GrBuff.getFont());
     int posx=(int) (lt.x*ZoomFactX) +
-              (int) ( ((lt.CTWidth+lt.x-lt.x)*ZoomFactX-fm.stringWidth(lt.EntryU))/2 );
+              (int) ( ((lt.ctWidth+lt.x-lt.x)*ZoomFactX-fm.stringWidth(lt.entryU))/2 );
     int posy=(int) (lt.y*ZoomFactY) +
-              (int) (lt.CTHeight*ZoomFactY/2) ;
-    GrBuff.drawString(lt.EntryU, posx, posy);
-    if(lt.EntryU!=lt.Entry) {
+              (int) (lt.ctHeight*ZoomFactY/2) ;
+    GrBuff.drawString(lt.entryU, posx, posy);
+    if(lt.entryU!=lt.entry) {
     // Display processed entry
-    cs=Math.min(Math.max((int)ltw/lt.Entry.length(),12),22);
+    cs=Math.min(Math.max((int)ltw/lt.entry.length(),12),22);
     GrBuff.setFont(new Font(GrBuff.getFont().getName(), Font.PLAIN, cs));
     fm=getFontMetrics(GrBuff.getFont());
     posx=(int) (lt.x*ZoomFactX) +
-          (int) ( ((lt.CTWidth+lt.x-lt.x)*ZoomFactX-fm.stringWidth(lt.Entry))/2 );
+          (int) ( ((lt.ctWidth+lt.x-lt.x)*ZoomFactX-fm.stringWidth(lt.entry))/2 );
     posy=(int) (lt.y*ZoomFactY) +
-          (int) (lt.CTHeight*ZoomFactY/2) + (int)(cs*1.5);
-    GrBuff.drawString(lt.Entry, posx, posy);
+          (int) (lt.ctHeight*ZoomFactY/2) + (int)(cs*1.5);
+    GrBuff.drawString(lt.entry, posx, posy);
     }
     repaint();
   }
@@ -107,16 +107,16 @@ public class CLogicellView extends JPView {
   /** Display background text */
   void DispBkgText() {
     GrBuff.setFont(new Font(GrBuff.getFont().getName(), Font.BOLD,20));
-    this.WriteCenterX(MyUniverse.App.MotherApplet.GetName()+" "+
-          MyUniverse.App.MotherApplet.GetVersion() ,25);
+    this.WriteCenterX(MyUniverse.app.MotherApplet.GetName()+" "+
+          MyUniverse.app.MotherApplet.GetVersion() ,25);
     GrBuff.setFont(new Font(GrBuff.getFont().getName(), Font.BOLD,10));
-    this.WriteCenterX(MyUniverse.App.MotherApplet.GetCopyright(),45);
+    this.WriteCenterX(MyUniverse.app.MotherApplet.GetCopyright(),45);
     this.WriteCenterX("www.rennard.org/alife/, alife@rennard.org",60);
 
     // It's really not the right place for that ! I know.
     // but I think I'm a bit tired today  ;=)
     GrBuff.setFont(new Font(GrBuff.getFont().getName(), Font.PLAIN,12));
-    if(MyUniverse.App.MotherApplet.Language==Logicell.LANGEN) {
+    if(MyUniverse.app.MotherApplet.Language==Logicell.LANGEN) {
       WriteCenterX("Logicell shows the capacity of a Conway cellular automata to manage boolean operators.",90);
       WriteCenterX("Equation mode ensures you to test any 4 entries boolean equation.",120);
       WriteCenterX("Some combinatorial applications shows the usefulness of those functions.",150);
@@ -156,7 +156,7 @@ public class CLogicellView extends JPView {
     ResizeGrBuff();
   }
   /** Set Best fit Grid size (Nb cells) */
-  void SetBestGridSize() {
+  void setBestGridSize() {
     NbHorizPlace=MyUniverse.PatWidth;
     NbVerticPlace=MyUniverse.PatWidth;
     ResizeGrBuff();    

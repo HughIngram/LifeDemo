@@ -38,17 +38,18 @@ public class CLogiTemplate {
 
   // Interface
   /** pointer to Universe */
-  CLogicellUniverse MyUniverse;
+  CLogicellUniverse myUniverse;
   /** User Entry (equation) */
-  String EntryU;
+  String entryU;
   /** Processed Entry (xor...) */
-  String Entry;
+  String entry;
   /** Position of the template */
   int x, y=0;
   /** Size */
-  int CTWidth, CTHeight;
+  int ctWidth, ctHeight;
+  
   /** Template blocks */
-  Vector Blocks1, Blocks2;
+  Vector blocks1, blocks2;
 
 
   /** Entry in postfix notation */
@@ -68,13 +69,13 @@ public class CLogiTemplate {
 
   /** Construct a simple conway pattern */
   public CLogiTemplate(CLogicellUniverse univ, int pattype) {
-    MyUniverse=univ;
-    Blocks1=new Vector();
-    Blocks2=new Vector();
+    myUniverse=univ;
+    blocks1=new Vector();
+    blocks2=new Vector();
     Stack Result=new Stack();
     CLogiComp DumComp=new CLogiComp(pattype);
     Result.push(DumComp);
-    GenBlocks(Result);
+    genBlocks(Result);
   }
 
   /** Construct a logical structure */
@@ -83,11 +84,11 @@ public class CLogiTemplate {
     OutputVal=LT_NONE;
     x= _x;
     y= _y;                            
-    MyUniverse=univ;
-    Blocks1=new Vector();
-    Blocks2=new Vector();    
-    Entry=_e;
-    EntryU=Entry;
+    myUniverse=univ;
+    blocks1=new Vector();
+    blocks2=new Vector();    
+    entry=_e;
+    entryU=entry;
     for(int i=0;i<CLogicellUniverse.MAXENTRY;i++)
       Entries[i]=entries[i];
     ParseEntry();
@@ -95,7 +96,7 @@ public class CLogiTemplate {
 
   /** Get output cell state */
   int GetOutputState(int gen) {
-    if(MyUniverse.GetMode()==CLogicellUniverse.M_CONWAY)
+    if(myUniverse.GetMode()==CLogicellUniverse.M_CONWAY)
       return(LT_NONE);
 
     if(OutputVal!=LT_NONE || gen<(OutputGeneration+1))
@@ -104,7 +105,7 @@ public class CLogiTemplate {
     int dx=OutpCellX-(OutputBlock.x*8);
     int dy=OutpCellY-(OutputBlock.y*8);
     long pos= 0x1L << 63-((dx%8)+(dy*8));
-    if((OutputBlock.CellsVal & pos) != 0)
+    if((OutputBlock.cellsVal & pos) != 0)
       OutputVal=LT_TRUE;
     else
       OutputVal=LT_FALSE;
@@ -114,38 +115,38 @@ public class CLogiTemplate {
   /** Parse entry string and generates blocks. */
   private boolean ParseEntry() {
     // set special connectors (xor)
-    Entry=JPParser.SetConnectors(Entry);
+    entry=JPParser.SetConnectors(entry);
     char C;
     // Transform Infixed entry to Postfixed
-    String EntryPost;
-    EntryPost=JPParser.InFixToPostFix(Entry);
+    String entryPost;
+    entryPost=JPParser.InFixToPostFix(entry);
 
     // set comp directions
-    NbEntries=JPParser.NbEntry(EntryPost);
+    NbEntries=JPParser.NbEntry(entryPost);
     boolean EntryDir[]=new boolean[NbEntries];
     int rcrt=0;
     // init entries tab
-    for(int i=0;i<EntryPost.length();i++) {
-      C=EntryPost.charAt(i);
+    for(int i=0;i<entryPost.length();i++) {
+      C=entryPost.charAt(i);
       if(!JPParser.IsOper(C)) {
         EntryDir[rcrt++]=true;
       }
     }
     // for each ~ inverse the corresponding entries recursively
-    boolean prec=false;
+    boolean prec = false;
     int rang=0;
-    for(int i=0;i<EntryPost.length();i++) {
-      C=EntryPost.charAt(i);
+    for(int i=0;i<entryPost.length();i++) {
+      C=entryPost.charAt(i);
       if(!JPParser.IsBoolOper(C))
         rang++;
       if(C==JPParser.OP_NOT) {
         int j=i-1;
         int nc=0;
-        char cc=EntryPost.charAt(j);
+        char cc=entryPost.charAt(j);
         j=i;
         int r=rang-1;
         while(nc>=0 && j>=0) {
-          cc=EntryPost.charAt(j);
+          cc=entryPost.charAt(j);
           if(!JPParser.IsBoolOper(cc)) {
             EntryDir[r] = !EntryDir[r];
             nc--;
@@ -157,7 +158,7 @@ public class CLogiTemplate {
               if(cc!=JPParser.OP_NOT)
                 nc++;
                 j--;
-            cc=EntryPost.charAt(j);
+            cc=entryPost.charAt(j);
             }
           }
         }
@@ -165,49 +166,49 @@ public class CLogiTemplate {
     }
 
     // Evaluate expression
-    EntryPost += '#';
-    Stack Results=new Stack();
-    CLogiComp LeftComp, RightComp, DumComp;
+    entryPost += '#';
+    Stack results = new Stack();
+    CLogiComp leftComp, rightComp, dumComp;
     int pc=0;
-    C=EntryPost.charAt(pc);
+    C=entryPost.charAt(pc);
     int entcrt=0;  // index of current entry
     while(C!='#') {
       // Simple entry
       if(!JPParser.IsBoolOper(C)) {
-        DumComp=new CLogiComp(Entries[C-CLogicellUniverse.FirstEntry],EntryDir[entcrt]);
-        if(!DumComp.IsValid())
+        dumComp=new CLogiComp(Entries[C-CLogicellUniverse.FirstEntry],EntryDir[entcrt]);
+        if(!dumComp.IsValid())
           return(false);
-        Results.push(DumComp);
+        results.push(dumComp);
         entcrt++;
       }
       // Unary operator
       else if(JPParser.IsUnaryOper(C)) {
-        RightComp=(CLogiComp)Results.pop();
-        if(pc<EntryPost.length()-2)   // is it the last op ?
-          DumComp=new CLogiComp(C,RightComp,false);
+        rightComp=(CLogiComp)results.pop();
+        if(pc<entryPost.length()-2)   // is it the last op ?
+          dumComp=new CLogiComp(C,rightComp,false);
         else
-          DumComp=new CLogiComp(C,RightComp,true);
-        if(!DumComp.IsValid())
+          dumComp=new CLogiComp(C,rightComp,true);
+        if(!dumComp.IsValid())
           return(false);
-        Results.push(DumComp);
+        results.push(dumComp);
       }
       // Binary operator
       else {
-        RightComp=(CLogiComp)Results.pop();
-        LeftComp=(CLogiComp)Results.pop();
-        if(pc<EntryPost.length()-2)   // is it the last op ?
-          DumComp=new CLogiComp(LeftComp, C, RightComp, false);
+        rightComp=(CLogiComp)results.pop();
+        leftComp=(CLogiComp)results.pop();
+        if(pc<entryPost.length()-2)   // is it the last op ?
+          dumComp=new CLogiComp(leftComp, C, rightComp, false);
         else
-          DumComp=new CLogiComp(LeftComp, C, RightComp, true);
-        if(!DumComp.IsValid())
+          dumComp=new CLogiComp(leftComp, C, rightComp, true);
+        if(!dumComp.IsValid())
           return(false);
-        Results.push(DumComp);
+        results.push(dumComp);
       }
       pc++;
-      C=EntryPost.charAt(pc);
+      C=entryPost.charAt(pc);
     }
 
-    GenBlocks(Results);
+    genBlocks(results);
 
     // Normalize (>0)
     int minx=9999999;
@@ -215,8 +216,8 @@ public class CLogiTemplate {
     int maxx=-9999999;
     int maxy=-9999999;
     CCells cel;
-    for(int i=0;i<Blocks1.size();i++) {
-      cel=(CCells)Blocks1.elementAt(i);
+    for(int i=0;i<blocks1.size();i++) {
+      cel=(CCells)blocks1.elementAt(i);
       if(cel.x<minx) minx=cel.x;
       if(cel.y<miny) miny=cel.y;
       if(cel.x>maxx) maxx=cel.x;
@@ -224,11 +225,11 @@ public class CLogiTemplate {
     }
 
     if(minx<0 || miny<0) {
-      for(int i=0;i<Blocks1.size();i++) {
-        cel=(CCells)Blocks1.elementAt(i);
+      for(int i=0;i<blocks1.size();i++) {
+        cel=(CCells)blocks1.elementAt(i);
         cel.x += minx<0 ? (-1*minx) : minx;
         cel.y += miny<0 ? (-1*miny) : miny;
-        cel=(CCells)Blocks2.elementAt(i);
+        cel=(CCells)blocks2.elementAt(i);
         cel.x += minx<0 ? (-1*minx) : minx;
         cel.y += miny<0 ? (-1*miny) : miny;
       }
@@ -236,8 +237,8 @@ public class CLogiTemplate {
       OutpCellY += miny<0 ? (-1*miny*8) : 0;
     }
 
-    for(int i=0;i<Blocks1.size();i++) {
-      cel=(CCells)Blocks1.elementAt(i);
+    for(int i=0;i<blocks1.size();i++) {
+      cel=(CCells)blocks1.elementAt(i);
       if( cel.x == (OutpCellX/8) && cel.y == (OutpCellY/8)) {
         OutputBlock=cel;
         break;
@@ -246,15 +247,15 @@ public class CLogiTemplate {
     OutputGeneration=(OutpCellY-7)*4-2;
 
     // Move template to pos
-    for(int i=0;i<Blocks1.size();i++) {
-      cel=(CCells)Blocks1.elementAt(i);
+    for(int i=0;i<blocks1.size();i++) {
+      cel=(CCells)blocks1.elementAt(i);
       cel.x += (x/8);
       cel.y += (y/8);
     }
     OutpCellX += 8*(x/8);
     OutpCellY += 8*(y/8);
-    for(int i=0;i<Blocks2.size();i++) {
-      cel=(CCells)Blocks2.elementAt(i);
+    for(int i=0;i<blocks2.size();i++) {
+      cel=(CCells)blocks2.elementAt(i);
       cel.x += (x/8);
       cel.y += (y/8);
     }
@@ -262,47 +263,47 @@ public class CLogiTemplate {
   }
 
   /** Generate blocks */
-  private void GenBlocks(Stack Results) {
+  private void genBlocks(Stack results) {
     // generates blocks
-    CLogiComp Lc;
-    CPattern Pat;
+    CLogiComp lc;
+    CPattern pat;
 
-    Lc=((CLogiComp)Results.peek());
-    for(int j=0;j<Lc.NbPat;j++) {
-      Pat=Lc.PatTab[j];
-      for(int k=0;k<Pat.NbBlocks;k++) {
-        if(Pat.BlockValues[k]!=0L) {
+    lc = ((CLogiComp) results.peek());
+    for (int j = 0; j < lc.NbPat; j++) {
+      pat = lc.PatTab[j];
+      for (int k = 0; k < pat.NbBlocks; k++) {
+        if (pat.BlockValues[k]!=0L) {
           boolean found=false;
           CCells cel;
-          int pos=0;
-          for(int bl=0;bl<Blocks1.size();bl++) {
-            cel=(CCells)Blocks1.elementAt(bl);
-            if(cel.x==Pat.BlockPos[k][0] &&
-                  cel.y==Pat.BlockPos[k][1]) {
+          int pos = 0;
+          for(int bl=0; bl<blocks1.size(); bl++) {
+            cel = (CCells) blocks1.elementAt(bl);
+            if (cel.x==pat.BlockPos[k][0] &&
+                  cel.y==pat.BlockPos[k][1]) {
                 found=true;
                 pos=bl;
             }
           }
           if(found) {
-            cel=(CCells)Blocks1.elementAt(pos);
-            cel.CellsVal |= Pat.BlockValues[k];
-            cel=(CCells)Blocks2.elementAt(pos);
-            cel.CellsVal |= Pat.BlockValues[k];
+            cel=(CCells)blocks1.elementAt(pos);
+            cel.cellsVal |= pat.BlockValues[k];
+            cel=(CCells)blocks2.elementAt(pos);
+            cel.cellsVal |= pat.BlockValues[k];
           }
           else {
-            Blocks1.addElement(new CCells(Blocks1, Pat.BlockPos[k][0],
-                                    Pat.BlockPos[k][1],Pat.BlockValues[k]));
-            Blocks2.addElement(new CCells(Blocks2, Pat.BlockPos[k][0],
-                                    Pat.BlockPos[k][1],Pat.BlockValues[k]));
+            blocks1.addElement(new CCells(blocks1, pat.BlockPos[k][0],
+                                    pat.BlockPos[k][1],pat.BlockValues[k]));
+            blocks2.addElement(new CCells(blocks2, pat.BlockPos[k][0],
+                                    pat.BlockPos[k][1],pat.BlockValues[k]));
           }
         }
       } // next pat block
     } // next pat
-    OutpCellX=Lc.ExitX;
-    OutpCellY=Lc.ExitY;
+    OutpCellX = lc.ExitX;
+    OutpCellY = lc.ExitY;
 
-    CTWidth=Math.abs(Lc.MaxX-Lc.MinX);
-    CTHeight=Math.abs(Lc.MaxY-Lc.MinY);
+    ctWidth = Math.abs(lc.MaxX-lc.MinX);
+    ctHeight = Math.abs(lc.MaxY-lc.MinY);
   }
 
 }
