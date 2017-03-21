@@ -20,7 +20,7 @@
 //    GNU General Public License for more details.
 //
 //***************************************************************************
-package logicell;
+package uk.co.hughingram.lifedemo.model.logicell;
 
 import jpUtil.*;
 

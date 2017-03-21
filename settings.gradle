@@ -1,1 +1,1 @@
-include ':app', ':logicell'
+include ':app', ':logicell_lib'

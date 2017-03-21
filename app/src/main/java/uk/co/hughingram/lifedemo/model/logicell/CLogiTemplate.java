@@ -20,9 +20,11 @@
 //    GNU General Public License for more details.
 //
 //***************************************************************************
-package logicell;
+package uk.co.hughingram.lifedemo.model.logicell;
 
-import jpUtil.*;
+//import jpUtil.*;
+import jpUtil.JPParser;
+
 import java.util.*;
 
 /** Generates the global structure according to Logical String entry.
@@ -115,7 +117,7 @@ public class CLogiTemplate {
   /** Parse entry string and generates blocks. */
   private boolean ParseEntry() {
     // set special connectors (xor)
-    entry=JPParser.SetConnectors(entry);
+    entry= JPParser.SetConnectors(entry);
     char C;
     // Transform Infixed entry to Postfixed
     String entryPost;

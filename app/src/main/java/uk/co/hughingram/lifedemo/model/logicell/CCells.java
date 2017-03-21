@@ -20,11 +20,9 @@
 //    GNU General Public License for more details.
 //
 //***************************************************************************
-package logicell;
+package uk.co.hughingram.lifedemo.model.logicell;
 
-import jpUtil.*;
 import java.util.*;
-import java.awt.*;
 
 /** CCells : this class manages and draws blocks of 8x8 cells */
 public class CCells {
@@ -105,277 +103,278 @@ static long Tps, TpsA=0;
     if(SWBloc!=null) SWBloc.NEBloc=null;
   }
 
+  // commented out
   /** Live : draw the CCells (blocks), manages blocks of 2x2 cells */
-  void Live(JPView v) {
-    CLogicellView lv = (CLogicellView) v;
-
-    int a=(int)(lv.HorizStepD*8*x);
-    int b=(int)(lv.VerticStepD*8*y);
-    int hs=Math.max(lv.HorizStep,1);
-    int vs=Math.max(lv.VerticStep,1);
-    double hsd=lv.HorizStepD;
-    double vsd=lv.VerticStepD;
-
-    int p=0;
-    long vcrt, blcrt;
-    Graphics Gr=lv.GrBuff;
-    // First 2 lines
-
-    // Display South-East 2x2 cells
-    vcrt = cellsVal & 0x0303L;
-    if(vcrt !=0) {
-      p=0;
-
-      blcrt=(vcrt & 0x0300L) >> 6;
-      blcrt |= (vcrt & 0x03L);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(7*hsd+a),(int)(7*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(6*hsd+a),(int)(7*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(7*hsd+a),(int)(6*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(6*hsd+a),(int)(6*vsd+b), hs, vs);
-    }
-    // Display ESE 2x2 cells
-    vcrt = cellsVal & 0x0C0CL;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0x0C00L) >> 8;
-      blcrt |= (vcrt & 0xCL) >> 2;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(5*hsd+a),(int)(7*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(4*hsd+a),(int)(7*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(5*hsd+a),(int)(6*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(4*hsd+a),(int)(6*vsd+b), hs, vs);
-    }
-    // Display WSW 2x2 cells
-    vcrt = cellsVal & 0x3030L;
-    if(vcrt !=0) {
-      p = 0;
-      blcrt =(vcrt & 0x3000L) >> 10;
-      blcrt |= (vcrt & 0x30L) >> 4;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(3*hsd+a),(int)(7*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(2*hsd+a),(int)(7*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(3*hsd+a),(int)(6*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(2*hsd+a),(int)(6*vsd+b), hs, vs);
-    }
-    // Display SW 2x2 cells
-    vcrt=cellsVal & 0xC0C0L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0xC000L) >> 12;
-      blcrt |= (vcrt & 0xC0L) >> 6;
-     blcrt |= (vcrt & 0x30L) >> 4;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(1*hsd+a),(int)(7*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(0*hsd+a),(int)(7*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(1*hsd+a),(int)(6*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(0*hsd+a),(int)(6*vsd+b), hs, vs);
-    }
-
-    // 2d 2 lines
-
-    // Display South-East 2x2 cells
-    vcrt=cellsVal & 0x03030000L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0x03000000L) >> 22;
-      blcrt |= (vcrt & 0x030000L) >> 16;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(7*hsd+a),(int)(5*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(6*hsd+a),(int)(5*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(7*hsd+a),(int)(4*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(6*hsd+a),(int)(4*vsd+b), hs, vs);
-    }
-
-    // Display ESE 2x2 cells
-    vcrt=cellsVal & 0x0C0C0000L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0x0C000000L) >> 24;
-      blcrt |= (vcrt & 0xC0000L) >> 18;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(5*hsd+a),(int)(5*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(4*hsd+a),(int)(5*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(5*hsd+a),(int)(4*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(4*hsd+a),(int)(4*vsd+b), hs, vs);
-    }
-    // Display WSW 2x2 cells
-    vcrt=cellsVal & 0x30300000L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0x30000000L) >> 26;
-      blcrt |= (vcrt & 0x300000L) >> 20;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(3*hsd+a),(int)(5*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(2*hsd+a),(int)(5*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(3*hsd+a),(int)(4*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(2*hsd+a),(int)(4*vsd+b), hs, vs);
-    }
-    // Display SW 2x2 cells
-    vcrt=cellsVal & 0xC0C00000L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0xC0000000L) >> 28;
-      blcrt |= (vcrt & 0xC00000L) >> 22;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(1*hsd+a),(int)(5*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(0*hsd+a),(int)(5*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(1*hsd+a),(int)(4*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(0*hsd+a),(int)(4*vsd+b), hs, vs);
-    }
-
-    // 3d 2 lines
-
-    // Display South-East 2x2 cells
-    vcrt=cellsVal & 0x030300000000L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0x030000000000L) >> 38;
-      blcrt |= (vcrt & 0x0300000000L) >> 32;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(7*hsd+a),(int)(3*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(6*hsd+a),(int)(3*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(7*hsd+a),(int)(2*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(6*hsd+a),(int)(2*vsd+b), hs, vs);
-    }
-
-    // Display ESE 2x2 cells
-    vcrt=cellsVal & 0x0C0C00000000L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0x0C0000000000L) >> 40;
-      blcrt |= (vcrt & 0xC00000000L) >> 34;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(5*hsd+a),(int)(3*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(4*hsd+a),(int)(3*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(5*hsd+a),(int)(2*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(4*hsd+a),(int)(2*vsd+b), hs, vs);
-    }
-    // Display WSW 2x2 cells
-    vcrt=cellsVal & 0x303000000000L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0x300000000000L) >> 42;
-      blcrt |= (vcrt & 0x3000000000L) >> 36;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(3*hsd+a),(int)(3*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(2*hsd+a),(int)(3*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(3*hsd+a),(int)(2*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(2*hsd+a),(int)(2*vsd+b), hs, vs);
-    }
-    // Display SW 2x2 cells
-    vcrt=cellsVal & 0xC0C000000000L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0xC00000000000L) >> 44;
-      blcrt |= (vcrt & 0xC000000000L) >> 38;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(1*hsd+a),(int)(3*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(0*hsd+a),(int)(3*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(1*hsd+a),(int)(2*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(0*hsd+a),(int)(2*vsd+b), hs, vs);
-    }
-
-    // 4th 2 lines
-
-    // Display South-East 2x2 cells
-    vcrt=cellsVal & 0x0303000000000000L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0x0300000000000000L) >> 54;
-      blcrt |= (vcrt & 0x03000000000000L) >> 48;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(7*hsd+a),(int)(1*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(6*hsd+a),(int)(1*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(7*hsd+a),(int)(0*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(6*hsd+a),(int)(0*vsd+b), hs, vs);
-    }
-
-    // Display ESE 2x2 cells
-    vcrt=cellsVal & 0x0C0C000000000000L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0x0C00000000000000L) >> 56;
-      blcrt |= (vcrt & 0x0C000000000000L) >> 50;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(5*hsd+a),(int)(1*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(4*hsd+a),(int)(1*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(5*hsd+a),(int)(0*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(4*hsd+a),(int)(0*vsd+b), hs, vs);
-    }
-    // Display WSW 2x2 cells
-    vcrt=cellsVal & 0x3030000000000000L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0x3000000000000000L) >> 58;
-      blcrt |= (vcrt & 0x30000000000000L) >> 52;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(3*hsd+a),(int)(1*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(2*hsd+a),(int)(1*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(3*hsd+a),(int)(0*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(2*hsd+a),(int)(0*vsd+b), hs, vs);
-    }
-    // Display SW 2x2 cells
-    vcrt=cellsVal & 0xC0C0000000000000L;
-    if(vcrt !=0) {
-      p=0;
-      blcrt=(vcrt & 0xC000000000000000L) >> 60;
-      blcrt |= (vcrt & 0xC0000000000000L) >> 54;
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(1*hsd+a),(int)(1*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(0*hsd+a),(int)(1*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(1*hsd+a),(int)(0*vsd+b), hs, vs);
-      if( ((blcrt >> p++) & 0x1L)>0 )
-        Gr.fillRect((int)(0*hsd+a),(int)(0*vsd+b), hs, vs);
-    }
-  }
+//  void Live(JPView v) {
+//    CLogicellView lv = (CLogicellView) v;
+//
+//    int a=(int)(lv.HorizStepD*8*x);
+//    int b=(int)(lv.VerticStepD*8*y);
+//    int hs=Math.max(lv.HorizStep,1);
+//    int vs=Math.max(lv.VerticStep,1);
+//    double hsd=lv.HorizStepD;
+//    double vsd=lv.VerticStepD;
+//
+//    int p=0;
+//    long vcrt, blcrt;
+//    Graphics Gr=lv.GrBuff;
+//    // First 2 lines
+//
+//    // Display South-East 2x2 cells
+//    vcrt = cellsVal & 0x0303L;
+//    if(vcrt !=0) {
+//      p=0;
+//
+//      blcrt=(vcrt & 0x0300L) >> 6;
+//      blcrt |= (vcrt & 0x03L);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(7*hsd+a),(int)(7*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(6*hsd+a),(int)(7*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(7*hsd+a),(int)(6*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(6*hsd+a),(int)(6*vsd+b), hs, vs);
+//    }
+//    // Display ESE 2x2 cells
+//    vcrt = cellsVal & 0x0C0CL;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0x0C00L) >> 8;
+//      blcrt |= (vcrt & 0xCL) >> 2;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(5*hsd+a),(int)(7*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(4*hsd+a),(int)(7*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(5*hsd+a),(int)(6*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(4*hsd+a),(int)(6*vsd+b), hs, vs);
+//    }
+//    // Display WSW 2x2 cells
+//    vcrt = cellsVal & 0x3030L;
+//    if(vcrt !=0) {
+//      p = 0;
+//      blcrt =(vcrt & 0x3000L) >> 10;
+//      blcrt |= (vcrt & 0x30L) >> 4;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(3*hsd+a),(int)(7*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(2*hsd+a),(int)(7*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(3*hsd+a),(int)(6*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(2*hsd+a),(int)(6*vsd+b), hs, vs);
+//    }
+//    // Display SW 2x2 cells
+//    vcrt=cellsVal & 0xC0C0L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0xC000L) >> 12;
+//      blcrt |= (vcrt & 0xC0L) >> 6;
+//     blcrt |= (vcrt & 0x30L) >> 4;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(1*hsd+a),(int)(7*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(0*hsd+a),(int)(7*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(1*hsd+a),(int)(6*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(0*hsd+a),(int)(6*vsd+b), hs, vs);
+//    }
+//
+//    // 2d 2 lines
+//
+//    // Display South-East 2x2 cells
+//    vcrt=cellsVal & 0x03030000L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0x03000000L) >> 22;
+//      blcrt |= (vcrt & 0x030000L) >> 16;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(7*hsd+a),(int)(5*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(6*hsd+a),(int)(5*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(7*hsd+a),(int)(4*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(6*hsd+a),(int)(4*vsd+b), hs, vs);
+//    }
+//
+//    // Display ESE 2x2 cells
+//    vcrt=cellsVal & 0x0C0C0000L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0x0C000000L) >> 24;
+//      blcrt |= (vcrt & 0xC0000L) >> 18;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(5*hsd+a),(int)(5*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(4*hsd+a),(int)(5*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(5*hsd+a),(int)(4*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(4*hsd+a),(int)(4*vsd+b), hs, vs);
+//    }
+//    // Display WSW 2x2 cells
+//    vcrt=cellsVal & 0x30300000L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0x30000000L) >> 26;
+//      blcrt |= (vcrt & 0x300000L) >> 20;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(3*hsd+a),(int)(5*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(2*hsd+a),(int)(5*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(3*hsd+a),(int)(4*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(2*hsd+a),(int)(4*vsd+b), hs, vs);
+//    }
+//    // Display SW 2x2 cells
+//    vcrt=cellsVal & 0xC0C00000L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0xC0000000L) >> 28;
+//      blcrt |= (vcrt & 0xC00000L) >> 22;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(1*hsd+a),(int)(5*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(0*hsd+a),(int)(5*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(1*hsd+a),(int)(4*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(0*hsd+a),(int)(4*vsd+b), hs, vs);
+//    }
+//
+//    // 3d 2 lines
+//
+//    // Display South-East 2x2 cells
+//    vcrt=cellsVal & 0x030300000000L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0x030000000000L) >> 38;
+//      blcrt |= (vcrt & 0x0300000000L) >> 32;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(7*hsd+a),(int)(3*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(6*hsd+a),(int)(3*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(7*hsd+a),(int)(2*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(6*hsd+a),(int)(2*vsd+b), hs, vs);
+//    }
+//
+//    // Display ESE 2x2 cells
+//    vcrt=cellsVal & 0x0C0C00000000L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0x0C0000000000L) >> 40;
+//      blcrt |= (vcrt & 0xC00000000L) >> 34;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(5*hsd+a),(int)(3*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(4*hsd+a),(int)(3*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(5*hsd+a),(int)(2*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(4*hsd+a),(int)(2*vsd+b), hs, vs);
+//    }
+//    // Display WSW 2x2 cells
+//    vcrt=cellsVal & 0x303000000000L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0x300000000000L) >> 42;
+//      blcrt |= (vcrt & 0x3000000000L) >> 36;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(3*hsd+a),(int)(3*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(2*hsd+a),(int)(3*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(3*hsd+a),(int)(2*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(2*hsd+a),(int)(2*vsd+b), hs, vs);
+//    }
+//    // Display SW 2x2 cells
+//    vcrt=cellsVal & 0xC0C000000000L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0xC00000000000L) >> 44;
+//      blcrt |= (vcrt & 0xC000000000L) >> 38;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(1*hsd+a),(int)(3*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(0*hsd+a),(int)(3*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(1*hsd+a),(int)(2*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(0*hsd+a),(int)(2*vsd+b), hs, vs);
+//    }
+//
+//    // 4th 2 lines
+//
+//    // Display South-East 2x2 cells
+//    vcrt=cellsVal & 0x0303000000000000L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0x0300000000000000L) >> 54;
+//      blcrt |= (vcrt & 0x03000000000000L) >> 48;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(7*hsd+a),(int)(1*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(6*hsd+a),(int)(1*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(7*hsd+a),(int)(0*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(6*hsd+a),(int)(0*vsd+b), hs, vs);
+//    }
+//
+//    // Display ESE 2x2 cells
+//    vcrt=cellsVal & 0x0C0C000000000000L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0x0C00000000000000L) >> 56;
+//      blcrt |= (vcrt & 0x0C000000000000L) >> 50;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(5*hsd+a),(int)(1*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(4*hsd+a),(int)(1*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(5*hsd+a),(int)(0*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(4*hsd+a),(int)(0*vsd+b), hs, vs);
+//    }
+//    // Display WSW 2x2 cells
+//    vcrt=cellsVal & 0x3030000000000000L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0x3000000000000000L) >> 58;
+//      blcrt |= (vcrt & 0x30000000000000L) >> 52;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(3*hsd+a),(int)(1*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(2*hsd+a),(int)(1*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(3*hsd+a),(int)(0*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(2*hsd+a),(int)(0*vsd+b), hs, vs);
+//    }
+//    // Display SW 2x2 cells
+//    vcrt=cellsVal & 0xC0C0000000000000L;
+//    if(vcrt !=0) {
+//      p=0;
+//      blcrt=(vcrt & 0xC000000000000000L) >> 60;
+//      blcrt |= (vcrt & 0xC0000000000000L) >> 54;
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(1*hsd+a),(int)(1*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(0*hsd+a),(int)(1*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(1*hsd+a),(int)(0*vsd+b), hs, vs);
+//      if( ((blcrt >> p++) & 0x1L)>0 )
+//        Gr.fillRect((int)(0*hsd+a),(int)(0*vsd+b), hs, vs);
+//    }
+//  }
 
   /** Set pointer to neighbours. Both directions.
   This function search the neighbours of a new cell.

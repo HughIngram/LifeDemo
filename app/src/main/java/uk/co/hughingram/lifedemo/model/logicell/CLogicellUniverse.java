@@ -20,10 +20,8 @@
 //    GNU General Public License for more details.
 //
 //***************************************************************************
-package logicell;
+package uk.co.hughingram.lifedemo.model.logicell;
 
-import jpUtil.*;
-import java.awt.*;
 import java.util.*;
 
 /** This class is the Universe of Logicell, the place where everything happens. */
@@ -46,17 +44,11 @@ public class CLogicellUniverse implements Runnable {
 	static final int M_BINADD=5;
 	static final int M_BINADD2=6;
 
-	// Interface
-	/** Pointer to App */
-	CLogicellUI app;
 	/** Pattern size x */
 	int PatHeight=480;
 	/** Pattern size y */
 	int PatWidth=480;
 	/** View */
-	CLogicellView mainView;
-	/** Output View */
-	COpDispView opDispView;
 	/** Thread */
 	Thread logicellUnivThread;
 	/** Value of bin entry in digit mode */
@@ -100,12 +92,11 @@ public class CLogicellUniverse implements Runnable {
 	private int DisplayStep=DefaultDisplayStep;
 
 	/** Constructor */
-	public CLogicellUniverse(CLogicellUI lu)  {
-		app = lu;
+	public CLogicellUniverse()  {
 		lookUp = new boolean[512];
 		initLookUp();
-		mainView = new CLogicellView(this,Color.black);
-		opDispView = new COpDispView(this, Color.blue);
+//		mainView = new CLogicellView(this,Color.black);
+//		opDispView = new COpDispView(this, Color.blue);
 		blocks1 = new Vector();
 		blocks2 = new Vector();
 		Mode = M_INIT;
@@ -119,10 +110,10 @@ public class CLogicellUniverse implements Runnable {
 
 	/** Init View */
 	public void InitView() {
-		mainView.ResizeGrBuff();
-		mainView.PaintBackground();
-		opDispView.ResizeGrBuff();
-		opDispView.paintBackground();
+//		mainView.ResizeGrBuff();
+//		mainView.PaintBackground();
+//		opDispView.ResizeGrBuff();
+//		opDispView.paintBackground();
 	}
 
 	/** Launch thread */
@@ -163,10 +154,10 @@ public class CLogicellUniverse implements Runnable {
 		}
 		else
 			entryBinVal = -1;
-		if(Mode != M_LIGHT)
-			opDispView.ResizeGrBuff();
-		opDispView.paintBackground();
-		opDispView.repaint();
+//		if(Mode != M_LIGHT)
+//			opDispView.ResizeGrBuff();
+//		opDispView.paintBackground();
+//		opDispView.repaint();
 		generation = 0;
 		// Template's Position management
 		int tx = 0;
@@ -205,7 +196,7 @@ public class CLogicellUniverse implements Runnable {
 			}
 			LTOutput[i]=CLogiTemplate.LT_NONE;
 		}
-		mainView.SetGridSize(mx, ycrt+my);
+//		mainView.SetGridSize(mx, ycrt+my);
 		drawWorld();
 	}
 
@@ -216,8 +207,8 @@ public class CLogicellUniverse implements Runnable {
 		LogiTempl=new CLogiTemplate[NbTemplate];
 		LogiTempl[0]=new CLogiTemplate(this, pat);
 		LTOutput=new int[NbTemplate];
-		opDispView.paintBackground();
-		opDispView.repaint();
+//		opDispView.paintBackground();
+//		opDispView.repaint();
 		generation = 0;
 		blocks1.removeAllElements();
 		blocks2.removeAllElements();
@@ -225,10 +216,10 @@ public class CLogicellUniverse implements Runnable {
 			blocks1.addElement((CCells)LogiTempl[0].blocks1.elementAt(j));
 			blocks2.addElement((CCells)LogiTempl[0].blocks2.elementAt(j));
 		}
-		if(pat!=CPattern.P_RANDOM && pat!=CPattern.P_BIGUN && pat!=CPattern.P_MAKEGUN)
-			mainView.SetGridSize(500, 500);
-		else
-			mainView.SetGridSize(250, 250);
+//		if(pat!=CPattern.P_RANDOM && pat!=CPattern.P_BIGUN && pat!=CPattern.P_MAKEGUN)
+//			mainView.SetGridSize(500, 500);
+//		else
+//			mainView.SetGridSize(250, 250);
 		drawWorld();
 	}
 
@@ -237,7 +228,7 @@ public class CLogicellUniverse implements Runnable {
 		genNewBlocs();
 		if(generation % DisplayStep==0 || !isRunning) {
 			drawWorld();
-			app.DispGen(generation);
+//			app.DispGen(generation);
 		}
 		boolean cont=false;
 		boolean newstate=false;
@@ -257,7 +248,7 @@ public class CLogicellUniverse implements Runnable {
 			SolFound=true;
 			stop();
 			System.out.println("Solution: "+(System.currentTimeMillis()-Time1)+" millisec.");
-			app.EndSearch(SolFound);
+//			app.EndSearch(SolFound);
 		}
 	}
 
@@ -271,33 +262,33 @@ public class CLogicellUniverse implements Runnable {
 	}
 	/** Default drawing */
 	synchronized public void drawWorld() {
-		drawWorld(mainView);
+//		drawWorld(mainView);
 	}
 
 	/** Draw Equation */
 	void DrawEquation() {
 		if(Mode==M_CONWAY)
 			return;
-		for(int i=0;i<NbTemplate;i++)
-			mainView.DispEquation(LogiTempl[i]);
+//		for(int i=0;i<NbTemplate;i++)
+//			mainView.DispEquation(LogiTempl[i]);
 	}
 
 	/** Draw Output */
 	void DrawOutput() {
-		opDispView.drawOutput(Mode);
-		opDispView.repaint();
+//		opDispView.drawOutput(Mode);
+//		opDispView.repaint();
 	}
 
 	/** Remove views */
 	public void RemoveViews() {
-		mainView.destroy();
-		opDispView.destroy();
+//		mainView.destroy();
+//		opDispView.destroy();
 	}
 
 	public void stop() {
 		isRunning=false;
 		logicellUnivThread=null;
-		app.stop();
+//		app.stop();
 	}
 
 	/** This is the end... */
@@ -307,11 +298,12 @@ public class CLogicellUniverse implements Runnable {
 	}
 
 	/** Get Info text */
+	/*
 	String GetInfoText(int mode, int pat) {
 		switch(Mode) {
 		case M_INIT :
 			return(
-					"Sélectionnez un mode.");
+					"Sï¿½lectionnez un mode.");
 		case M_EQUATION :
 			return(app.Texts.Txt[19]);
 		case M_LIGHT :
@@ -339,6 +331,7 @@ public class CLogicellUniverse implements Runnable {
 			return(app.Texts.Txt[27]);
 		}
 	}
+	*/
 
 	/** Get Speed */
 	public int GetSpeed() {
@@ -833,6 +826,7 @@ public class CLogicellUniverse implements Runnable {
 	}
 
 	/** Draw World */
+	/*
 	private void drawWorld(JPView jpv) {
 		CLogicellView bv = (CLogicellView) jpv;
 		bv.PaintBackground();
@@ -845,6 +839,7 @@ public class CLogicellUniverse implements Runnable {
 		}
 		bv.repaint();
 	}
+	*/
 
 	/** Set speed */
 	private void SetSpeed(int s) {
