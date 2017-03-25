@@ -6,11 +6,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Test for the PatternParser class.
+ * Test for the PatternParserRle class.
  */
-public class PatternParserTest {
+public class PatternParserRleTest {
 
-    private PatternParser patternParser;
+    private PatternParserRle patternParserRle;
     private final String gosperGliderGunRle =
             "#CXRLE Pos=-15,-10\n" +
             "x = 36, y = 9, rule = B3/S23\n" +
@@ -24,21 +24,21 @@ public class PatternParserTest {
 
     @Before
     public void setUp() {
-        patternParser = new PatternParser();
+        patternParserRle = new PatternParserRle();
     }
 
     // TODO write some tests m8
     @Test
     public void testArraySizing() {
-//        final boolean[][] gosperGrid = patternParser.setUpArray(gosperGliderGunRle);
+//        final boolean[][] gosperGrid = patternParserRle.setUpArray(gosperGliderGunRle);
 //        assertEquals(gosperGrid.length, 9);
 //        assertEquals(gosperGrid[0].length, 36);
     }
 
     @Test
     public void testArrayReading() {
-//        final boolean[][] testGrid = patternParser.setUpArray(testPatternRle);
-//        final boolean[][] gosperGrid = patternParser.setUpArray(gosperGliderGunRle);
+//        final boolean[][] testGrid = patternParserRle.setUpArray(testPatternRle);
+//        final boolean[][] gosperGrid = patternParserRle.setUpArray(gosperGliderGunRle);
 //        System.out.println(render(testGrid));
     }
 

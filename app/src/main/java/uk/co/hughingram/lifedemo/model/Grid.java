@@ -6,7 +6,7 @@ import android.util.Log;
 /**
  * Holds a array.
  */
-final class Grid {
+public final class Grid {
 
     // this type should never be used outside of this class.
     private boolean[][] array;

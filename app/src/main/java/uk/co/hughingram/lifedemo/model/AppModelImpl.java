@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import uk.co.hughingram.lifedemo.model.logicell_wrapper.PatternGenerator;
 import uk.co.hughingram.lifedemo.presenter.AppPresenterForModel;
 
 /**
@@ -23,11 +24,16 @@ public final class AppModelImpl implements AppModel {
     private boolean running = false;
     private Timer timer;
     private final Renderer renderer = new Renderer();
+    final private PatternGenerator patternGenerator;
 
 
     public AppModelImpl(final SystemWrapperForModel system) {
         gridHolder = new GridHolder(new PatternLoader(system).getDefaultGrid());
         this.system = system;
+
+        patternGenerator = new PatternGenerator();
+//        gridHolder = new GridHolder(patternGenerator.genPattern("A^B"));
+        new GridHolder(patternGenerator.genPattern("A^B"));
     }
 
     @Override

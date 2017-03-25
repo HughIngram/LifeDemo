@@ -12,9 +12,9 @@ import java.util.regex.Pattern;
 /**
  * Class to parse .rle files to grid arrays.
  */
-final class PatternParser {
+final class PatternParserRle {
 
-    private final static String TAG = "PatternParser";
+    private final static String TAG = "PatternParserRle";
 
     Grid parsePatternFile(final File file) {
         final String patternText = getPatternFileContent(file);

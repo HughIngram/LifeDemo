@@ -44,7 +44,7 @@ final class PatternLoader implements FileHelper {
     public Grid loadPattern(final String patternId) {
         final File directory = new File(Environment.getExternalStorageDirectory(), PATTERNS_DIR);
         final File patternFile = new File(directory, patternId);
-        final PatternParser parser = new PatternParser();
+        final PatternParserRle parser = new PatternParserRle();
         return parser.parsePatternFile(patternFile);
     }
 
@@ -54,6 +54,6 @@ final class PatternLoader implements FileHelper {
 
     private Grid loadPatternFromResources(@RawRes final int id) {
         final String patternRle = system.getStringFromRawResource(id);
-        return new PatternParser().setUpArray(patternRle);
+        return new PatternParserRle().setUpArray(patternRle);
     }
 }

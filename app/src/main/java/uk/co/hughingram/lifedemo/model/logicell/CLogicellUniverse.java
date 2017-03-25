@@ -138,7 +138,13 @@ public class CLogicellUniverse implements Runnable {
 		logicellUnivThread.start();
 	}
 
-	/** Construct a Logical Problem e.d. a combination of templates. */
+	// reverse engineer how this method works..
+	/** Construct a Logical Problem e.d. a combination of templates.
+     * @param templ - the equation string for some other problem?
+     * @param st - the equation string.
+     * @param entries - ?
+     * @param se - not used
+     * */
 	public void GenLogiProblem(String templ[], int st, boolean entries[], int se) {
 		NbTemplate = st;
 		LogiTempl = null;
@@ -845,6 +851,10 @@ public class CLogicellUniverse implements Runnable {
 	private void SetSpeed(int s) {
 		speed=Math.max(s,0);
 		DisplayStep=(speed>0 ? 1 : DefaultDisplayStep);
+	}
+
+	public Vector getBlocks() {
+		return cellsBlocs;
 	}
 }
 
