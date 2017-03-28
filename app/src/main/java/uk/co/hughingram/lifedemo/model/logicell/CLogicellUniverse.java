@@ -73,7 +73,7 @@ public class CLogicellUniverse implements Runnable {
 	/** Contains the working list. Just a pointer */
 	private Vector blocTmp;
 	/** 2 lists of blocks */
-	private Vector blocks1, blocks2;
+	private Vector<CCells> blocks1, blocks2;
 	/** A pattern */
 	private CPattern Pattern;
 	/** Logical structure e.d. a list of templates (equations)
@@ -118,7 +118,7 @@ public class CLogicellUniverse implements Runnable {
 
 	/** Launch thread */
 	public void run() {
-		Thread thisThread=Thread.currentThread();
+		Thread thisThread = Thread.currentThread();
 		isRunning=true;
 		while(logicellUnivThread==thisThread) {
 			Go();
@@ -145,7 +145,7 @@ public class CLogicellUniverse implements Runnable {
      * @param entries - ?
      * @param se - not used
      * */
-	public void GenLogiProblem(String templ[], int st, boolean entries[], int se) {
+	public void genLogiProblem(String templ[], int st, boolean entries[], int se) {
 		NbTemplate = st;
 		LogiTempl = null;
 		LogiTempl = new CLogiTemplate[NbTemplate];
@@ -381,14 +381,14 @@ public class CLogicellUniverse implements Runnable {
 			long cells, nCells, neCells, eCells, seCells, sCells, swCells, wCells, nwCells;
 			cells = bcrt.cellsVal;
 			// get the values of adjacent blocks. Substitute all false at edges of grid.
-			nCells = (bcrt.NBloc != null ? bcrt.NBloc.cellsVal : 0x0L);
-			neCells = (bcrt.NEBloc!=null ? bcrt.NEBloc.cellsVal : 0x0L);
-			eCells = (bcrt.EBloc!=null ? bcrt.EBloc.cellsVal : 0x0L);
-			seCells = (bcrt.SEBloc!=null ? bcrt.SEBloc.cellsVal : 0x0L);
-			sCells = (bcrt.SBloc!=null ? bcrt.SBloc.cellsVal : 0x0L);
-			swCells = (bcrt.SWBloc!=null ? bcrt.SWBloc.cellsVal : 0x0L);
-			wCells = (bcrt.WBloc!=null ? bcrt.WBloc.cellsVal : 0x0L);
-			nwCells = (bcrt.NWBloc!=null ? bcrt.NWBloc.cellsVal : 0x0L);
+			nCells = (bcrt.northBloc != null ? bcrt.northBloc.cellsVal : 0x0L);
+			neCells = (bcrt.northEastBloc !=null ? bcrt.northEastBloc.cellsVal : 0x0L);
+			eCells = (bcrt.eastBloc !=null ? bcrt.eastBloc.cellsVal : 0x0L);
+			seCells = (bcrt.southEastBloc !=null ? bcrt.southEastBloc.cellsVal : 0x0L);
+			sCells = (bcrt.southBloc !=null ? bcrt.southBloc.cellsVal : 0x0L);
+			swCells = (bcrt.southWestBloc !=null ? bcrt.southWestBloc.cellsVal : 0x0L);
+			wCells = (bcrt.westBloc !=null ? bcrt.westBloc.cellsVal : 0x0L);
+			nwCells = (bcrt.northWestBloc !=null ? bcrt.northWestBloc.cellsVal : 0x0L);
 
 			// North-West corner
 			vcrt = ( ( ((0x1L & nwCells) << 2) |
@@ -398,17 +398,17 @@ public class CLogicellUniverse implements Runnable {
 					( ((0x1L & (wCells >>> 48)) << 2) |
 							((0x3L & (cells >>> 54))) );
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.NBloc == null) {
+			if(ccrt && bcrt.northBloc == null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs, bcrt.x, bcrt.y-1));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x,bcrt.y-1));
 				sizeCrt++;
 			}
-			if(ccrt && bcrt.WBloc == null) {
+			if(ccrt && bcrt.westBloc == null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x-1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x-1,bcrt.y));
 				sizeCrt++;
 			}
-			if(ccrt && bcrt.NWBloc == null) {
+			if(ccrt && bcrt.northWestBloc == null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x-1,bcrt.y-1));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x-1,bcrt.y-1));
 				sizeCrt++;
@@ -422,7 +422,7 @@ public class CLogicellUniverse implements Runnable {
 						( (0x7L & (cells >>> (53-(j-9)))) << 3 ) |
 						( 0x7L & (cells >>> (45-(j-9))) );
 				ccrt = ((vcrt >> 4) & 0x1L) >0;
-				if(ccrt && bcrt.NBloc==null) {
+				if(ccrt && bcrt.northBloc ==null) {
 					cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x,bcrt.y-1));
 					blocTmp.addElement(new CCells(blocTmp,bcrt.x,bcrt.y-1));
 					sizeCrt++;
@@ -439,17 +439,17 @@ public class CLogicellUniverse implements Runnable {
 					( ((0x3L & (cells >>> 48)) << 1) |
 							(0x1L & (eCells >>> 55)) );
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.NBloc==null) {
+			if(ccrt && bcrt.northBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x,bcrt.y-1));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x,bcrt.y-1));
 				sizeCrt++;
 			}
-			if(ccrt && bcrt.EBloc==null) {
+			if(ccrt && bcrt.eastBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x+1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x+1,bcrt.y));
 				sizeCrt++;
 			}
-			if(ccrt && bcrt.NEBloc==null) {
+			if(ccrt && bcrt.northEastBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x+1,bcrt.y-1));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x+1,bcrt.y-1));
 				sizeCrt++;
@@ -465,7 +465,7 @@ public class CLogicellUniverse implements Runnable {
 					( ( ((wCells >>> 40) & 0x1L) << 2 ) |
 							(0x3L & (cells >>> 46 )));
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.WBloc==null) {
+			if(ccrt && bcrt.westBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x-1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x-1,bcrt.y));
 				sizeCrt++;
@@ -492,7 +492,7 @@ public class CLogicellUniverse implements Runnable {
 					( ( ((eCells >>> 47) & 0x1L) << 0 ) |
 							(0x3L & (cells >>> 40))<<1);
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.EBloc==null) {
+			if(ccrt && bcrt.eastBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x+1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x+1,bcrt.y));
 				sizeCrt++;
@@ -508,7 +508,7 @@ public class CLogicellUniverse implements Runnable {
 					( ( ((wCells >>> 32) & 0x1L) << 2 ) |
 							(0x3L & (cells >>> 38 )));
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.WBloc==null) {
+			if(ccrt && bcrt.westBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x-1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x-1,bcrt.y));
 				sizeCrt++;
@@ -535,7 +535,7 @@ public class CLogicellUniverse implements Runnable {
 					( ( ((eCells >>> 39) & 0x1L) << 0 ) |
 							(0x3L & (cells >>> 32))<<1);
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.EBloc==null) {
+			if(ccrt && bcrt.eastBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x+1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x+1,bcrt.y));
 				sizeCrt++;
@@ -551,7 +551,7 @@ public class CLogicellUniverse implements Runnable {
 					( ( ((wCells >>> 24) & 0x1L) << 2 ) |
 							(0x3L & (cells >>> 30 )));
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.WBloc==null) {
+			if(ccrt && bcrt.westBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x-1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x-1,bcrt.y));
 				sizeCrt++;
@@ -577,7 +577,7 @@ public class CLogicellUniverse implements Runnable {
 					( ( ((eCells >>> 31) & 0x1L)  ) |
 							(0x3L & (cells >>> 24))<<1);
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.EBloc==null) {
+			if(ccrt && bcrt.eastBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x+1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x+1,bcrt.y));
 				sizeCrt++;
@@ -594,7 +594,7 @@ public class CLogicellUniverse implements Runnable {
 					( ( ((wCells >>> 16) & 0x1L) << 2 ) |
 							(0x3L & (cells >>> 22 )));
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.WBloc==null) {
+			if(ccrt && bcrt.westBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x-1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x-1,bcrt.y));
 				sizeCrt++;
@@ -621,7 +621,7 @@ public class CLogicellUniverse implements Runnable {
 					( ( ((eCells >>> 23) & 0x1L)  ) |
 							(0x3L & (cells >>> 16))<<1);
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.EBloc==null) {
+			if(ccrt && bcrt.eastBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x+1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x+1,bcrt.y));
 				sizeCrt++;
@@ -637,7 +637,7 @@ public class CLogicellUniverse implements Runnable {
 					( ( ((wCells >>> 8) & 0x1L) << 2 ) |
 							(0x3L & (cells >>> 14 )));
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.WBloc==null) {
+			if(ccrt && bcrt.westBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x-1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x-1,bcrt.y));
 				sizeCrt++;
@@ -663,7 +663,7 @@ public class CLogicellUniverse implements Runnable {
 					( ( ((eCells >>> 15) & 0x1L)  ) |
 							(0x3L & (cells >>> 8))<<1);
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.EBloc==null) {
+			if(ccrt && bcrt.eastBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x+1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x+1,bcrt.y));
 				sizeCrt++;
@@ -679,7 +679,7 @@ public class CLogicellUniverse implements Runnable {
 					( ( ((wCells >>> 0) & 0x1L) << 2 ) |
 							(0x3L & (cells >>> 6 )));
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.WBloc==null) {
+			if(ccrt && bcrt.westBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x-1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x-1,bcrt.y));
 				sizeCrt++;
@@ -705,7 +705,7 @@ public class CLogicellUniverse implements Runnable {
 					( ( ((eCells >>> 7) & 0x1L)  ) |
 							(0x3L & (cells >>> 0))<<1);
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.EBloc==null) {
+			if(ccrt && bcrt.eastBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x+1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x+1,bcrt.y));
 				sizeCrt++;
@@ -721,17 +721,17 @@ public class CLogicellUniverse implements Runnable {
 					( ((0x1L & (swCells >>> 56)) << 2) |
 							(0x3L & (sCells >>> 62)) );
 			ccrt = ((vcrt >> 4) & 0x1L) >0;
-			if(ccrt && bcrt.SBloc==null) {
+			if(ccrt && bcrt.southBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x,bcrt.y+1));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x,bcrt.y+1));
 				sizeCrt++;
 			}
-			if(ccrt && bcrt.WBloc==null) {
+			if(ccrt && bcrt.westBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x-1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x-1,bcrt.y));
 				sizeCrt++;
 			}
-			if(ccrt && bcrt.SWBloc==null) {
+			if(ccrt && bcrt.southWestBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x-1,bcrt.y+1));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x-1,bcrt.y+1));
 				sizeCrt++;
@@ -745,7 +745,7 @@ public class CLogicellUniverse implements Runnable {
 						( (0x7L & (cells >>> (53-(j-9)))) << 3 ) |
 						( (0x7L & (sCells >>> (56+(62-j)))) );
 				ccrt = ((vcrt >> 4) & 0x1L) >0;
-				if(ccrt && bcrt.SBloc==null) {
+				if(ccrt && bcrt.southBloc ==null) {
 					cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x,bcrt.y+1));
 					blocTmp.addElement(new CCells(blocTmp,bcrt.x,bcrt.y+1));
 					sizeCrt++;
@@ -762,17 +762,17 @@ public class CLogicellUniverse implements Runnable {
 					( ((0x3L & (sCells >>> 56)) << 1) |
 							((0x1L & (seCells >>> 63))) );
 			ccrt = ((vcrt >> 4) & 0x1L) > 0;
-			if(ccrt && bcrt.SBloc==null) {
+			if(ccrt && bcrt.southBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x,bcrt.y+1));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x,bcrt.y+1));
 				sizeCrt++;
 			}
-			if(ccrt && bcrt.EBloc==null) {
+			if(ccrt && bcrt.eastBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x+1,bcrt.y));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x+1,bcrt.y));
 				sizeCrt++;
 			}
-			if(ccrt && bcrt.SEBloc==null) {
+			if(ccrt && bcrt.southEastBloc ==null) {
 				cellsBlocs.addElement(new CCells(cellsBlocs,bcrt.x+1,bcrt.y+1));
 				blocTmp.addElement(new CCells(blocTmp,bcrt.x+1,bcrt.y+1));
 				sizeCrt++;
@@ -853,7 +853,7 @@ public class CLogicellUniverse implements Runnable {
 		DisplayStep=(speed>0 ? 1 : DefaultDisplayStep);
 	}
 
-	public Vector getBlocks() {
+	public Vector<CCells> getBlocks() {
 		return cellsBlocs;
 	}
 }

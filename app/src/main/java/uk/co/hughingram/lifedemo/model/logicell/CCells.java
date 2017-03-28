@@ -34,43 +34,116 @@ static long Tps, TpsA=0;
   /** # empty generations */
   private int EmptyGen=0;
   /** Point to North bloc */
-  CCells NBloc;
+  CCells northBloc;
   /** Point to NEast bloc */
-  CCells NEBloc;
+  CCells northEastBloc;
   /** Point to Eastern bloc */
-  CCells EBloc;
+  CCells eastBloc;
   /** Point to SouthEast bloc */
-  CCells SEBloc;
+  CCells southEastBloc;
   /** Point to South bloc */
-  CCells SBloc;
+  CCells southBloc;
   /** Point to SouthWest bloc */
-  CCells SWBloc;
+  CCells southWestBloc;
   /** Point to Western bloc */
-  CCells WBloc;
-  /** Point to NorthWest bloc */
-  CCells NWBloc;
+  CCells westBloc;
+  /** Points to NorthWest bloc */
+   CCells northWestBloc;
+
   /** Cells values : long 64 bits = 8x8 */
   long cellsVal=0L;
 
   /** Pointer to the List which contains blocks */
   private Vector FatherList;
 
+  public long getCellsVal() {
+    return cellsVal;
+  }
+
+  public int getX() {
+    return x;
+  }
+
+  public int getY() {
+    return y;
+  }
+
+  public CCells getNorthBloc() {
+    return northBloc;
+  }
+
+  public void setNorthBloc(CCells northBloc) {
+    this.northBloc = northBloc;
+  }
+
+  public CCells getNorthEastBloc() {
+    return northEastBloc;
+  }
+
+  public void setNorthEastBloc(CCells northEastBloc) {
+    this.northEastBloc = northEastBloc;
+  }
+
+  public CCells getEastBloc() {
+    return eastBloc;
+  }
+
+  public void setEastBloc(CCells eastBloc) {
+    this.eastBloc = eastBloc;
+  }
+
+  public CCells getSouthEastBloc() {
+    return southEastBloc;
+  }
+
+  public void setSouthEastBloc(CCells southEastBloc) {
+    this.southEastBloc = southEastBloc;
+  }
+
+  public CCells getSouthBloc() {
+    return southBloc;
+  }
+
+  public void setSouthBloc(CCells southBloc) {
+    this.southBloc = southBloc;
+  }
+
+  public CCells getSouthWestBloc() {
+    return southWestBloc;
+  }
+
+  public void setSouthWestBloc(CCells southWestBloc) {
+    this.southWestBloc = southWestBloc;
+  }
+
+  public CCells getWestBloc() {
+    return westBloc;
+  }
+
+  public void setWestBloc(CCells westBloc) {
+    this.westBloc = westBloc;
+  }
+
+  public CCells getNwBloc() {
+    return northWestBloc;
+  }
+
   /** Construct cells at pos */
   public CCells(Vector bv,int _x, int _y) {
     FatherList=bv;
     x=_x;
     y=_y;
-    NBloc=null;
-    NEBloc=null;
-    EBloc=null;
-    SEBloc=null;
-    SBloc=null;
-    SWBloc=null;
-    WBloc=null;
-    NWBloc=null;
+    northBloc =null;
+    northEastBloc =null;
+    eastBloc =null;
+    southEastBloc =null;
+    southBloc =null;
+    southWestBloc =null;
+    westBloc =null;
+    northWestBloc =null;
     EmptyGen=0;
     cellsVal=0L;
-    SetPointers();
+    setPointers();
   }
   
   /** Construct cells at pos according to cells values */
@@ -78,29 +151,29 @@ static long Tps, TpsA=0;
     FatherList=bv;
     x=_x;
     y=_y;
-    NBloc=null;
-    NEBloc=null;
-    EBloc=null;
-    SEBloc=null;
-    SBloc=null;
-    SWBloc=null;
-    WBloc=null;
-    NWBloc=null;
+    northBloc =null;
+    northEastBloc =null;
+    eastBloc =null;
+    southEastBloc =null;
+    southBloc =null;
+    southWestBloc =null;
+    westBloc =null;
+    northWestBloc =null;
     EmptyGen=0;
     cellsVal=v;
-    SetPointers();
+    setPointers();
   }
 
   /** destruction of a bloc, updates pointers */
   void DestroyBloc() {
-    if(SBloc!=null) SBloc.NBloc=null;
-    if(SEBloc!=null) SEBloc.NWBloc=null;
-    if(EBloc!=null) EBloc.WBloc=null;
-    if(NEBloc!=null) NEBloc.SWBloc=null;
-    if(NBloc!=null) NBloc.SBloc=null;
-    if(NWBloc!=null) NWBloc.SEBloc=null;
-    if(WBloc!=null) WBloc.EBloc=null;
-    if(SWBloc!=null) SWBloc.NEBloc=null;
+    if(southBloc !=null) southBloc.northBloc =null;
+    if(southEastBloc !=null) southEastBloc.northWestBloc =null;
+    if(eastBloc !=null) eastBloc.westBloc =null;
+    if(northEastBloc !=null) northEastBloc.southWestBloc =null;
+    if(northBloc !=null) northBloc.southBloc =null;
+    if(northWestBloc !=null) northWestBloc.southEastBloc =null;
+    if(westBloc !=null) westBloc.eastBloc =null;
+    if(southWestBloc !=null) southWestBloc.northEastBloc =null;
   }
 
   // commented out
@@ -380,7 +453,7 @@ static long Tps, TpsA=0;
   This function search the neighbours of a new cell.
   The best way should have been a wonderful BTree or hashtable
   but I think I've worked enough, sorry ;=) */
-  private void SetPointers() {
+  private void setPointers() {
     int xcrt,ycrt;
     CCells c;
     int nbf=0;
@@ -388,14 +461,14 @@ static long Tps, TpsA=0;
       c=(CCells)(FatherList.elementAt(i));
       xcrt=c.x;
       ycrt=c.y;
-      if(xcrt==x && ycrt==y+1) { SBloc=c; c.NBloc=this; nbf++; }
-      if(xcrt==x+1 && ycrt==y+1) { SEBloc=c; c.NWBloc=this; nbf++; }
-      if(xcrt==x+1 && ycrt==y) { EBloc=c;  c.WBloc=this; nbf++; }
-      if(xcrt==x+1 && ycrt==y-1) {  NEBloc=c; c.SWBloc=this; nbf++; }
-      if(xcrt==x && ycrt==y-1) { NBloc=c; c.SBloc=this; nbf++; }
-      if(xcrt==x-1 && ycrt==y-1) { NWBloc=c; c.SEBloc=this; nbf++; }
-      if(xcrt==x-1 && ycrt==y) { WBloc=c; c.EBloc=this; nbf++; }
-      if(xcrt==x-1 && ycrt==y+1) { SWBloc=c; c.NEBloc=this; nbf++; }
+      if(xcrt==x && ycrt==y+1) { southBloc =c; c.northBloc =this; nbf++; }
+      if(xcrt==x+1 && ycrt==y+1) { southEastBloc =c; c.northWestBloc =this; nbf++; }
+      if(xcrt==x+1 && ycrt==y) { eastBloc =c;  c.westBloc =this; nbf++; }
+      if(xcrt==x+1 && ycrt==y-1) {  northEastBloc =c; c.southWestBloc =this; nbf++; }
+      if(xcrt==x && ycrt==y-1) { northBloc =c; c.southBloc =this; nbf++; }
+      if(xcrt==x-1 && ycrt==y-1) { northWestBloc =c; c.southEastBloc =this; nbf++; }
+      if(xcrt==x-1 && ycrt==y) { westBloc =c; c.eastBloc =this; nbf++; }
+      if(xcrt==x-1 && ycrt==y+1) { southWestBloc =c; c.northEastBloc =this; nbf++; }
       if(nbf==8) break;
     }
   }

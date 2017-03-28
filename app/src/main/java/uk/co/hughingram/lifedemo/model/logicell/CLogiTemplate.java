@@ -23,8 +23,7 @@
 package uk.co.hughingram.lifedemo.model.logicell;
 
 //import jpUtil.*;
-import jpUtil.JPParser;
-
+import uk.co.hughingram.lifedemo.model.logicell.jputil.JPParser;
 import java.util.*;
 
 /** Generates the global structure according to Logical String entry.

@@ -13,7 +13,7 @@ public final class Grid {
 
     private final static String TAG = "Grid";
 
-    Grid(final int height, final int width) {
+    public Grid(final int height, final int width) {
         array = initialiseArray(height, width);
     }
 
@@ -36,15 +36,15 @@ public final class Grid {
         }
     }
 
-    void setCell(final int x, final int y, boolean state) {
+    public void setCell(final int x, final int y, boolean state) {
         array[y][x] = state;
     }
 
-    int getWidth() {
+    public int getWidth() {
         return array[0].length;
     }
 
-    int getHeight() {
+    public int getHeight() {
         return array.length;
     }
 

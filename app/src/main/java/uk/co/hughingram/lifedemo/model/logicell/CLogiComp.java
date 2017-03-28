@@ -22,7 +22,7 @@
 //***************************************************************************
 package uk.co.hughingram.lifedemo.model.logicell;
 
-import jpUtil.*;
+import uk.co.hughingram.lifedemo.model.logicell.jputil.JPParser;
 
 /** Manages logical components : A template is a components organisation. */
 public class CLogiComp {
