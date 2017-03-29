@@ -28,7 +28,7 @@ public final class PatternGenerator {
     public Grid genPattern(final String equation) {
         String equationArray[] = new String[1];
         equationArray[0] = equation;
-        final boolean[] booleans = {false, false, false, false};
+        final boolean[] booleans = {true, true, true, true};
         logicellUniverse.genLogiProblem(equationArray, 1, booleans, 4);
 
         final Vector<CCells> blocks = logicellUniverse.getBlocks(); //the Universe

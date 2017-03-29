@@ -201,6 +201,8 @@ https://stackoverflow.com/questions/7977392/android-dialogfragment-vs-dialog/210
 
 https://android-developers.googleblog.com/2012/05/using-dialogfragments.html
 
+problem
+
 ====================
 current tasks:
 >implement speed control slider
