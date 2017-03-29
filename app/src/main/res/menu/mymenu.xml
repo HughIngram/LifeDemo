@@ -8,6 +8,12 @@
         app:showAsAction="always"
     />
     <item
+        android:id="@+id/formula"
+        android:icon="@android:drawable/edit_text"
+        app:showAsAction="always"
+        android:title=""
+        />
+    <item
         android:id="@+id/menu_item_load"
         android:title=""
         app:showAsAction="always"

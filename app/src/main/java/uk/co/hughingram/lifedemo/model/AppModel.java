@@ -48,6 +48,14 @@ public interface AppModel {
      */
     void loadPattern(String id);
 
+    // TODO include truth values
+    /**
+     * Create and load a pattern to solve the given boolean equation.
+     *
+     * @param equation the equation to be solved.
+     */
+    void createPattern(String equation);
+
     void setPresenter(AppPresenterForModel presenter);
 
     /**

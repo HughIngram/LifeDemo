@@ -1,11 +1,14 @@
 package uk.co.hughingram.lifedemo.presenter;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,6 +17,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import uk.co.hughingram.lifedemo.R;
 import uk.co.hughingram.lifedemo.model.AppModel;
@@ -34,7 +38,8 @@ import uk.co.hughingram.lifedemo.view.AppViewImpl;
  * This class should not be responsible for View logic.
  *
  */
-public final class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity
+        implements FormulaInputDialog.FormulaInputDialogListener {
 
     final AppPresenterImpl presenterImpl = new AppPresenterImpl();
     AppView view;
@@ -142,6 +147,11 @@ public final class MainActivity extends AppCompatActivity {
         if (id == R.id.menu_item_step) {
             model.iterateOnce();
         }
+        if (id == R.id.formula) {
+            FragmentManager fm = getSupportFragmentManager();
+            FormulaInputDialog editNameDialog = new FormulaInputDialog();
+            editNameDialog.show(fm, "fragment_test");
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -152,5 +162,12 @@ public final class MainActivity extends AppCompatActivity {
         invalidateOptionsMenu();
         return super.onPrepareOptionsMenu(menu);
     }
+
+    @Override
+    public void onFinishEditDialog(final String inputText) {
+        model.createPattern(inputText);
+        Toast.makeText(this, "Pattern to solve equation: " + inputText, Toast.LENGTH_SHORT).show();
+    }
+
 
 }

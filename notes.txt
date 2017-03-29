@@ -189,12 +189,23 @@ investigate this. Take screenshots of the fancy Android Tools used for investiga
 Explain why Android imposes this limitation, and what could be done to overcome it - is overcoming
 it even a good idea?
 ====================
+implement function input UI element
+>this will be implemented as an AlertDialog
+https://developer.android.com/reference/android/app/AlertDialog.html
+button in the actionbar will open an alertDialog.
+>implement a dead simple one for now
+
+.. maybe use DialogFragment instead
+>why use DialogFragment over AlertDialog??
+https://stackoverflow.com/questions/7977392/android-dialogfragment-vs-dialog/21032871#21032871
+
+https://android-developers.googleblog.com/2012/05/using-dialogfragments.html
+
+====================
 current tasks:
 >implement speed control slider
     -investigate speed limit on animation
     -investigate exponential speed control
 
->read and understand the french code
->implement function input UI element
->integrate it into my app
 ====================
+

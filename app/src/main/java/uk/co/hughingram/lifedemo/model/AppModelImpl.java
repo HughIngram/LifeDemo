@@ -29,9 +29,7 @@ public final class AppModelImpl implements AppModel {
 
     public AppModelImpl(final SystemWrapperForModel system) {
         patternGenerator = new PatternGenerator();
-        gridHolder = new GridHolder(patternGenerator.genPattern("A^B"));
-        // TODO above 2 lines for testing only
-//        gridHolder = new GridHolder(new PatternLoader(system).getDefaultGrid());
+        gridHolder = new GridHolder(new PatternLoader(system).getDefaultGrid());
         this.system = system;
     }
 
@@ -96,6 +94,12 @@ public final class AppModelImpl implements AppModel {
     @Override
     public void loadPattern(final String id) {
         gridHolder = new GridHolder(new PatternLoader(system).loadPattern(id));
+    }
+
+    @Override
+    public void createPattern(final String equation) {
+        final Grid grid = patternGenerator.genPattern(equation);
+        gridHolder = new GridHolder(grid);
     }
 
     @Override
