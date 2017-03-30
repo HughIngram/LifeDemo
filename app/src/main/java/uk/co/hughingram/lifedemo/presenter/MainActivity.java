@@ -151,7 +151,7 @@ public final class MainActivity extends AppCompatActivity
             gridGraphic.pause();
             FragmentManager fm = getSupportFragmentManager();
             FormulaInputDialog editNameDialog = new FormulaInputDialog();
-            editNameDialog.show(fm, "fragment_test");
+            editNameDialog.show(fm, "fragment_formula");
         }
         return super.onOptionsItemSelected(item);
     }
@@ -165,12 +165,11 @@ public final class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFinishEditDialog(final String inputText) {
-        model.createPattern(inputText);
+    public void onFinishEditDialog(final String inputText, boolean[] values) {
+        model.createPattern(inputText, values);
         gridGraphic.invalidate();
         gridGraphic.start();
         Toast.makeText(this, "Pattern to solve equation: " + inputText, Toast.LENGTH_SHORT).show();
     }
-
 
 }

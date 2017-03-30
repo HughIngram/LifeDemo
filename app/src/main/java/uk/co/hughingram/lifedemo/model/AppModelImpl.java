@@ -97,8 +97,8 @@ public final class AppModelImpl implements AppModel {
     }
 
     @Override
-    public void createPattern(final String equation) {
-        final Grid grid = patternGenerator.genPattern(equation);
+    public void createPattern(final String equation, final boolean[] values) {
+        final Grid grid = patternGenerator.genPattern(equation, values);
         gridHolder = new GridHolder(grid);
     }
 

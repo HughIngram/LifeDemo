@@ -25,12 +25,10 @@ public final class PatternGenerator {
     /**
      * Generates a pattern for the given boolean equation.
      */
-    public Grid genPattern(final String equation) {
+    public Grid genPattern(final String equation, final boolean[] values) {
         String equationArray[] = new String[1];
         equationArray[0] = equation;
-        final boolean[] booleans = {true, true, true, true};
-        logicellUniverse.genLogiProblem(equationArray, 1, booleans, 4);
-
+        logicellUniverse.genLogiProblem(equationArray, 1, values, 4);
         final Vector<CCells> blocks = logicellUniverse.getBlocks(); //the Universe
 
         int width = 0;

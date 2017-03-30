@@ -208,6 +208,8 @@ current tasks:
 >implement speed control slider
     -investigate speed limit on animation
     -investigate exponential speed control
+Bugs:
+>opening the formula input whilst a simulation is running can freeze the app.
 
 ====================
 

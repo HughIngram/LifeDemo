@@ -1,0 +1,132 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/formula_input"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="50dp"
+    android:orientation="vertical"
+    >
+
+        <TextView
+            android:id="@+id/create_circuit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Input Formula"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/txt_function_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create_circuit"
+            android:enabled="false"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
+
+        <LinearLayout
+            android:id="@+id/layout_input_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/txt_function_input"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_button_a"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:text="A" />
+
+            <Button
+                android:id="@+id/btn_button_b"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:text="B" />
+
+            <Button
+                android:id="@+id/btn_button_c"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:text="C" />
+
+            <Button
+                android:id="@+id/btn_button_d"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:text="D" />
+
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_button_and"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:text="AND" />
+        <Button
+            android:id="@+id/btn_button_or"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:text="OR" />
+        <Button
+            android:id="@+id/btn_button_not"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:text="NOT" />
+        <Button
+            android:id="@+id/btn_button_open_bracket"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:text="(" />
+        <Button
+            android:id="@+id/btn_button_close_bracket"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:text=")" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp">
+            <CheckBox
+                android:id="@+id/checkbox_a"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A"/>
+        <CheckBox
+            android:id="@+id/checkbox_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B"/>
+        <CheckBox
+            android:id="@+id/checkbox_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C"/>
+        <CheckBox
+            android:id="@+id/checkbox_d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="D"/>
+    </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_okay"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/layout_input_buttons"
+            android:text="Okay" />
+
+</LinearLayout>
