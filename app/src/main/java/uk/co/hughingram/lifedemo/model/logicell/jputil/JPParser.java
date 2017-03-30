@@ -33,7 +33,7 @@ public class JPParser {
     strinf += "#";
     C=strinf.charAt(IndInf);
     while(C!='#') {
-      if(IsBoolOper(C)) {
+      if(isBoolOper(C)) {
         More=!St.empty();
         while(More) {
           if(OperPriority( ((Character)St.peek()).charValue() )>=OperPriority(C)) {
@@ -69,11 +69,11 @@ public class JPParser {
 
   /** test if a char is an operator */
   public static boolean IsOper(char c) {
-    return(IsBoolOper(c));
+    return(isBoolOper(c));
   }
 
   /** Test if a char is a boolean operator */
-  public static boolean IsBoolOper(char o) {
+  public static boolean isBoolOper(char o) {
     if(o==OP_AND || o==OP_OR || o==OP_NOT || o==OP_XOR)
       return(true);
     return(false);
@@ -86,14 +86,14 @@ public class JPParser {
   }
 
   /** Test if a char is a unary operator */
-  public static boolean IsUnaryOper(char op) {
+  public static boolean isUnaryOper(char op) {
     if(op==OP_NOT)
       return(true);
     return(false);
   }
   
   /** Returns # of entries in a string */
-  public static int NbEntry(String str) {
+  public static int nbEntry(String str) {
     int n=0;
     char c;
     for(int i=0;i<str.length();i++) {

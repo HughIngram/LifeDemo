@@ -42,6 +42,7 @@ public class CPattern {
 
   static final int ENTRY_WIDTH=40;
   static final int ENTRY_OPYOFS=7;
+  // what do these do???
   static final int OUTPUT_RIGHT_OFFSET=21;
   static final int OUTPUT_LEFT_OFFSET=14;
 

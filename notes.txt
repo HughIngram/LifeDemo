@@ -204,10 +204,25 @@ https://android-developers.googleblog.com/2012/05/using-dialogfragments.html
 problem
 
 ====================
+Modifying space between gates:
+>phase must be maintained
+    - based on the number of steps it takes for a glider to cycle
+    - gliders need room to pass clear of glider guns
+
+====================
 current tasks:
 >implement speed control slider
     -investigate speed limit on animation
     -investigate exponential speed control
+>implement pinch & zoom
+>investigate optimisation?
+    -reduce space between gates?
+>try increasing space between gates
+    -to demonstrate the effect this has on computation time
+
+>read from CLogiTemplate.outputCell
+    I think this is the cell which contains the output state
+
 Bugs:
 >opening the formula input whilst a simulation is running can freeze the app.
 

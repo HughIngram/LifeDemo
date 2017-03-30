@@ -28,15 +28,15 @@ import uk.co.hughingram.lifedemo.model.logicell.jputil.JPParser;
 public class CLogiComp {
 
   /** # of patterns in the component */
-  int NbPat;
+  int nbPat;
   /** Patterns tab : the patterns list of the component */
-  CPattern PatTab[];
+  CPattern patTab[];
   /** Component size data */
   int MinX, MinY, MaxX, MaxY;
   /** Component Output position */
   int ExitX, ExitY=0;
 
-  
+
   /** Validity flag */
   private boolean Valid=false;
   /** Output Offset */
@@ -50,7 +50,7 @@ public class CLogiComp {
   private boolean OutpDirection;
 
 
- /** Construct a single pattern. */
+  /** Construct a single pattern. */
   public CLogiComp(int pat) {
     if(pat!=CPattern.P_RANDOM && pat!=CPattern.P_BIGUN && pat!=CPattern.P_MAKEGUN)
       x=y=250;
@@ -58,22 +58,22 @@ public class CLogiComp {
       x=90;
       y=60;
     }
-    NbPat=1;
-    PatTab=new CPattern[NbPat];
-    PatTab[0]=new CPattern(x,y,pat,false,false);
-    PatTab[0].SetPattern();
-     Entry1X=PatTab[0].OutputX;
-     Entry1Y=PatTab[0].OutputY;
-     Entry2X=PatTab[0].OutputX;
-     Entry2Y=PatTab[0].OutputY;
-     OutputX=PatTab[0].OutputX;
-     OutputY=PatTab[0].OutputY;
-     OutpDirection=PatTab[0].OutputDir;
-     MinX=x;
-     MinY=y;
-     MaxX=MinX+PatTab[0].NbCols;
-     MaxY=MinY+PatTab[0].NbLines;
-     Valid=true;
+    nbPat =1;
+    patTab =new CPattern[nbPat];
+    patTab[0]=new CPattern(x,y,pat,false,false);
+    patTab[0].SetPattern();
+    Entry1X= patTab[0].OutputX;
+    Entry1Y= patTab[0].OutputY;
+    Entry2X= patTab[0].OutputX;
+    Entry2Y= patTab[0].OutputY;
+    OutputX= patTab[0].OutputX;
+    OutputY= patTab[0].OutputY;
+    OutpDirection= patTab[0].OutputDir;
+    MinX=x;
+    MinY=y;
+    MaxX=MinX+ patTab[0].NbCols;
+    MaxY=MinY+ patTab[0].NbLines;
+    Valid=true;
   }
 
 
@@ -81,26 +81,26 @@ public class CLogiComp {
   public CLogiComp(boolean entry, boolean dir) {
     dir= !dir;
     x=y=0;
-    NbPat=1;
-    PatTab=new CPattern[NbPat];
+    nbPat =1;
+    patTab =new CPattern[nbPat];
     if(entry)
-      PatTab[0]=new CPattern(x,y,CPattern.P_ENTRYRT,dir,false);
+      patTab[0]=new CPattern(x,y,CPattern.P_ENTRYRT,dir,false);
     else
-      PatTab[0]=new CPattern(x,y,CPattern.P_ENTRYRF,dir,false);
-    PatTab[0].SetPattern();
+      patTab[0]=new CPattern(x,y,CPattern.P_ENTRYRF,dir,false);
+    patTab[0].SetPattern();
 
-    Entry1X=PatTab[0].OutputX;
-    Entry1Y=PatTab[0].OutputY;
-    Entry2X=PatTab[0].OutputX;
-    Entry2Y=PatTab[0].OutputY;
-    OutputX=PatTab[0].OutputX;
-    OutputY=PatTab[0].OutputY;
-    OutpDirection=PatTab[0].OutputDir;
+    Entry1X= patTab[0].OutputX;
+    Entry1Y= patTab[0].OutputY;
+    Entry2X= patTab[0].OutputX;
+    Entry2Y= patTab[0].OutputY;
+    OutputX= patTab[0].OutputX;
+    OutputY= patTab[0].OutputY;
+    OutpDirection= patTab[0].OutputDir;
 
     MinX=x;
     MinY=y;
-    MaxX=MinX+PatTab[0].NbCols;
-    MaxY=MinY+PatTab[0].NbLines;
+    MaxX=MinX+ patTab[0].NbCols;
+    MaxY=MinY+ patTab[0].NbLines;
     Valid=true;
   }
 
@@ -110,11 +110,11 @@ public class CLogiComp {
       Valid=false;
       return;
     }
-    NbPat=2+Father.NbPat;
-    PatTab=new CPattern[NbPat];
+    nbPat =2+Father.nbPat;
+    patTab =new CPattern[nbPat];
     Father.MoveComp(0,0);
-    for(int i=0;i<Father.NbPat;i++) {
-      PatTab[i]=Father.PatTab[i];
+    for(int i = 0; i<Father.nbPat; i++) {
+      patTab[i]=Father.patTab[i];
     }
 
     // Right Output
@@ -122,76 +122,76 @@ public class CLogiComp {
       int dx;
       // dx has to be even
       dx=Father.MaxX+CompOffset+1+(1*
-            ((Father.MaxX+CompOffset+1+CPattern.OUTPUT_LEFT_OFFSET)-
-              Father.OutputX)%2);
-      PatTab[Father.NbPat+0]=new CPattern(dx, Father.OutputY-CPattern.ENTRY_OPYOFS+0,//1,
-                                CPattern.P_GUN30R,true,false);
-      PatTab[Father.NbPat+0].SetPattern();
+              ((Father.MaxX+CompOffset+1+CPattern.OUTPUT_LEFT_OFFSET)-
+                      Father.OutputX)%2);
+      patTab[Father.nbPat +0]=new CPattern(dx, Father.OutputY-CPattern.ENTRY_OPYOFS+0,//1,
+              CPattern.P_GUN30R,true,false);
+      patTab[Father.nbPat +0].SetPattern();
       Entry1X=Father.OutputX;
       Entry1Y=Father.OutputY;
       Entry2X=Father.OutputX;
       Entry2Y=Father.OutputY;
-      OutputX=PatTab[Father.NbPat+0].OutputX;
-      OutputY=PatTab[Father.NbPat+0].OutputY;
-      OutpDirection=PatTab[Father.NbPat+0].OutputDir;
-      int eat1x=Math.abs(PatTab[Father.NbPat+0].OutputX-Father.OutputX)/2+
-                    Father.OutputX;
+      OutputX= patTab[Father.nbPat +0].OutputX;
+      OutputY= patTab[Father.nbPat +0].OutputY;
+      OutpDirection= patTab[Father.nbPat +0].OutputDir;
+      int eat1x=Math.abs(patTab[Father.nbPat +0].OutputX-Father.OutputX)/2+
+              Father.OutputX;
       int eat1y=OutputY+(Math.abs(OutputX-eat1x));
       eat1x -= 5;
       eat1x -= OutputOffset;
       eat1y += OutputOffset;
 
       if(last) {
-        PatTab[Father.NbPat+1]=new CPattern(eat1x,eat1y,CPattern.P_OUTPUT,true,false);
+        patTab[Father.nbPat +1]=new CPattern(eat1x,eat1y,CPattern.P_OUTPUT,true,false);
         ExitX=(eat1y-OutputY)+OutputX-1;
         ExitY=eat1y;
       }
       else
-        PatTab[Father.NbPat+1]=new CPattern(eat1x,eat1y,CPattern.P_NIL,true,false);
-      PatTab[Father.NbPat+1].SetPattern();
+        patTab[Father.nbPat +1]=new CPattern(eat1x,eat1y,CPattern.P_NIL,true,false);
+      patTab[Father.nbPat +1].SetPattern();
       MinX=Father.MinX;
       MinY=Father.MinY;
-      MaxX=PatTab[Father.NbPat+0].x+PatTab[Father.NbPat+0].NbCols;
-      MaxY=PatTab[Father.NbPat+1].y+PatTab[Father.NbPat+1].NbLines;
+      MaxX= patTab[Father.nbPat +0].x+ patTab[Father.nbPat +0].NbCols;
+      MaxY= patTab[Father.nbPat +1].y+ patTab[Father.nbPat +1].NbLines;
     }
     // Left Output
     else {
       int dx;
       // dx has to be even
       dx=Father.MinX-CPattern.ENTRY_WIDTH-CompOffset-1+(1*
-          (((Father.MinX-CPattern.ENTRY_WIDTH-CompOffset-1)+
-              CPattern.OUTPUT_RIGHT_OFFSET)-Father.OutputX)%2);
+              (((Father.MinX-CPattern.ENTRY_WIDTH-CompOffset-1)+
+                      CPattern.OUTPUT_RIGHT_OFFSET)-Father.OutputX)%2);
 
-      PatTab[Father.NbPat+0]=new CPattern(dx, Father.OutputY-CPattern.ENTRY_OPYOFS+0,
-                               CPattern.P_GUN30R,false,false);
-      PatTab[Father.NbPat+0].SetPattern();
+      patTab[Father.nbPat +0]=new CPattern(dx, Father.OutputY-CPattern.ENTRY_OPYOFS+0,
+              CPattern.P_GUN30R,false,false);
+      patTab[Father.nbPat +0].SetPattern();
       Entry1X=Father.OutputX;
       Entry1Y=Father.OutputY;
       Entry2X=Father.OutputX;
       Entry2Y=Father.OutputY;
-      OutputX=PatTab[Father.NbPat+0].OutputX;
-      OutputY=PatTab[Father.NbPat+0].OutputY;
-      OutpDirection=PatTab[Father.NbPat+0].OutputDir;
+      OutputX= patTab[Father.nbPat +0].OutputX;
+      OutputY= patTab[Father.nbPat +0].OutputY;
+      OutpDirection= patTab[Father.nbPat +0].OutputDir;
 
-      int eat1x=Math.abs(PatTab[Father.NbPat+0].OutputX-Father.OutputX)/2+
-                    PatTab[Father.NbPat+0].OutputX;
+      int eat1x=Math.abs(patTab[Father.nbPat +0].OutputX-Father.OutputX)/2+
+              patTab[Father.nbPat +0].OutputX;
       int eat1y=OutputY+(Math.abs(OutputX-eat1x));
       eat1x -= 6;
       eat1x += OutputOffset;
       eat1y += OutputOffset;
 
       if(last) {
-        PatTab[Father.NbPat+1]=new CPattern(eat1x,eat1y,CPattern.P_OUTPUT,false,false);
+        patTab[Father.nbPat +1]=new CPattern(eat1x,eat1y,CPattern.P_OUTPUT,false,false);
         ExitX=(eat1y-OutputY)+OutputX-1;
         ExitY=eat1y;
       }
       else
-        PatTab[Father.NbPat+1]=new CPattern(eat1x,eat1y,CPattern.P_NIL,false,false);
-      PatTab[Father.NbPat+1].SetPattern();
-      MinX=PatTab[Father.NbPat+0].x;
+        patTab[Father.nbPat +1]=new CPattern(eat1x,eat1y,CPattern.P_NIL,false,false);
+      patTab[Father.nbPat +1].SetPattern();
+      MinX= patTab[Father.nbPat +0].x;
       MinY=Father.MinY;
       MaxX=Father.MaxX;
-      MaxY=PatTab[Father.NbPat+1].y+PatTab[Father.NbPat+1].NbLines;
+      MaxY= patTab[Father.nbPat +1].y+ patTab[Father.nbPat +1].NbLines;
     }
     Valid=true;
   }
@@ -201,10 +201,10 @@ public class CLogiComp {
     switch(op) {
       case JPParser.OP_AND :
         Valid=MakeAndComp(LeftComp, RightComp, last);
-      break;
+        break;
       case JPParser.OP_OR :
         Valid=MakeOrComp(LeftComp, RightComp, last);
-      break;
+        break;
 
       default:
         Valid=false;
@@ -220,31 +220,31 @@ public class CLogiComp {
 
   /** Construction of an AND component */
   private boolean MakeAndComp(CLogiComp LeftComp, CLogiComp RightComp, boolean last) {
-    NbPat=LeftComp.NbPat+RightComp.NbPat+3;
-    PatTab=new CPattern[NbPat];
-    for(int i=0;i<LeftComp.NbPat;i++) {
-      PatTab[i]=LeftComp.PatTab[i];
+    nbPat =LeftComp.nbPat +RightComp.nbPat +3;
+    patTab =new CPattern[nbPat];
+    for(int i = 0; i<LeftComp.nbPat; i++) {
+      patTab[i]=LeftComp.patTab[i];
     }
     int dx;
     // Right output
     if(LeftComp.OutpDirection==CLogiTemplate.RIGHT) {
       dx=LeftComp.MinX-Math.abs(RightComp.MaxX-RightComp.MinX)-CompOffset-1+(1*
-          (((LeftComp.MinX-Math.abs(RightComp.MaxX-RightComp.MinX)-CompOffset-1)+
-              Math.abs(RightComp.OutputX-RightComp.MinX))-LeftComp.OutputX)%2);
+              (((LeftComp.MinX-Math.abs(RightComp.MaxX-RightComp.MinX)-CompOffset-1)+
+                      Math.abs(RightComp.OutputX-RightComp.MinX))-LeftComp.OutputX)%2);
 
       RightComp.SetPos(dx, RightComp.y);
-      for(int i=0;i<RightComp.NbPat;i++) {
-        PatTab[LeftComp.NbPat+i]=RightComp.PatTab[i];
+      for(int i = 0; i<RightComp.nbPat; i++) {
+        patTab[LeftComp.nbPat +i]=RightComp.patTab[i];
       }
-      int pat0=LeftComp.NbPat+RightComp.NbPat;
+      int pat0=LeftComp.nbPat +RightComp.nbPat;
       dx=LeftComp.MaxX+CompOffset+1+(1*
               ((LeftComp.MaxX+CompOffset+1+CPattern.OUTPUT_LEFT_OFFSET)-
-                LeftComp.OutputX)%2);
+                      LeftComp.OutputX)%2);
 
 
-      PatTab[pat0]=new CPattern(dx, LeftComp.OutputY-7+0,//1,
-            CPattern.P_GUN30R,true,false);
-      PatTab[pat0].SetPattern();
+      patTab[pat0]=new CPattern(dx, LeftComp.OutputY-7+0,//1,
+              CPattern.P_GUN30R,true,false);
+      patTab[pat0].SetPattern();
       Entry1X=RightComp.OutputX;
       Entry1Y=RightComp.OutputY;
       Entry2X=LeftComp.OutputX;
@@ -253,49 +253,49 @@ public class CLogiComp {
       OutputY=RightComp.OutputY;
       OutpDirection=RightComp.OutpDirection;
 
-      int eat1x=Math.abs(PatTab[pat0].OutputX-RightComp.OutputX)/2+
-                  RightComp.OutputX;
+      int eat1x=Math.abs(patTab[pat0].OutputX-RightComp.OutputX)/2+
+              RightComp.OutputX;
       int eat1y=OutputY+(Math.abs(OutputX-eat1x));
       eat1x -= 6;
       eat1x += OutputOffset;
       eat1y += OutputOffset;
 
       if(last) {
-        PatTab[pat0+1]=new CPattern(eat1x,eat1y,CPattern.P_OUTPUT,false,false);
+        patTab[pat0+1]=new CPattern(eat1x,eat1y,CPattern.P_OUTPUT,false,false);
         ExitX=(eat1y-OutputY)+OutputX-1;
         ExitY=eat1y;
       }
       else
-        PatTab[pat0+1]=new CPattern(eat1x,eat1y,CPattern.P_NIL,false,false);
-      PatTab[pat0+1].SetPattern();
+        patTab[pat0+1]=new CPattern(eat1x,eat1y,CPattern.P_NIL,false,false);
+      patTab[pat0+1].SetPattern();
 
-      eat1x=PatTab[pat0].OutputX-(eat1y-PatTab[pat0].OutputY);
+      eat1x= patTab[pat0].OutputX-(eat1y- patTab[pat0].OutputY);
       eat1x -= 2;
-      PatTab[pat0+2]=new CPattern(eat1x,eat1y,CPattern.P_EATERR,true,false);
-      PatTab[pat0+2].SetPattern();
+      patTab[pat0+2]=new CPattern(eat1x,eat1y,CPattern.P_EATERR,true,false);
+      patTab[pat0+2].SetPattern();
 
       MinX=RightComp.MinX;
       MinY=RightComp.MinY;
-      MaxX=PatTab[pat0].x+PatTab[pat0].NbCols;
-      MaxY=PatTab[pat0+1].y+PatTab[pat0+1].NbLines;
+      MaxX= patTab[pat0].x+ patTab[pat0].NbCols;
+      MaxY= patTab[pat0+1].y+ patTab[pat0+1].NbLines;
     }
     // Left output
     else {
       dx=LeftComp.MaxX+CompOffset+(1*
-          (((LeftComp.MaxX+CompOffset)+
-            Math.abs(RightComp.OutputX-RightComp.MinX))-LeftComp.OutputX)%2);
+              (((LeftComp.MaxX+CompOffset)+
+                      Math.abs(RightComp.OutputX-RightComp.MinX))-LeftComp.OutputX)%2);
 
       RightComp.SetPos(dx, RightComp.y);
-      for(int i=0;i<RightComp.NbPat;i++)
-        PatTab[LeftComp.NbPat+i]=RightComp.PatTab[i];
-      int pat0=LeftComp.NbPat+RightComp.NbPat;
+      for(int i = 0; i<RightComp.nbPat; i++)
+        patTab[LeftComp.nbPat +i]=RightComp.patTab[i];
+      int pat0=LeftComp.nbPat +RightComp.nbPat;
       dx=LeftComp.MinX-CPattern.ENTRY_WIDTH-CompOffset-1+(1*
-          (((LeftComp.MinX-CPattern.ENTRY_WIDTH-CompOffset-1)+
-              CPattern.OUTPUT_RIGHT_OFFSET)-LeftComp.OutputX)%2);
+              (((LeftComp.MinX-CPattern.ENTRY_WIDTH-CompOffset-1)+
+                      CPattern.OUTPUT_RIGHT_OFFSET)-LeftComp.OutputX)%2);
 
-      PatTab[pat0]=new CPattern(dx, RightComp.OutputY-7+0,//1,
-            CPattern.P_GUN30R,false,false);
-      PatTab[pat0].SetPattern();
+      patTab[pat0]=new CPattern(dx, RightComp.OutputY-7+0,//1,
+              CPattern.P_GUN30R,false,false);
+      patTab[pat0].SetPattern();
       Entry1X=LeftComp.OutputX;
       Entry1Y=LeftComp.OutputY;
       Entry2X=RightComp.OutputX;
@@ -304,8 +304,8 @@ public class CLogiComp {
       OutputY=RightComp.OutputY;
       OutpDirection=RightComp.OutpDirection;
 
-      int eat1x=Math.abs(RightComp.OutputX-PatTab[pat0].OutputX)/2+
-              PatTab[pat0].OutputX;
+      int eat1x=Math.abs(RightComp.OutputX- patTab[pat0].OutputX)/2+
+              patTab[pat0].OutputX;
 
       int eat1y=OutputY+(Math.abs(OutputX-eat1x));
       eat1x -= 5;
@@ -313,32 +313,32 @@ public class CLogiComp {
       eat1y += OutputOffset;
 
       if(last) {
-        PatTab[pat0+1]=new CPattern(eat1x,eat1y,CPattern.P_OUTPUT,true,false);
+        patTab[pat0+1]=new CPattern(eat1x,eat1y,CPattern.P_OUTPUT,true,false);
         ExitX=(eat1y-OutputY)+OutputX-1;
         ExitY=eat1y;
       }
       else
-        PatTab[pat0+1]=new CPattern(eat1x,eat1y,CPattern.P_NIL,true,false);
-      PatTab[pat0+1].SetPattern();
+        patTab[pat0+1]=new CPattern(eat1x,eat1y,CPattern.P_NIL,true,false);
+      patTab[pat0+1].SetPattern();
 
-      eat1x=PatTab[pat0].OutputX+(eat1y-PatTab[pat0].OutputY);
+      eat1x= patTab[pat0].OutputX+(eat1y- patTab[pat0].OutputY);
       eat1x -= 1;
-      PatTab[pat0+2]=new CPattern(eat1x,eat1y,CPattern.P_EATERR,false,false);
-      PatTab[pat0+2].SetPattern();
-      MinX=PatTab[pat0].x;
+      patTab[pat0+2]=new CPattern(eat1x,eat1y,CPattern.P_EATERR,false,false);
+      patTab[pat0+2].SetPattern();
+      MinX= patTab[pat0].x;
       MinY=RightComp.MinY;
       MaxX=RightComp.MaxX;
-      MaxY=PatTab[pat0+2].y+PatTab[pat0+2].NbLines;
+      MaxY= patTab[pat0+2].y+ patTab[pat0+2].NbLines;
     }
     return(true);
   }
 
   /** Construction of an OR component */
   private boolean MakeOrComp(CLogiComp LeftComp, CLogiComp RightComp, boolean last) {
-    NbPat=LeftComp.NbPat+RightComp.NbPat+4;
-    PatTab=new CPattern[NbPat];
-    for(int i=0;i<LeftComp.NbPat;i++) {
-      PatTab[i]=LeftComp.PatTab[i];
+    nbPat =LeftComp.nbPat +RightComp.nbPat +4;
+    patTab =new CPattern[nbPat];
+    for(int i = 0; i<LeftComp.nbPat; i++) {
+      patTab[i]=LeftComp.patTab[i];
     }
     int dx;
     Entry1X=LeftComp.OutputX;
@@ -346,39 +346,39 @@ public class CLogiComp {
     // Right Output
     if(LeftComp.OutpDirection==CLogiTemplate.RIGHT) {
       dx=LeftComp.MinX-Math.abs(RightComp.MaxX-RightComp.MinX)-CompOffset-1+(1*
-          (((LeftComp.MinX-Math.abs(RightComp.MaxX-RightComp.MinX)-CompOffset-1)+
-              Math.abs(RightComp.OutputX-RightComp.MinX))-LeftComp.OutputX)%2);
+              (((LeftComp.MinX-Math.abs(RightComp.MaxX-RightComp.MinX)-CompOffset-1)+
+                      Math.abs(RightComp.OutputX-RightComp.MinX))-LeftComp.OutputX)%2);
       RightComp.SetPos(dx, RightComp.y);
-      for(int i=0;i<RightComp.NbPat;i++) {
-        PatTab[LeftComp.NbPat+i]=RightComp.PatTab[i];
+      for(int i = 0; i<RightComp.nbPat; i++) {
+        patTab[LeftComp.nbPat +i]=RightComp.patTab[i];
       }
       Entry2X=RightComp.OutputX;
       Entry2Y=RightComp.OutputY;
 
-      int pat0=LeftComp.NbPat+RightComp.NbPat;
+      int pat0=LeftComp.nbPat +RightComp.nbPat;
 
       dx=RightComp.MinX-CPattern.ENTRY_WIDTH-CompOffset-1+(1*
-          (((RightComp.MinX-CPattern.ENTRY_WIDTH-CompOffset-1)+
-              CPattern.OUTPUT_RIGHT_OFFSET)-RightComp.OutputX)%2);
+              (((RightComp.MinX-CPattern.ENTRY_WIDTH-CompOffset-1)+
+                      CPattern.OUTPUT_RIGHT_OFFSET)-RightComp.OutputX)%2);
 
-      PatTab[pat0]=new CPattern(dx, RightComp.OutputY-7,
-            CPattern.P_GUN30R,false,false);
-      PatTab[pat0].SetPattern();
+      patTab[pat0]=new CPattern(dx, RightComp.OutputY-7,
+              CPattern.P_GUN30R,false,false);
+      patTab[pat0].SetPattern();
 
-      OutputX=PatTab[pat0].OutputX;
-      OutputY=PatTab[pat0].OutputY;
-      OutpDirection=PatTab[pat0].OutputDir;
+      OutputX= patTab[pat0].OutputX;
+      OutputY= patTab[pat0].OutputY;
+      OutpDirection= patTab[pat0].OutputDir;
 
       dx=LeftComp.MaxX+CompOffset+(1*
-          (((LeftComp.MaxX+CompOffset)+
-            CPattern.OUTPUT_LEFT_OFFSET)-LeftComp.OutputX)%2);
+              (((LeftComp.MaxX+CompOffset)+
+                      CPattern.OUTPUT_LEFT_OFFSET)-LeftComp.OutputX)%2);
 
-      PatTab[pat0+1]=new CPattern(dx,RightComp.OutputY-7+0//1
-                ,CPattern.P_GUN30R,true,false);
-      PatTab[pat0+1].SetPattern();
+      patTab[pat0+1]=new CPattern(dx,RightComp.OutputY-7+0//1
+              ,CPattern.P_GUN30R,true,false);
+      patTab[pat0+1].SetPattern();
 
-      int eat1x=Math.abs(PatTab[pat0+1].OutputX-PatTab[pat0].OutputX)/2+
-                    PatTab[pat0].OutputX;
+      int eat1x=Math.abs(patTab[pat0+1].OutputX- patTab[pat0].OutputX)/2+
+              patTab[pat0].OutputX;
       int eat1y=OutputY+(Math.abs(OutputX-eat1x));
       eat1x -= 0;
       eat1x -= 6;
@@ -386,89 +386,89 @@ public class CLogiComp {
       eat1y += OutputOffset;
 
       if(last) {
-        PatTab[pat0+2]=new CPattern(eat1x,eat1y,CPattern.P_OUTPUT,false,false);
+        patTab[pat0+2]=new CPattern(eat1x,eat1y,CPattern.P_OUTPUT,false,false);
         ExitX=(eat1y-OutputY)+OutputX-1;
         ExitY=eat1y;
       }
       else
-        PatTab[pat0+2]=new CPattern(eat1x,eat1y,CPattern.P_NIL,false,false);
-      PatTab[pat0+2].SetPattern();
+        patTab[pat0+2]=new CPattern(eat1x,eat1y,CPattern.P_NIL,false,false);
+      patTab[pat0+2].SetPattern();
 
-      eat1x=Math.abs(PatTab[pat0+1].OutputX-RightComp.OutputX)/2+
-                    RightComp.OutputX;
+      eat1x=Math.abs(patTab[pat0+1].OutputX-RightComp.OutputX)/2+
+              RightComp.OutputX;
       eat1y=RightComp.OutputY+(Math.abs(RightComp.OutputX-eat1x));
       eat1y += 1;
       eat1x += 4;
       eat1y += 4;
-      PatTab[pat0+3]=new CPattern(eat1x,eat1y,CPattern.P_EATERR,false,false);
-      PatTab[pat0+3].SetPattern();
+      patTab[pat0+3]=new CPattern(eat1x,eat1y,CPattern.P_EATERR,false,false);
+      patTab[pat0+3].SetPattern();
 
-      MinX=PatTab[pat0].x;
+      MinX= patTab[pat0].x;
       MinY=LeftComp.MinY;
-      MaxX=PatTab[pat0+1].x+PatTab[pat0+1].NbCols;
-      MaxY=PatTab[pat0+2].y+PatTab[pat0+2].NbLines;
+      MaxX= patTab[pat0+1].x+ patTab[pat0+1].NbCols;
+      MaxY= patTab[pat0+2].y+ patTab[pat0+2].NbLines;
     }
     // Left Output
     else {
       dx=LeftComp.MaxX+CompOffset+1+(1*
-          (((LeftComp.MaxX+CompOffset+1)+
-            Math.abs(RightComp.OutputX-RightComp.MinX))-LeftComp.OutputX)%2);
+              (((LeftComp.MaxX+CompOffset+1)+
+                      Math.abs(RightComp.OutputX-RightComp.MinX))-LeftComp.OutputX)%2);
 
       RightComp.SetPos(dx, RightComp.y);
-      for(int i=0;i<RightComp.NbPat;i++) {
-        PatTab[LeftComp.NbPat+i]=RightComp.PatTab[i];
+      for(int i = 0; i<RightComp.nbPat; i++) {
+        patTab[LeftComp.nbPat +i]=RightComp.patTab[i];
       }
       Entry2X=RightComp.OutputX;
       Entry2Y=RightComp.OutputY;
 
-      int pat0=LeftComp.NbPat+RightComp.NbPat;
+      int pat0=LeftComp.nbPat +RightComp.nbPat;
       dx=RightComp.MaxX+CompOffset+(1*
-          (((RightComp.MaxX+CompOffset)+
-            CPattern.OUTPUT_LEFT_OFFSET)-RightComp.OutputX)%2);
-      PatTab[pat0]=new CPattern(dx, RightComp.OutputY-7,
-            CPattern.P_GUN30R,true,false);
-      PatTab[pat0].SetPattern();
+              (((RightComp.MaxX+CompOffset)+
+                      CPattern.OUTPUT_LEFT_OFFSET)-RightComp.OutputX)%2);
+      patTab[pat0]=new CPattern(dx, RightComp.OutputY-7,
+              CPattern.P_GUN30R,true,false);
+      patTab[pat0].SetPattern();
 
-      OutputX=PatTab[pat0].OutputX;
-      OutputY=PatTab[pat0].OutputY;
-      OutpDirection=PatTab[pat0].OutputDir;
+      OutputX= patTab[pat0].OutputX;
+      OutputY= patTab[pat0].OutputY;
+      OutpDirection= patTab[pat0].OutputDir;
 
       dx=LeftComp.MinX-CPattern.ENTRY_WIDTH-CompOffset-1+(1*
-          (((LeftComp.MinX-CPattern.ENTRY_WIDTH-CompOffset-1)+
-              CPattern.OUTPUT_RIGHT_OFFSET)-LeftComp.OutputX)%2);
+              (((LeftComp.MinX-CPattern.ENTRY_WIDTH-CompOffset-1)+
+                      CPattern.OUTPUT_RIGHT_OFFSET)-LeftComp.OutputX)%2);
 
-      PatTab[pat0+1]=new CPattern(dx,RightComp.OutputY-7+0//1
-                ,CPattern.P_GUN30R,false,false);
-      PatTab[pat0+1].SetPattern();
+      patTab[pat0+1]=new CPattern(dx,RightComp.OutputY-7+0//1
+              ,CPattern.P_GUN30R,false,false);
+      patTab[pat0+1].SetPattern();
 
-      int eat1x=Math.abs(PatTab[pat0].OutputX-PatTab[pat0+1].OutputX)/2+
-                  PatTab[pat0+1].OutputX;
+      int eat1x=Math.abs(patTab[pat0].OutputX- patTab[pat0+1].OutputX)/2+
+              patTab[pat0+1].OutputX;
       int eat1y=OutputY+(Math.abs(OutputX-eat1x));
       eat1x -= 5;
       eat1x -= OutputOffset;
       eat1y += OutputOffset;
       if(last) {
-        PatTab[pat0+2]=new CPattern(eat1x,eat1y,CPattern.P_OUTPUT,true,false);
+        patTab[pat0+2]=new CPattern(eat1x,eat1y,CPattern.P_OUTPUT,true,false);
         ExitX=(eat1y-OutputY)+OutputX-1;
         ExitY=eat1y;
       }
       else
-        PatTab[pat0+2]=new CPattern(eat1x,eat1y,CPattern.P_NIL,true,false);
-      PatTab[pat0+2].SetPattern();
+        patTab[pat0+2]=new CPattern(eat1x,eat1y,CPattern.P_NIL,true,false);
+      patTab[pat0+2].SetPattern();
 
-      eat1x=Math.abs(RightComp.OutputX-PatTab[pat0+1].OutputX)/2+
-                          PatTab[pat0+1].OutputX;
+      eat1x=Math.abs(RightComp.OutputX- patTab[pat0+1].OutputX)/2+
+              patTab[pat0+1].OutputX;
       eat1y=RightComp.OutputY+(Math.abs(RightComp.OutputX-eat1x));
       eat1x -= 2;
       eat1x -= 4;
       eat1y += 4;
-      PatTab[pat0+3]=new CPattern(eat1x,eat1y,CPattern.P_EATERR,true,false);
-      PatTab[pat0+3].SetPattern();
+      patTab[pat0+3]=new CPattern(eat1x,eat1y,CPattern.P_EATERR,true,false);
+      patTab[pat0+3].SetPattern();
 
-      MinX=PatTab[pat0+1].x;
+      MinX= patTab[pat0+1].x;
       MinY=LeftComp.MinY;
-      MaxX=PatTab[pat0].x+PatTab[pat0].NbCols;
-      MaxY=PatTab[pat0+2].y+PatTab[pat0+2].NbLines;
+      MaxX= patTab[pat0].x+ patTab[pat0].NbCols;
+      MaxY= patTab[pat0+2].y+ patTab[pat0+2].NbLines;
     }
     return(true);
   }
@@ -480,8 +480,8 @@ public class CLogiComp {
 
   /** Move a component with offset */
   private void MoveComp(int dx, int dy) {
-    for(int i=0;i<NbPat;i++)
-      PatTab[i].SetPattern(dx, dy);
+    for(int i = 0; i< nbPat; i++)
+      patTab[i].SetPattern(dx, dy);
     Entry1X += dx;
     Entry1Y += dy;
     Entry2X += dx;

@@ -62,7 +62,6 @@ public final class PatternGenerator {
                 }
             }
         }
-
         return grid;
     }
 }
